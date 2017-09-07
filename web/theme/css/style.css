@@ -3303,7 +3303,17 @@ CANVAS PAGE STYLE
 }
 
 /* MY CSS */
-
+hr{
+    margin: 20px 0;
+}
+mt0{
+    margin-top: 10px;
+}
+.checkbox{
+    padding-left: 0;
+    font-weight: 400;
+    color: #000;
+}
 .logo {
     width: 70px;
     margin-top: -4px;
@@ -3549,6 +3559,10 @@ a:hover, a:focus{
 	height: 300px;
         border-radius: 5px;
 }
+.img-block.avatar-200{
+	height: 200px;
+        border-radius: 5px;
+}
 .img-block.avatar-table{
     height: 38px;
     width: 38px;
@@ -3782,7 +3796,19 @@ margin: 0 0 50px;
 .folow-persons a{
     color: initial;
 }
-
+.input-label{
+    margin: 10px 0 5px;
+    font-size: 14px;
+}
+#form-profile input, #form-profile textarea{
+    font-size: 14px;
+}
+#forgot-password-settings{
+    margin-left: 20px;
+}
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"]{
+    padding: 6px;
+}
 @media (max-width: 767px) {
 	.projects-section .css-table-cell.image.has-bg-image{
 	width: 100%;

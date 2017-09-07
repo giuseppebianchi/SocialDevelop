@@ -30,8 +30,12 @@
         <servlet-class>com.bianchii.socialdevelop.Dashboard</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Profile</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.Profile</servlet-class>
+        <servlet-name>SettingsProfile</servlet-name>
+        <servlet-class>com.bianchii.socialdevelop.SettingsProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SettingsAccount</servlet-name>
+        <servlet-class>com.bianchii.socialdevelop.SettingsAccount</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SignIn</servlet-name>
@@ -74,8 +78,12 @@
         <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Profile</servlet-name>
+        <servlet-name>SettingsProfile</servlet-name>
         <url-pattern>/settings/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingsAccount</servlet-name>
+        <url-pattern>/settings/account</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SignIn</servlet-name>

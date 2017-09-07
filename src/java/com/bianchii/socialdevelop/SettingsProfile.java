@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Giuseppe Bianchi
  */
-public class Profile extends HttpServlet {
+public class SettingsProfile extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -45,7 +45,7 @@ public class Profile extends HttpServlet {
             TemplateResult res = new TemplateResult(getServletContext());
             //verrà usato automaticamente il template di outline spcificato tra i context parameters
             //the outlne template specified through the context parameters will be added by the TemplateResult to the specified template
-            res.activate("profile.ftl.html", data, response);
+            res.activate("settings_profile.ftl.html", data, response);
         } catch (TemplateManagerException ex) {
             throw new ServletException(ex);
         }

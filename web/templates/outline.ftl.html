@@ -49,9 +49,9 @@
                     <nav class="nav pull-left">
           <ul class="sf-menu">
           <li><form action="${request.getContextPath()}/search" id="search-menu-form"><input type="text" value="" placeholder="Search"><a href="#" id="search-button"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
-          <li class="active"><a href="home">HOME</a></li>
-            <li> <a href="projects">Projects</a></li>
-            <li> <a href="developers">Developers</a></li>
+          <li class="active"><a href="${request.getContextPath()}/home">HOME</a></li>
+            <li> <a href="${request.getContextPath()}/projects">Projects</a></li>
+            <li> <a href="${request.getContextPath()}/developers">Developers</a></li>
                     </ul>
                     </nav>
         <a href="#" class="mobile-sidebar-button mobile-sidebar-toggle"><span></span></a>
@@ -60,12 +60,11 @@
               <li><form action="${request.getContextPath()}/search" id="search-menu-form"><input type="text" value="" placeholder="Search"><a href="#" id="search-button"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
             <li><a href="${request.getContextPath()}/signin">Sign In</a></li>
             <li><a href="${request.getContextPath()}/signin">Sign Up</a></li>
-            <li><a href="${request.getContextPath()}/signin" id="notifications-icon" class="new-contents"><i class="fa fa-envelope"></i></a></li>
+            <li><a href="${request.getContextPath()}/dashboard" id="notifications-icon" class="new-contents"><i class="fa fa-envelope"></i></a></li>
             <!--<li><a href="/signin" id="notifications-icon" class="new-contents"><i class="fa fa-tachometer"></i></a></li>-->
             <li id="avatar-menu"><a href="${request.getContextPath()}/user"><div></div></a>
               <ul style="display: none;">
                 <li class="bordered">Signed in as<strong>Giuseppe Bianchi</strong></li>
-                <li><a href="dashboard">Dashboard</a></li>
                 <li><a href="user">Your profile</a></li>
                 <li><a href="user-dashboard(connections)(hotkeys-disabled).html">Your projects</a></li>
                 <li class="bordered"><a href="user-dashboard(connections)(hotkeys-enabled).html">Your tasks</a></li>
