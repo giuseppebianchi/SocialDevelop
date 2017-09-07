@@ -18,8 +18,8 @@
         <servlet-class>com.bianchii.socialdevelop.SingleProject</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Task</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.Task</servlet-class>
+        <servlet-name>SingleTask</servlet-name>
+        <servlet-class>com.bianchii.socialdevelop.SingleTask</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>User</servlet-name>
@@ -30,12 +30,20 @@
         <servlet-class>com.bianchii.socialdevelop.Dashboard</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Profile</servlet-name>
+        <servlet-class>com.bianchii.socialdevelop.Profile</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SignIn</servlet-name>
         <servlet-class>com.bianchii.socialdevelop.SignIn</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SignUp</servlet-name>
         <servlet-class>com.bianchii.socialdevelop.SignUp</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewProject</servlet-name>
+        <servlet-class>com.bianchii.socialdevelop.NewProject</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
@@ -54,7 +62,7 @@
         <url-pattern>/project</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Task</servlet-name>
+        <servlet-name>SingleTask</servlet-name>
         <url-pattern>/task</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -66,12 +74,20 @@
         <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>Profile</servlet-name>
+        <url-pattern>/settings/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SignIn</servlet-name>
         <url-pattern>/signin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SignUp</servlet-name>
         <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewProject</servlet-name>
+        <url-pattern>/projects/new</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -449,7 +449,7 @@ h1, h2, h3, h4, h5{
 	list-style: none;
 }
 .tab-title{
-    font-size: 30px !important;
+    font-size: 24px !important;
     border: none !important;
     margin-bottom: 0 !important;
 }
@@ -1179,9 +1179,6 @@ iframe {
 	border-radius: 4px;
 	text-align: center;
 	font-size: 12px;
-}
-.user-profile .nav-tabs li {
-	float: left;
 }
 .user-profile .nav-tabs li a {
 	background: #eeeeee;
@@ -3066,28 +3063,7 @@ CANVAS PAGE STYLE
 .profile-company-content .sidebar .sidebar-information .single-category .title {
 	margin-top: 0px;
 }
-.profile-company-content.main-user .nav-tabs {
-	position: absolute;
-	top: -60px;
-}
-.profile-company-content.main-user .nav-tabs li a {
-	text-transform: none;
-	font-size: 16px;
-	color: #a2a2a2;
-	padding: 10px 20px;
-	background: #eeeeee;
-}
-.profile-company-content.main-user .nav-tabs li a:hover {
-	background: #f8f8f8;
-	color: #333333;
-}
-.profile-company-content.main-user .nav-tabs li.active a {
-	background: #f8f8f8;
-	color: #333333;
-}
-.profile-company-content.main-user .tab-content #profile {
-	background: none;
-}
+
 .sub-bnr {
 	position: relative;
 	padding: 0px;
@@ -3328,11 +3304,116 @@ CANVAS PAGE STYLE
 
 /* MY CSS */
 
+.logo {
+    width: 70px;
+    margin-top: -4px;
+    font-size: 45px !important;
+}
+.uou-block-2b .nav .sf-menu > li > a{
+    font-size: 14px;
+}
+
 ul, ol {
     margin: 0 0 24px;
     font-family: 'Open Sans', sans-serif;
 }
+#search-menu-form{
+    margin-bottom: 0;
+}
 
+#search-menu-form input{
+    font-size: 12px;
+    height: 30px;
+    padding: 0px 30px 0 6px;
+    font-weight: 600;
+    width: 215px;
+    margin: 5px 0 0;
+}
+#search-button{
+    color: #B6B4B6;
+    position:absolute;
+    top: 1px;
+    right: 10px;
+}
+a#search-button:hover{
+    color: #0099ff;
+}
+select:focus, textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus{
+    border-color: #0099ff;
+}
+.uou-block-2b .nav .sf-menu > li.active > a{
+    color: initial;
+    border-bottom: 3px solid #0099ff;
+}
+.profile-company-content .nav-tabs li a:hover{
+    color: #0099ff;
+}
+#notifications-icon.new-contents:after{
+    content: "";
+    background: #0099ff;
+    width: 10px;
+    position: absolute;
+    height: 10px;
+    top: 8px;
+    border-radius: 50%;
+    right: -5px;
+}
+#avatar-menu > a > div{
+    width:40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #ededed center center no-repeat;
+    background-size: cover;
+    background-image: url('../images/avatar.jpg');
+    display: inline-block;
+}
+#avatar-menu > ul{
+        left: -140px;
+    width: 200px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0;
+    box-shadow: 0 3px 12px rgba(27,31,35,0.15);
+}
+#avatar-menu > ul:before{
+    position: absolute;
+    content: "\f0d8";
+    font-family: 'FontAwesome';
+    font-size: 16px;
+    top: -16px;
+    left: 150px;
+    color: #ddd;
+}
+#avatar-menu > ul > li{
+    border: none;
+    font-size: 14px;
+}
+#avatar-menu > ul > li:first-child{
+    padding: 5px 10px 5px 15px;
+}
+#avatar-menu > ul > li.bordered{
+    border-bottom: 1px solid #ddd;
+}
+#avatar-menu > ul > li > strong{
+    display:block;
+    color: #000;
+}
+#avatar-menu > ul > li > a{
+    background: none;
+    min-width: 160px;
+    color: #24292e;
+    font-size: 14px;
+    font-weight: 400 !important;
+    padding: 5px 10px 5px 15px;
+    
+    
+}
+#avatar-menu > ul > li > a:hover{
+    color: #fff;
+    background: #0099ff;
+    
+}
 footer{
     z-index: 2;
     border-top: 1px solid #ededed;
@@ -3393,6 +3474,8 @@ a:hover, a:focus{
 .profile-company-content.project-page.main-user .nav-tabs li a{
     background: transparent;
     border-radius: 0;
+    font-size: 14px;
+    text-transform: uppercase;
 }
 .profile-company-content.main-user .nav-tabs li.active a {
     background: #0099ff;
@@ -3406,6 +3489,12 @@ a:hover, a:focus{
 	border-left: 2px solid #fafafa;
 	border-right: 2px solid #fafafa;
 
+}
+.task-item > .listing-heading > h6 > a{
+    color: #000;
+}
+.task-item > .listing-heading > h6 > a:hover{
+    color: #0099ff;
 }
 .css-table .css-table-cell.content .listing.listing-1 .listing-ver-3 .listing-inner .listing-content{
 	padding:  0 25px;
@@ -3453,8 +3542,24 @@ a:hover, a:focus{
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
-	background-image: url("../images/avatar.png");
+	background-image: url("../images/avatar.jpg");
 	width:  100%;
+}
+.img-block.avatar-pic{
+	height: 300px;
+        border-radius: 5px;
+}
+.img-block.avatar-table{
+    height: 38px;
+    width: 38px;
+    border-radius: 50%;
+    float: left;
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    left: 0px;
+    overflow: hidden;
+    margin-right: 10px;
 }
 .img-avatar{
 	width:  250px !important;
@@ -3499,8 +3604,23 @@ a:hover, a:focus{
 .profile-bnr.user-profile-bnr > .container > .pull-left{
 	width: 50%;
 }
-.categories-list.vertical.uou-tabs > .tabs{
-	width:  100%;
+.categories-list.vertical.uou-tabs .tabs.col-sm-4{
+	width:  33.33333333%;
+        position: relative;
+        min-height: 1px;
+        padding-left: 15px;
+        padding-right: 15px;
+        
+}
+.categories-list.vertical.uou-tabs .content.col-sm-8{
+    margin-left: 0;
+    padding: 0;
+}
+.categories-list.uou-tabs.accordion-xs .content > div{
+    padding: 10px 0;
+}
+.categories-list.uou-tabs .accordion-link{
+    padding: 10px;
 }
 .listing.listing-1 .listing-ver-3 .listing-tabs ul li > span{
 	padding: 10px;
@@ -3551,10 +3671,10 @@ a:hover, a:focus{
     font-size: 30px;
     font-weight: 100;
 }
-.profile-company-content.project-page{
+.profile-company-content.project-page, .profile-company-content.user-profile{
     padding-top: 30px;
 }
-.profile-company-content.project-page.main-user .nav-tabs{
+.profile-company-content.project-page.main-user .nav-tabs, .profile-company-content.user-profile.main-user .nav-tabs{
     position:relative;
     top:0;  
 }
@@ -3572,6 +3692,97 @@ a:hover, a:focus{
 .fa.fa-star, .fa.fa-star-o, .fa.fa-star-half-o{
     color: #2aadde;
 }
+.user-page-info{
+  text-align: center;
+margin: 0 0 50px;  
+}
+.user-page-info .img-block{
+    margin: 0 auto;
+}
+.user-page-info .right-top-bnr, .user-page-info .right-top-bnr .bt-ns{
+    float:none;
+}
+.user-page-info .right-top-bnr .bt-ns a{
+    margin:0;
+    margin-right:5px
+}
+.overlay{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+.overlay-up{
+    position:relative;
+}
+.background-transparent{
+    background: none !important;
+}
+.compny-profile .user-info{
+    padding-left: 0;
+}
+.uou-progressbar-single .main-bar a{
+    margin: 0;
+    position: absolute;
+    right: 0;
+    top: -30px;
+}
+#title-tab-category{
+    margin-bottom: 20px;
+}
+.select2-container{
+    margin-bottom: 20px;
+}
+.select2-container .select2-selection--single, .select2-container--default .select2-selection--single .select2-selection__arrow{
+    height: 40px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    line-height: 40px;
+}
+#new-project-button{
+    margin-top: -5px;
+}
+#setting-project-button{
+    color: #000 !important;
+}
+.filter-flower{
+    padding-left: 20px;
+}
+.table-blue.main-mem .tittle{
+    background: #0099ff;
+}
+.table-blue.main-mem .tittle span{
+    color: #fff;
+}
+.profile-company-content .network .nav-tabs li a{
+    border-radius: 0;
+}
+.folow-persons li{
+    border-bottom: 1px solid #ededed;
+}
+.folow-persons .row{
+    width: 102%;
+    float: right;
+}
+.folow-persons .checkbox{
+    position: absolute;
+    left: 10px;
+    padding: 0px;
+    line-height: 15px;
+    margin: 0px;
+    top: auto;
+    height: 20px;
+    z-index: 99; 
+}
+.folow-persons .checkbox input[type="checkbox"], .folow-persons .checkbox input[type="radio"]{
+    top: 10px;
+    height: 20px;
+}
+.folow-persons a{
+    color: initial;
+}
+
 @media (max-width: 767px) {
 	.projects-section .css-table-cell.image.has-bg-image{
 	width: 100%;
@@ -3584,7 +3795,7 @@ a:hover, a:focus{
 	padding-right:  0px;
 	}
 	.right-top-bnr, .profile-bnr.user-profile-bnr .right-top-bnr{
-		position: relative;
+            position: relative;
 	    float: left;
 	    top: 0;
 	    margin: 20px 0 0;

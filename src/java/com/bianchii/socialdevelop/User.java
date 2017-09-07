@@ -41,7 +41,7 @@ public class User extends HttpServlet {
         try {
             Map data = new HashMap();
             data.put("page_title", "Social Develop - Name User");
-            
+            data.put("request", request);
             TemplateResult res = new TemplateResult(getServletContext());
             //verrà usato automaticamente il template di outline spcificato tra i context parameters
             //the outlne template specified through the context parameters will be added by the TemplateResult to the specified template

@@ -2,22 +2,23 @@
   
   <div class="compny-profile"> 
     <!-- SUB Banner -->
-    <div class="profile-bnr" style="background-image: url('theme/images/pro-img-1.jpg')">
-      <div class="container"> 
+    <div class="profile-bnr overlay-up" style="background-image: url('theme/images/pro-img-1.jpg')">
+        <a class="overlay"></a>
+      <div class="container overlay-up"> 
         
         <!-- User Iinfo -->
-        <div class="user-info">
-          <h1><a data-toggle="tooltip" data-placement="top" title="Task Name"><img src="theme/images/icon-ver.png" alt=""></a>  Name of Task</h1>
+        <div class="user-info background-transparent">
+          <h1>Name of Task</h1>
           <h6>Project: <a href="project">Name of Project</a></h6>
           <h6>Front End Developement</h6>
-          <h6 class="btn btn-success">Open</h6>
+          <h6><span class="btn btn-success">Open</span></h6>
         </div>
         
         
         <!-- Top Riht Button -->
         <div class="right-top-bnr">
           <div class="connect"> <a href="#." data-toggle="modal" data-target="#myModal" class="btn btn-success"><i class="fa fa-user-plus"></i> Subscribe</a>
-            <div class="bt-ns"> <a href="#."><i class="fa fa-bookmark-o"></i> </a> <a href="#."><i class="fa fa-envelope-o"></i> </a>  </div>
+            <div class="bt-ns"> <a href="#."><i class="fa fa-bookmark-o"></i> </a> <a href="#."><i class="fa fa-thumbs-up"></i> </a>  </div>
           </div>
         </div>
       </div>
@@ -179,9 +180,31 @@
               
               <!-- Jobs -->
               <div id="developers" class="tab-pane fade">
-                  <h3 class="tab-title">Developers ( <span class="text-success">1</span> / <span class="text-success">3</span> )</h3>
+                  <h3 class="tab-title">Developers</h3>
               <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
-              <a href="#" class="btn btn-success">Subscribe</a>
+              <!--<div class="listing listing-1" style="padding-bottom: 0">
+                  <div class="listing-ver-3 task-item">
+                      <div class="listing-tabs">
+                        <ul>
+                            <li class="hidden-xs"><span><strong class="text-primary">30</strong> Developers</span></li>
+                          <li><span><strong class="text-primary">2</strong> Hired</span></li>
+                          <li><span><strong class="text-primary">23452</strong> Requests</span></li>
+                          <li class="visible-xs"><span><strong class="text-primary"></strong> Closed</span></li>
+                          <li><span class="task-open">Subscribe</span></li>
+                        </ul>
+                      </div>
+                    </div>
+              </div>-->
+              <div class="row">
+                      <div class="col-sm-9">
+              <ul class="nav nav-tabs">
+                    <li><a>3 <span class="text-primary">Required</span></a></li>
+                    <li><a>20 <span class="text-success">Hired</span></a></li>
+                    <li><a>20 <span class="text-danger">Requests</span></a></li>
+                </ul>
+                      </div>
+               <div class="col-sm-3"><a id="new-project-button" class="btn btn-success btn-block" href="projects/new">SubScribe</a></div>
+              </div>
               <hr>
                 <div class="">
                   <div class="similar developer-list">
@@ -198,11 +221,6 @@
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, 
                 voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum 
                 accusantium deleniti neque architecto vitae.</p>
-              <span class="title-tags">Tasks:</span>
-                          <ul class="tags list-inline">
-                            <li><a href="#">Front end development</a></li>
-                            <li><a href="#">Graphic design</a></li>
-                          </ul>
               <!-- Share -->
               <div class="share-w"><a href="#."><i class="fa fa-bookmark-o"></i></a> <a href="#."><i class="fa fa-envelope-o"></i></a> <a href="#."><i class="fa fa-eye"></i></a></div>
             </div>
