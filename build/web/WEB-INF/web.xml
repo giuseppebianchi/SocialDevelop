@@ -3,39 +3,39 @@
     <!--SERVLET -->
     <servlet>
         <servlet-name>Home</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.Home</servlet-class>
+        <servlet-class>com.helloworldgroup.socialdevelop.controller.HomeController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Developers</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.Developers</servlet-class>
+        <servlet-class>com.helloworldgroup.socialdevelop.controller.DevelopersController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Projects</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.Projects</servlet-class>
+        <servlet-class>com.helloworldgroup.socialdevelop.controller.ProjectsController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SingleProject</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.SingleProject</servlet-class>
+        <servlet-class>com.helloworldgroup.socialdevelop.controller.SingleProjectController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SingleTask</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.SingleTask</servlet-class>
+        <servlet-class>com.helloworldgroup.socialdevelop.controller.SingleTaskController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>User</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.User</servlet-class>
+        <servlet-class>com.helloworldgroup.socialdevelop.controller.UserController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Dashboard</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.Dashboard</servlet-class>
+        <servlet-class>com.helloworldgroup.socialdevelop.controller.DashboardController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SettingsProfile</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.SettingsProfile</servlet-class>
+        <servlet-class>com.helloworldgroup.socialdevelop.controller.SettingsProfileController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SettingsAccount</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.SettingsAccount</servlet-class>
+        <servlet-class>com.helloworldgroup.socialdevelop.controller.SettingsAccountController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SignIn</servlet-name>
@@ -120,7 +120,7 @@
     </context-param>
     <context-param>
         <param-name>view.data.author</param-name>
-        <param-value>Giuseppe Bianchi</param-value>
+        <param-value>HelloWorld Group</param-value>
     </context-param>
     <context-param>
         <param-name>view.data.homepage_url</param-name>
