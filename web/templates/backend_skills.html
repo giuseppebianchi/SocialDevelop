@@ -1,0 +1,142 @@
+        <div class="col-md-12">
+            <!--types-->
+            <div class="col-md-6 mb30">
+                <div class="gt_d_classes_wrap default_width">
+                    <div class="gt_d_fav_courses default_width">
+                        <ul class="gt_d_fav_hdg">
+                            <li>Add Skill</li>
+                        </ul>                    
+                    </div>
+                    <form action="AddSkillBack" method="post">
+                        <div>
+                            <div class="gt_contact_us_field ">
+                                <label id="label-pop">Skill Name</label>
+                                <input class="c_ph" type="text" required="required" placeholder="Insert the skill's name" id="skill-name" name="skill-name">
+                            </div>
+                          
+                        <div class="gt_privacy_field default_width mb20">
+                            <select class="form-control" id="typeS" name="typeS" required="required">
+                                <option value="">Select the skill's type</option>
+                                <#list types as type>
+                                    <option value="${type.key}">${type.type}</option>
+                                </#list>
+                            </select>
+                        </div>
+                            <div class="gt_privacy_field default_width mb20">
+                                <select class="form-control" id="skill-father" name="skill-father">
+                                    <option selected value="">Select the skill's father (optional)</option>
+                                    <#list skills as skill>
+                                    <option class="${skill.type_key} hidden" value="${skill.key}">${skill.name}</option>
+                                    <#list skill.child as child>
+                                    <option class="${skill.type_key} hidden" value="${child.key}">${child.name}</option>
+                                    </#list>
+                                    </#list>
+                                </select>
+                            </div>
+                            <div id="skill-submit" class="gt_contact_us_field">
+                                <input id="submit-skill" value="ADD" name="submit-skill" type="submit">
+                            </div>       
+                        </div>
+                    </form>        
+                </div>
+            </div>
+            <div class="col-md-6 mb30">
+                <div class="gt_d_classes_wrap default_width">
+                    <div class="gt_d_fav_courses default_width">
+                        <ul class="gt_d_fav_hdg mb20">
+                            <li>Delete Skill</li>
+                        </ul>                    
+                    </div>
+                    <div class="delete-skill-b"><!-- gt_advacnce_search_wrap default_width -->
+
+                       
+                        <div class="mb20">
+                            <form action="rmSkillBack" method="post">
+                                <div class="gt_privacy_field default_width mb20">
+                                    <select class="form-control" id="rm-skill-b" required="required" name="rm-skill-b">
+                                        <option value="">Select the skill to delete </option>
+                                        <#list skillsD as skill>
+                                            
+                                            <option value="${skill.key}">${skill.name}</option>
+                                            <#if skill.child?has_content>
+                                            <#list skill.child as child>
+                                            <option value="${child.key}">${child.name}</option>
+                                            </#list>
+                                            </#if>
+                                        </#list>
+                                    </select>
+                                </div>
+                                <div id="skill-delete" class="gt_contact_us_field mb20">
+                                    <input id="delete-skill" value="REMOVE" name="delete-skill" type="submit">
+                                </div>  
+                            </form>
+                        </div>
+
+                           
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-12">
+               
+                <div class="gt_advacnce_search_wrap default_width">
+                    <div class="gt_d_classes_wrap default_width">
+                        <div class="gt_d_fav_courses default_width  mb20">
+                            <ul class="gt_d_fav_hdg">
+                                <li>Update Skill</li>
+                            </ul>                    
+                        </div>
+                        <form id="form-update-skill" action="UpdateSkillBack" method="post"> 
+                               <div class="col-md-6">
+
+                               
+                           
+                                    <div class="gt_privacy_field default_width mb20">
+                                        <select class="form-control" id="old-skill" required="required" name="old-skill">
+                                            <option value="">Select a skill to update</option>
+                                            <#list skills as skill>
+                                                <option value="${skill.key}">${skill.name}</option>
+                                            </#list>
+                                        </select>
+                                    </div>
+                                </div>
+                               
+                            <div class="col-md-6 gt_contact_us_field">
+                                <input class="c_ph" type="text" placeholder="Change here the skill's name" id="new-skill-name" name="new-skill-name">
+                            </div>
+                                
+                               
+                                <div class="col-md-6">
+                                    <div class="gt_privacy_field default_width mb20">
+                                        <select class="form-control" id="new-type" name="new-type">
+                                            <option value="">Select the new skill's type</option>
+                                            <#list types as type>
+                                                <option value="${type.key}">${type.type}</option>
+                                            </#list>
+                                        </select>
+                                    </div>
+                                </div>
+                            <div class="col-md-6">
+                                    <div class="gt_privacy_field default_width mb20">
+                                        <select class="form-control" id="new-father" name="new-father">
+                                            <option value="">Select the new skill's father</option>
+                                            <#list skills as skill>
+                                                <option class="${skill.type_key} hidden" value="${skill.key}">${skill.name}</option>
+                                                <#list skill.child as child>
+                                                    <option class="${skill.type_key} hidden" value="${child.key}">${child.name}</option>
+                                                </#list>
+                                            </#list>
+                                        </select>
+                                    </div>
+                                </div>
+                            
+                            <div id="skill-update" class="gt_contact_us_field">
+                                    <input id="update-skill" value="UPDATE" name="update-skill" type="submit">
+                                </div>  
+                            </form>
+                        </div>
+                    </div>
+                
+                </div>
+
+

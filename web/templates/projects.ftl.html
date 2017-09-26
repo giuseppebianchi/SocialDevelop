@@ -14,21 +14,14 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <div class="map-toggleButton"> <i class="fa fa-bars"></i> </div>
+            <form id="findByKeyWord" action="${request.getContextPath()}/projects/search" method="post">  
             <div class="map-search-fields">
-              <div class="field">
-                <input type="text" placeholder="Name">
-              </div>
-              <div class="field">
-                <input type="text" placeholder="Location">
-              </div>
-              <div class="field custom-select-box">
-                <input type="text" placeholder="Category">
-              </div>
+                <input type="text" name="keyWord" placeholder="Name">
             </div>
             <div class="search-button">
-              <button>Search Projects</button>
+              <button type="submit">Search Projects</button>
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -38,48 +31,64 @@
   <!-- Members -->
   <section class="pro-mem projects-section">
     <div class="container pb30">
-      
-      <!-- PROJECT -->
-      <div class="project-list-item container">
-        <div class="uou-block-7a">
-          <div class="css-table">
+      <#if listaprogetti?size != 0>
+        <#list listaprogetti as progetto>
+            <!-- PROJECT -->
+            <div class="project-list-item container">
+              <div class="uou-block-7a">
+                <div class="css-table">
 
-            <div class="css-table-cell image has-bg-image" data-bg-image="theme/images/blog-image-3.png" style="background-image: url('theme/images/blog-image-3.png');"> <img class="hidden-image" src="theme/images/blog-image-3.png" alt=""> </div>
-            <div class="css-table-cell content" style="background: #fff"> 
-                    <h1>iMovie App</h1><div class="listing listing-1" style="padding-bottom: 0;">
-                    <div class="listing-section">
-                      <div class="listing-ver-3" style="margin:0">
+                    <a href="${request.getContextPath()}/projects/${progetto.key}"><div class="project-list-img img-block" data-bg-image="${request.getContextPath()}/theme/images/${progetto.picture}" style="background-image: url('${request.getContextPath()}/theme/images/${progetto.picture}');"></div></a>
+                  <div class="css-table-cell content project-list-content" style="background: #fff"> 
+                          <h1><a href="${request.getContextPath()}/projects/${progetto.key}">${progetto.name?cap_first}</a></h1><div class="listing listing-1" style="padding-bottom: 0;">
+                          <div class="listing-section">
+                            <div class="listing-ver-3" style="margin:0">
 
-                        <div class="listing-inner">
-                          <div class="listing-content">
+                              <div class="listing-inner">
+                                <div class="listing-content">
 
-                              <a href="#" class="location">Giuseppe Bianchi</a>
-                              <br>
-                              <h6 class="project-type">Web Development</h6>
-                              <span class="project-type text-black"><span class="text-primary">12</span> Tasks </span>
-                            <p>Proin gravida nibh vel velit auctor aliquet aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. <a href="single_job.html">read more</a></p>
-                            <h6 class="title-tags">Skills required:</h6>
-                            <ul class="tags list-inline">
-                              <li><a href="#">Javascript</a></li>
-                              <li><a href="#">Wordpress</a></li>
-                              <li><a href="#">Presta</a></li>
-                              <li><a href="#">Sass</a></li>
-                            </ul>
+                                    <a href="#" class="location">${progetto.coordinator.name?cap_first} ${progetto.coordinator.surname?cap_first}</a>
+                                    <br>
+                                    <h6 class="project-type">Web Development ${ncollaboratori[progetto?index]}</h6>
+                                    <span class="project-type text-black"><span class="text-primary">${ntasks[progetto?index]}</span> Tasks </span>
+                                  <p>${progetto.description} <a href="${request.getContextPath()}/projects/${progetto.key}">read more</a></p>
+                                  <!--<h6 class="title-tags">Skills required:</h6>
+                                  <ul class="tags list-inline">
+                                    <li><a href="#">Javascript</a></li>
+                                    <li><a href="#">Wordpress</a></li>
+                                    <li><a href="#">Presta</a></li>
+                                    <li><a href="#">Sass</a></li>
+                                  </ul>-->
+                                </div>
+                              </div>
+
+                            </div>
+
                           </div>
                         </div>
-
-                      </div>
-
-                    </div>
                   </div>
+                </div>
+              </div>
+              <!-- end .uou-block-7a --> 
             </div>
-          </div>
-        </div>
-        <!-- end .uou-block-7a --> 
-      </div>
-      <br>
-      <!-- END PROJECT -->
-      
-      
+            <br>
+            <!-- END PROJECT -->
+      </#list>
+    <#else>
+    <h4 class="text-center">No project available</h4>
+     </#if> 
     </div>
+      
+      
+      <div class="gt_pagination_outer_wrap">
+            <ul>
+                <#list 1..page as i>
+                <#if i gte 1>
+                <#if selected?number == i ><li class="active"><a href="List_project?n=${i}">${i}</a></li><#else><li><a href="List_project?n=${i}">${i}</a></li></#if>
+                </#if>
+                </#list>
+            </ul>
+        </div>
+      
+      
   </section>

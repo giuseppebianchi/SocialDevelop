@@ -1,0 +1,115 @@
+<!-- Dashboard Side Bar Wrap Start -->
+<div class="col-md-4">
+    <div class="gt-user-sidebar">
+        <div class="gt_d_author_wrap">
+            <div class="gt_d_author_pic">
+                <figure>
+                    <img src=${foto_profilo} alt="">
+                </figure>
+            </div>
+            <div class="gt_d_author_pic_des">
+                <h5>${username}</h5>
+                <span class="gt_hdg_span"></span>
+                <p>${fullname}</p>
+            </div>
+        </div>
+        <div class="gt-usser-account-list">
+            <ul>
+                <li><a href="<#if notmy??>DeveloperProfile?n=${id}<#else>MyProfile</#if>"><i class="fa fa-user-circle-o gt-color"></i><#if notmy??>Profile<#else>My Profile</#if></a></li>
+                <li><a href="<#if notmy??>DeveloperProjects?n=${id}<#else>MyProjects</#if>"><i class="fa fa-code gt-color"></i><#if notmy??>Projects<#else>My Projects</#if></a></li>
+                    
+                <li><a href="<#if notmy??>DeveloperCollaborators?n=${id}<#else>MyCollaborators</#if>"><i class="fa fa-users gt-color"></i><#if notmy??>Collaborators<#else>My Collaborators</#if></a></li>
+                    
+                <li class="active"><a href="<#if notmy??>DeveloperCollaborations?n=${id} <#else>MyCollaborations </#if>"><i class="fa fa-handshake-o gt-color"></i><#if notmy??>Collaborations<#else>My Collaborations</#if></a></li>
+                <li><a href="<#if notmy??>DeveloperSkills?n=${id} <#else>MySkills </#if>"><i class="icon-book gt-color"></i><#if notmy??>Skills<#else>My Skills</#if></a></li>
+                <#if notmy??>
+            </ul>
+            <#else>
+            <li><a href="UpdateProfile"><i class="fa fa-upload"></i>Update Profile</a></li>
+            <li><a href="CreateProject"> <i class="fa fa-plus-circle"></i>New Project</a></li>
+                
+            </ul>
+            <a href="Logout" class="gt-logout"><i class="icon-arrows-2 gt-color"></i>Logout</a>
+            </#if>
+        </div>
+    </div>
+</div>
+<!-- Dashboard Side Bar Wrap End -->
+    
+    
+<!--Classes List Wrap Start-->
+<div class="col-md-8">
+    <!--current collaborations-->
+    <div class="gt_d_classes_wrap default_width">
+        <div class="gt_d_fav_courses default_width">
+            <ul class="gt_d_fav_hdg">
+                <li>Current Collaborations</li>
+                <li>Grade</li>
+            </ul>
+                
+            <ul class="gt-shortlisted">
+                <#if tasksList?has_content>
+                <#list tasksList?keys as task>
+                <li>
+                    
+                    <div class="gt-text grade-padding">
+                        
+                        <h5><a href="Project_Detail?n=${task.project.key}">${task.project.name?cap_first}</a></h5>
+                        <p>Task: ${task.name?cap_first}</p>
+                            
+                        <h4 id="grade-right"> n.c. </h4>
+                        <p>Start Date: ${task.getStartDate().time?date!"-"} &nbsp; - &nbsp; End Date: ${task.getEndDate().time?date!"-"}</p>
+                            
+                        <p>Task Description: &nbsp;${task.description?cap_first}</p>
+                            
+                        <a href="DeveloperProfile?n=${coordinators[task?index].key}"><span><em>Project Coordinator: &nbsp;</em> ${coordinators[task?index].username?cap_first} - ${coordinators[task?index].mail}</span></a>
+                    </div>
+                </li>
+                    
+                </#list>
+                <#else>
+                <li> At the moment you do not work in any project.</li>
+                </#if>
+            </ul>
+                
+                
+        </div>
+    </div>
+    <!--ended collaborations-->
+    <div class="gt_d_classes_wrap default_width">
+        <div class="gt_d_fav_courses default_width">
+            <ul class="gt_d_fav_hdg">
+                <li>Ended Collaborations</li>
+                <li>Grade</li>
+            </ul>
+                
+            <ul class="gt-shortlisted">
+                <#if tasksListEnded?has_content>
+                <#list tasksListEnded?keys as taskEnded>
+                <li>
+                    
+                    <div class="gt-text grade-padding">
+                        
+                        <h5><a href="Project_Detail?n=${taskEnded.project.key}">${taskEnded.project.name?cap_first}</a></h5>
+                        <p>Task: ${taskEnded.name?cap_first}</p>
+                        <#if tasksListEnded?values[taskEnded?index] != -1>
+                        <h4 id="grade-right"> ${tasksListEnded?values[taskEnded?index]!"-"} <i class="fa fa-star"></i></h4>
+                        <#else>
+                        <h4 id="grade-right"> - </h4>
+                        </#if> 
+                        <p>Start Date: ${taskEnded.getStartDate().time?date!"-"} &nbsp; - &nbsp; End Date: ${taskEnded.getEndDate().time?date!"-"}</p>
+                        <p>Task Description: &nbsp;${taskEnded.description?cap_first}</p>
+                            
+                        <a href="DeveloperProfile?n=${coordinatorsEnded[taskEnded?index].key}"><span><em>Project Coordinator: &nbsp;</em> ${coordinatorsEnded[taskEnded?index].username?cap_first} - ${coordinatorsEnded[taskEnded?index].mail}</span></a>
+                    </div>
+                </li>
+                </#list>  
+                <#else>
+                <li>You have not finished any collaboration.</li>
+                </#if>
+            </ul>
+                
+                
+        </div>
+    </div>   
+</div>

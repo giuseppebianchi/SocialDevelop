@@ -5,7 +5,17 @@
     <div class="banr-head">
       <div class="container">
         <div class="row"> 
-          
+         <#if auth_user??>
+         <div class="col-sm-12">
+          <div class="uou-block-6a"> 
+              <div class="img-block img-3 rounded"></div>
+              <h1 >${auth_user.fullname}</h1>
+              <h6>Founder &amp; Web Designer</h6>
+            <a href="profile" class="btn btn-primary">Profile</a>
+          </div>
+          <!-- end .uou-block-6a --> 
+        </div>
+         <#else>
           <!-- CONTENT -->
           <div class="col-sm-7">
             <div class="text-area">
@@ -15,7 +25,7 @@
               </div>
             </div>
           </div>
-          
+         
           <!-- FORM SECTION -->
           <div class="col-sm-5">
             <div class="login-sec"> 
@@ -23,21 +33,29 @@
               <!-- TABS -->
               <div class="uou-tabs">
                 <ul class="tabs">
-                  <li><a href="#register">Sign Up Now</a></li>
-                  <li class="active"><a href="#log-in">Sign In</a></li>
+                   <#if active =="login">
+                    <li><a href="#register">Sign Up Now</a></li>
+                    <li class="active"><a href="#log-in">Sign In</a></li>
+                    <#else>
+                    <li class="active"><a href="#register">Sign Up Now</a></li>
+                    <li><a href="#log-in">Sign In</a></li>
+                   </#if>
                 </ul>
                 
                 <!-- REGISTER -->
                 <div class="content">
                   <div id="register">
-                    <form>
+                    <form id="signup-form" action="${request.getContextPath()}/signup" method="post">
                       <label class="input-title">Username</label>
-                      <input type="text" placeholder="Pick a username">
+                      <input type="text" name="username1" required="required" placeholder="Username">
                       <label class="input-title">Email</label>
-                      <input type="email" placeholder="Your email address">
+                      <input type="email" name="mail" required="required" placeholder="Your Email Address">
                       <label class="input-title">Password</label>
-                      <input type="password" placeholder="Create your password">
-                      <button type="submit">Sign Up for SocialDevelop</button>
+                      <input type="password" id="pwd1" name="pwd1" required="required" placeholder="Create you password">
+                      <label class="input-title">Confirm Password</label>
+                      <input type="password" id="pwd2" name="pwd2" required="required" placeholder="Confirm password">
+                      <#if error_register??><p class="text-danger">${error}</p></#if>
+                      <button id="submit-sign" type="submit">Sign Up for SocialDevelop</button>
                       <div class="forget">By clicking "Sign Up for SocialDevelop", you agree to our <a href="#">terms of service</a> and <a href="#">privacy policy</a>.</div>
                       <!--<div class="login-with"> <span>Or login with <a href="#."><i class="fa fa-linkedin"></i></a> </div>-->
 
@@ -46,11 +64,12 @@
                   
                   <!-- LOGIN -->
                   <div id="log-in" class="active">
-                    <form>
+                    <form id="signin-form" action="${request.getContextPath()}/login" method="post">
                       <label class="input-title">Email</label>
-                      <input type="email" placeholder="Your email address">
+                      <input type="text" name="username" required="required" id="mail-username" placeholder="Your Email  or Username..">
                       <label class="input-title">Password</label>
-                      <input type="password" placeholder="Your password">
+                      <input type="password" name="pwd" required="required" id="pwd" placeholder="Your Password">
+                      <#if error??><p class="text-danger">${error}</p></#if>
                       <button type="submit">Sign In to SocialDevelop</button>
                       <!--<div class="login-with"> <span>Or login with:</span> <a href="#."><i class="fa fa-facebook"></i></a> <a href="#."><i class="fa fa-google"></i></a> <a href="#."><i class="fa fa-linkedin"></i></a> </div>-->
                       <div class="forget">Forgot your password? <a href="#.">Click Here</a></div>
@@ -66,10 +85,10 @@
               </div>
             </div>
           </div>
+          </#if>
         </div>
       </div>
-    </div>
-    
+    </div> 
     <!-- SERVICES -->
     <section class="services"> 
       

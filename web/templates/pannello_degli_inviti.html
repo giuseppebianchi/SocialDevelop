@@ -1,0 +1,104 @@
+<!-- Dashboard Side Bar Wrap Start -->
+<div class="col-md-4">
+    <div class="gt-user-sidebar">
+        <div class="gt_d_author_wrap">
+            <div class="gt_d_author_pic">
+                <figure>
+                    <img src=${foto_profilo} alt="">
+                </figure>
+            </div>
+            <div class="gt_d_author_pic_des">
+                <h5>${username}</h5>
+                <span class="gt_hdg_span"></span>
+                <p>${fullname}</p>
+            </div>
+        </div>
+        <div class="gt-usser-account-list">
+            <ul>
+                <li><a href="MyProfile"><i class="fa fa-user-circle-o gt-color"></i>My Profile</a></li>
+                <li><a href="MyProjects"><i class="fa fa-code gt-color"></i>My Projects</a></li>
+                    
+                <li><a href="MyCollaborators"><i class="fa fa-users gt-color"></i>My Collaborators</a></li>
+                    
+                <li><a href="MyCollaborations"><i class="fa fa-handshake-o gt-color"></i>My Collaborations</a></li>
+                <li><a href="MySkills"><i class="icon-book gt-color"></i>My Skills</a></li>
+                    
+                <li><a href="UpdateProfile"><i class="fa fa-upload"></i>Update Profile</a></li>
+                <li><a href="CreateProject"> <i class="fa fa-plus-circle"></i>New Project</a></li>
+                    
+            </ul>
+            <a href="Logout" class="gt-logout"><i class="icon-arrows-2 gt-color"></i>Logout</a>
+                
+        </div>
+    </div>
+</div>
+<!-- Dashboard Side Bar Wrap End -->
+    
+    
+<!--Classes List Wrap Start-->
+    
+<div class="col-md-8">
+    
+    <div class="gt_d_classes_wrap default_width">
+        <div class="gt_d_fav_courses default_width">
+            <ul class="gt_d_fav_hdg">
+                <li>Invites</li>
+                <li>State</li>
+            </ul>
+                
+            <ul class="gt-shortlisted">
+                <#if invites?has_content>
+                <#list invites as invite>
+                <li id="${invite.getCollaboratorRequest().key}">
+                    
+                    <div class="gt-text grade-padding">
+                        
+                        <h5><a href="Project_Detail?n=${invite.getTaskByRequest().getProject().key}#${invite.getTaskByRequest().key}"> Task: ${invite.getTaskByRequest().name?cap_first} (${invite.getTaskByRequest().getProject().name?cap_first})</a></h5>
+                            
+                        <h6 id="grade-right" class="icons"> 
+                            <#if invite.state==0>
+                            <!--IN ATTESA-->
+                            <i class="fa fa-spinner fa-spin" style="font-size:40px;"></i>
+                            <#else>
+                            <#if invite.state gte 1>
+                            <!--ACCETTATA-->
+                            <i class="fa fa-check-circle-o" style="font-size:40px"></i>
+                            <#else>
+                            <i class='fa fa-times-circle-o' style='font-size:40px'></i>
+                            </#if>
+                            </#if>
+                        </h6>
+                            
+                        <div class="col-md-3">
+                            <figure>
+                                <#if invite.getCollaboratorRequest().fotoFile??>
+                                <img src="uploaded-images/${invite.getCollaboratorRequest().getFotoFile().localFile}" alt="">
+                                <#else>
+                                <img src="uploaded-images/foto_profilo_default.png" alt="">
+                                </#if>
+                            </figure>
+                                
+                        </div>  
+                        <div class="user-invite">
+                            <a href="DeveloperProfile?n=${invite.getCollaboratorRequest().key}"><h5>${invite.getCollaboratorRequest().username}</h5></a>
+                                
+                            <p>Date: ${invite.getDate().time?date?string("dd/MM/yyyy")}</p>
+                            <#if invite.state==0>
+                            <div class="view-update">
+                                <button class="btn btn-default delete-proposal" onclick="remove_collaborator(${invite.getCollaboratorRequest().key},${invite.getTaskByRequest().key})">Delete</button>       
+                            </div>
+                        </div>
+                        </#if>
+                    </div>
+                </li>
+                    
+                </#list>
+                <#else>
+                <li> There are no invites.</li>
+                </#if>
+            </ul>
+                
+        </div>
+    </div>
+        
+</div>

@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/java/socialdevelop/data/model/Developer.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>49</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/mirkopizii/Scrivania/socialdevelop-github/SocialDevelop_original/SocialDevelop/nbproject/build-impl.xml</file>
+        </group>
     </open-files>
 </project-private>

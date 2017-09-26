@@ -1,112 +1,489 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <!--SERVLET -->
+    <!-- Mirko
+    <context-param>
+        <param-name>uploaded-images.directory</param-name>
+        <param-value>/home/mirkopizii/Scrivania/socialdevelop/web/uploaded-images</param-value>
+    </context-param>
+    <context-param>
+        <param-name>curriculums.directory</param-name>
+        <param-value>/home/mirkopizii/Scrivania/socialdevelop/web/curriculums</param-value>
+    </context-param>
+    -->
+    <!-- Giuseppe
+    <context-param>
+        <param-name>uploaded-images.directory</param-name>
+        <param-value>/home/giuseppe/Scrivania/socialdevelop/web/uploaded-images</param-value>
+    </context-param>
+    <context-param>
+        <param-name>curriculums.directory</param-name>
+        <param-value>/home/giuseppe/Scrivania/socialdevelop/web/curriculums</param-value>
+    </context-param>
+    -->
     <servlet>
         <servlet-name>Home</servlet-name>
-        <servlet-class>com.helloworldgroup.socialdevelop.controller.HomeController</servlet-class>
+        <servlet-class>it.socialdevelop.controller.Index</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Developers</servlet-name>
-        <servlet-class>com.helloworldgroup.socialdevelop.controller.DevelopersController</servlet-class>
+        <servlet-name>Signup</servlet-name>
+        <servlet-class>it.socialdevelop.controller.Signup</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>it.socialdevelop.controller.Login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>socialdevelop.controller.logout</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Profile</servlet-name>
+        <servlet-class>it.socialdevelop.controller.Profile</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Projects</servlet-name>
-        <servlet-class>com.helloworldgroup.socialdevelop.controller.ProjectsController</servlet-class>
+        <servlet-class>it.socialdevelop.controller.Projects</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SingleProject</servlet-name>
-        <servlet-class>com.helloworldgroup.socialdevelop.controller.SingleProjectController</servlet-class>
+        <servlet-name>Progetto</servlet-name>
+        <servlet-class>socialdevelop.data.model.Project</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SingleTask</servlet-name>
-        <servlet-class>com.helloworldgroup.socialdevelop.controller.SingleTaskController</servlet-class>
+        <servlet-name>provaDB2</servlet-name>
+        <servlet-class>socialdevelop.data.impl.provaDB2</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>User</servlet-name>
-        <servlet-class>com.helloworldgroup.socialdevelop.controller.UserController</servlet-class>
+        <servlet-name>MakeLoginReg</servlet-name>
+        <servlet-class>socialdevelop.controller.MakeLoginReg</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Dashboard</servlet-name>
-        <servlet-class>com.helloworldgroup.socialdevelop.controller.DashboardController</servlet-class>
+        <servlet-name>Project_Detail</servlet-name>
+        <servlet-class>it.socialdevelop.controller.Project_Detail</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SettingsProfile</servlet-name>
-        <servlet-class>com.helloworldgroup.socialdevelop.controller.SettingsProfileController</servlet-class>
+        <servlet-name>MyCollaborations</servlet-name>
+        <servlet-class>it.socialdevelop.controller.MyCollaborations</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SettingsAccount</servlet-name>
-        <servlet-class>com.helloworldgroup.socialdevelop.controller.SettingsAccountController</servlet-class>
+        <servlet-name>SearchProject</servlet-name>
+        <servlet-class>it.socialdevelop.controller.SearchProject</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>SignIn</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.SignIn</servlet-class>
+        <servlet-name>CompletaRegistrazione</servlet-name>
+        <servlet-class>it.socialdevelop.controller.CompletaRegistrazione</servlet-class>
+        <multipart-config>
+            <!--
+            <location>/tmp</location> temporary files location (DEF: "") -->
+            <max-file-size>20848820</max-file-size>
+            <!-- max size of accepted uploadd (DEF: unlimited!) -->
+            <max-request-size>418018841</max-request-size>
+            <!-- max size of multipart requests (may contain more files or data) (DEF: ulimited!) -->
+            <!-- <file-size-threshold>1048576</file-size-threshold> max size of files to hold in memory (without writing to temporary disk file) (DEF: 0) -->
+        </multipart-config>
     </servlet>
     <servlet>
-        <servlet-name>SignUp</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.SignUp</servlet-class>
+        <servlet-name>DownloadCurriculum</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DownloadCurriculum</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>NewProject</servlet-name>
-        <servlet-class>com.bianchii.socialdevelop.NewProject</servlet-class>
+        <servlet-name>MySkills</servlet-name>
+        <servlet-class>it.socialdevelop.controller.MySkills</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MyProjects</servlet-name>
+        <servlet-class>it.socialdevelop.controller.MyProjects</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addSkill</servlet-name>
+        <servlet-class>it.socialdevelop.controller.addSkill</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>rmSkill</servlet-name>
+        <servlet-class>it.socialdevelop.controller.rmSkill</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CreateProject</servlet-name>
+        <servlet-class>it.socialdevelop.controller.CreateProject</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateProfile</servlet-name>
+        <servlet-class>it.socialdevelop.controller.UpdateProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateProfileSubmit</servlet-name>
+        <servlet-class>it.socialdevelop.controller.UpdateProfileSubmit</servlet-class>
+        <multipart-config>
+            <!--
+            <location>/tmp</location> temporary files location (DEF: "") -->
+            <max-file-size>20848820</max-file-size>
+            <!-- max size of accepted uploadd (DEF: unlimited!) -->
+            <max-request-size>418018841</max-request-size>
+            <!-- max size of multipart requests (may contain more files or data) (DEF: ulimited!) -->
+            <!-- <file-size-threshold>1048576</file-size-threshold> max size of files to hold in memory (without writing to temporary disk file) (DEF: 0) -->
+        </multipart-config>
+    </servlet>
+    <servlet>
+        <servlet-name>InsertProject</servlet-name>
+        <servlet-class>it.socialdevelop.controller.InsertProject</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FindDeveloper</servlet-name>
+        <servlet-class>it.socialdevelop.controller.FindDeveloper</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchDeveloper</servlet-name>
+        <servlet-class>it.socialdevelop.controller.SearchDeveloper</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateProject</servlet-name>
+        <servlet-class>it.socialdevelop.controller.UpdateProject</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateProjectSave</servlet-name>
+        <servlet-class>it.socialdevelop.controller.UpdateProjectSave</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeveloperProfile</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DeveloperProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeveloperCollaborations</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DeveloperCollaborations</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeveloperProjects</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DeveloperProjects</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeveloperSkills</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DeveloperSkills</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostAd</servlet-name>
+        <servlet-class>it.socialdevelop.controller.PostAd</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostRequest</servlet-name>
+        <servlet-class>it.socialdevelop.controller.PostRequest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PostDiscussion</servlet-name>
+        <servlet-class>it.socialdevelop.controller.PostDiscussion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MyCollaborators</servlet-name>
+        <servlet-class>it.socialdevelop.controller.MyCollaborators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>removeCollaboratorFromTask</servlet-name>
+        <servlet-class>it.socialdevelop.controller.removeCollaboratorFromTask</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>releaseVote</servlet-name>
+        <servlet-class>it.socialdevelop.controller.releaseVote</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>joinTask</servlet-name>
+        <servlet-class>it.socialdevelop.controller.joinTask</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BackEndType</servlet-name>
+        <servlet-class>it.socialdevelop.controller.BackEndType</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BackEndSkill</servlet-name>
+        <servlet-class>it.socialdevelop.controller.BackEndSkill</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddSkillBack</servlet-name>
+        <servlet-class>it.socialdevelop.controller.AddSkillBack</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateSkillBack</servlet-name>
+        <servlet-class>it.socialdevelop.controller.UpdateSkillBack</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>rmSkillBack</servlet-name>
+        <servlet-class>it.socialdevelop.controller.rmSkillBack</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>rmType</servlet-name>
+        <servlet-class>it.socialdevelop.controller.rmType</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateType</servlet-name>
+        <servlet-class>it.socialdevelop.controller.UpdateType</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addType</servlet-name>
+        <servlet-class>it.socialdevelop.controller.addType</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeveloperForTask</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DeveloperForTask</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>sendRequest</servlet-name>
+        <servlet-class>it.socialdevelop.controller.sendRequest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PannelloDelleProposte</servlet-name>
+        <servlet-class>it.socialdevelop.controller.PannelloDelleProposte</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>acceptProposal</servlet-name>
+        <servlet-class>it.socialdevelop.controller.acceptProposal</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>declineProposal</servlet-name>
+        <servlet-class>socialdevelop.controller.declineProposal</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PannelloDelleOfferte</servlet-name>
+        <servlet-class>it.socialdevelop.controller.PannelloDelleOfferte</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PannelloDegliInviti</servlet-name>
+        <servlet-class>it.socialdevelop.controller.PannelloDegliInviti</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PannelloDelleDomande</servlet-name>
+        <servlet-class>it.socialdevelop.controller.PannelloDelleDomande</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeveloperCollaborators</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DeveloperCollaborators</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetPhoto</servlet-name>
+        <servlet-class>socialdevelop.controller.GetPhoto</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Developers</servlet-name>
-        <url-pattern>/developers</url-pattern>
+        <servlet-name>Signup</servlet-name>
+        <url-pattern>/Signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Profile</servlet-name>
+        <url-pattern>/profile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Projects</servlet-name>
         <url-pattern>/projects</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SingleProject</servlet-name>
-        <url-pattern>/project</url-pattern>
+        <servlet-name>provaDB2</servlet-name>
+        <url-pattern>/provaDB2</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SingleTask</servlet-name>
-        <url-pattern>/task</url-pattern>
+        <servlet-name>MakeLoginReg</servlet-name>
+        <url-pattern>/MakeLoginReg</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>User</servlet-name>
-        <url-pattern>/user</url-pattern>
+        <servlet-name>MyProjects</servlet-name>
+        <url-pattern>/MyProjects</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Dashboard</servlet-name>
-        <url-pattern>/dashboard</url-pattern>
+        <servlet-name>CompletaRegistrazione</servlet-name>
+        <url-pattern>/CompletaRegistrazione</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SettingsProfile</servlet-name>
-        <url-pattern>/settings/profile</url-pattern>
+        <servlet-name>MyCollaborations</servlet-name>
+        <url-pattern>/MyCollaborations</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SettingsAccount</servlet-name>
-        <url-pattern>/settings/account</url-pattern>
+        <servlet-name>DownloadCurriculum</servlet-name>
+        <url-pattern>/DownloadCurriculum</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SignIn</servlet-name>
-        <url-pattern>/signin</url-pattern>
+        <servlet-name>SearchProject</servlet-name>
+        <url-pattern>/projects/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SignUp</servlet-name>
-        <url-pattern>/signup</url-pattern>
+        <servlet-name>Project_Detail</servlet-name>
+        <url-pattern>/Project_Detail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>NewProject</servlet-name>
-        <url-pattern>/projects/new</url-pattern>
+        <servlet-name>MySkills</servlet-name>
+        <url-pattern>/MySkills</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addSkill</servlet-name>
+        <url-pattern>/addSkill</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>rmSkill</servlet-name>
+        <url-pattern>/rmSkill</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreateProject</servlet-name>
+        <url-pattern>/CreateProject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProfile</servlet-name>
+        <url-pattern>/UpdateProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProfileSubmit</servlet-name>
+        <url-pattern>/UpdateProfileSubmit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertProject</servlet-name>
+        <url-pattern>/InsertProject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FindDeveloper</servlet-name>
+        <url-pattern>/developers/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProject</servlet-name>
+        <url-pattern>/UpdateProject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateProjectSave</servlet-name>
+        <url-pattern>/UpdateProjectSave</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeveloperProfile</servlet-name>
+        <url-pattern>/DeveloperProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeveloperCollaborations</servlet-name>
+        <url-pattern>/DeveloperCollaborations</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeveloperProjects</servlet-name>
+        <url-pattern>/DeveloperProjects</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeveloperSkills</servlet-name>
+        <url-pattern>/DeveloperSkills</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostAd</servlet-name>
+        <url-pattern>/PostAd</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostRequest</servlet-name>
+        <url-pattern>/PostRequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostDiscussion</servlet-name>
+        <url-pattern>/PostDiscussion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchDeveloper</servlet-name>
+        <url-pattern>/SearchDeveloper</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyCollaborators</servlet-name>
+        <url-pattern>/MyCollaborators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>removeCollaboratorFromTask</servlet-name>
+        <url-pattern>/removeCollaboratorFromTask</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>releaseVote</servlet-name>
+        <url-pattern>/releaseVote</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>joinTask</servlet-name>
+        <url-pattern>/joinTask</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addType</servlet-name>
+        <url-pattern>/addType</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BackEndType</servlet-name>
+        <url-pattern>/BackEndType</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BackEndSkill</servlet-name>
+        <url-pattern>/BackEndSkill</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddSkillBack</servlet-name>
+        <url-pattern>/AddSkillBack</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>rmSkillBack</servlet-name>
+        <url-pattern>/rmSkillBack</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateSkillBack</servlet-name>
+        <url-pattern>/UpdateSkillBack</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>rmType</servlet-name>
+        <url-pattern>/rmType</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateType</servlet-name>
+        <url-pattern>/UpdateType</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeveloperForTask</servlet-name>
+        <url-pattern>/DeveloperForTask</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>sendRequest</servlet-name>
+        <url-pattern>/sendRequest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PannelloDelleProposte</servlet-name>
+        <url-pattern>/PannelloDelleProposte</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>acceptProposal</servlet-name>
+        <url-pattern>/acceptProposal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>declineProposal</servlet-name>
+        <url-pattern>/declineProposal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PannelloDelleOfferte</servlet-name>
+        <url-pattern>/PannelloDelleOfferte</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PannelloDegliInviti</servlet-name>
+        <url-pattern>/PannelloDegliInviti</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PannelloDelleDomande</servlet-name>
+        <url-pattern>/PannelloDelleDomande</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeveloperCollaborators</servlet-name>
+        <url-pattern>/DeveloperCollaborators</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetPhoto</servlet-name>
+        <url-pattern>/GetPhoto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            60
+            30
         </session-timeout>
     </session-config>
     <context-param>
         <param-name>view.outline_template</param-name>
         <param-value>outline.ftl.html</param-value>
     </context-param>
-    <context-param>
+    <!--<context-param>
         <param-name>view.date_format</param-name>
         <param-value>dd/MM/yyyy hh:mm:ss</param-value>
     </context-param>
@@ -126,15 +503,21 @@
         <param-name>view.data.homepage_url</param-name>
         <param-value>/home</param-value>
     </context-param>
-    <context-param>
+    <<context-param>
         <param-name>view.encoding</param-name>
         <param-value>ISO-8859-1</param-value>
     </context-param>
     <context-param>
         <param-name>view.error_template</param-name>
         <param-value>errore.ftl.html</param-value>
-    </context-param>
+    </context-param>-->
     <welcome-file-list>
         <welcome-file>home</welcome-file>
     </welcome-file-list>
+    <resource-ref>
+        <res-ref-name>jdbc/hwsd</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
 </web-app>

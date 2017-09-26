@@ -1,0 +1,93 @@
+<!-- Dashboard Side Bar Wrap Start -->
+<div class="col-md-4">
+    <div class="gt-user-sidebar">
+        <div class="gt_d_author_wrap">
+            <div class="gt_d_author_pic">
+                <figure>
+                    <img src=${foto_profilo} alt="">
+                </figure>
+            </div>
+            <div class="gt_d_author_pic_des">
+                <h5>${username}</h5>
+                <span class="gt_hdg_span"></span>
+                <p>${fullname}</p>
+            </div>
+        </div>
+        <div class="gt-usser-account-list">
+            <ul>
+                <li><a href="<#if notmy??>DeveloperProfile?n=${id}<#else>MyProfile</#if>"><i class="fa fa-user-circle-o gt-color"></i><#if notmy??>Profile<#else>My Profile</#if></a></li>
+                <li class="active"><a href="<#if notmy??>DeveloperProjects?n=${id}<#else>MyProjects</#if>"><i class="fa fa-code gt-color"></i><#if notmy??>Projects<#else>My Projects</#if></a></li>
+                    
+                <li><a href="<#if notmy??>DeveloperCollaborators?n=${id}<#else>MyCollaborators</#if>"><i class="fa fa-users gt-color"></i><#if notmy??>Collaborators<#else>My Collaborators</#if></a></li>
+                    
+                <li><a href="<#if notmy??>DeveloperCollaborations?n=${id} <#else>MyCollaborations </#if>"><i class="fa fa-handshake-o gt-color"></i><#if notmy??>Collaborations<#else>My Collaborations</#if></a></li>
+                <li><a href="<#if notmy??>DeveloperSkills?n=${id} <#else>MySkills </#if>"><i class="icon-book gt-color"></i><#if notmy??>Skills<#else>My Skills</#if></a></li>
+                <#if notmy??>
+            </ul>
+            <#else>
+            <li><a href="UpdateProfile"><i class="fa fa-upload"></i>Update Profile</a></li>
+            <li><a href="CreateProject"> <i class="fa fa-plus-circle"></i>New Project</a></li>
+                
+            </ul>
+            <a href="Logout" class="gt-logout"><i class="icon-arrows-2 gt-color"></i>Logout</a>
+            </#if>
+        </div>
+    </div>
+</div>
+<!-- Dashboard Side Bar Wrap End -->
+    
+    
+<!--Classes List Wrap Start-->
+<div class="col-md-8">
+    
+    <div class="gt_d_classes_wrap default_width">
+        <div class="gt_d_fav_courses default_width gt_courses_wrap">
+            <ul class="gt_d_fav_hdg">
+                <#if notmy??>
+                <li>Projects</li>
+                <#else>
+                <li>My Projects</li>
+                </#if>
+                <li>Complete</li>
+            </ul>
+                
+            <ul class="gt-shortlisted"> 
+                <#if projects?size!=0>    
+                <#list projects as project>
+                <li>
+                    
+                    <div class="gt-text grade-padding">
+                        <h4 id="grade-right"> ${perc[project?index]}%</h4>
+                        <h5><a href="Project_Detail?n=${project.key}">${project.name?cap_first}</a></h5>
+                            
+                        <p class="description_project">${project.description?cap_first}</p>
+                        <p>Start Date: ${startdate[project?index]} &nbsp; - &nbsp; End Date: ${enddate[project?index]}</p> 
+                        <div class="view-update">
+                            <a href="Project_Detail?n=${project.key}" class="btn btn-default" role="button">View</a>
+                            <#if notmy??>
+                            <#else>
+                            <a href="UpdateProject?n=${project.key}" class="btn btn-default" role="button">Update</a>
+                            <a href="DeveloperForTask?n=${project.key}" class="btn btn-default" role="button">Find Collaborators</a>
+                            </#if>
+                        </div>
+                    </div>
+                    <div class="gt_course_bottom default_width">
+                        <h5>${project.tasks?size}<span>Task</span></h5>
+                        <a><h5>${ncollaboratori[project?index]}<span>Collaboratori</span></h5></a>                  
+                    </div>
+                </li>
+                    
+                    
+                </#list> 
+                <#else>
+                <#if notmy??>
+                <li>${username} does not coordinate any project</li>
+                <#else>
+                <li>You are not the coordinator of any project</li>
+                </#if>
+                </#if>
+            </ul>
+                
+        </div>
+    </div>
+</div>

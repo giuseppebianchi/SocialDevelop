@@ -1,0 +1,48 @@
+<#list tasks as task>
+<div class="row dev-margin">
+    <#if devs[task?index]?has_content>
+    <div class="dev-for-task">
+        <h2 class="dev-taskrow">${task.name}</h2>
+            
+        <#list devs[task?index] as sviluppatore>
+        <div class="col-md-4 single-dev-m">
+            <div class="owl-item cloned"><div class="item">
+                    <div class="gt_courses_wrap default_width single-dev">
+                        <figure>
+                            <figcaption class="gt_course_img_des">
+                                <div class="gt_course_des_holder projectCoordinator">
+                                    <div class="gt_course_author">
+                                        <img src="uploaded-images/<#if sviluppatore.fotoFile??>${sviluppatore.fotoFile.localFile}<#else>foto_profilo_default.png</#if>" alt="">
+                                        <a class="dev-name" href="DeveloperProfile?n=${sviluppatore.key}">${sviluppatore.name?cap_first} ${sviluppatore.surname?cap_first}</a>
+                                    </div>
+                                </div>
+                                <div class="gt_course_cat gt_bg_4">New</div>
+                            </figcaption>
+                        </figure>
+                        <div class="gt_course_des projectDescription default_width">
+                            <h5><a href="DeveloperProfile?n=${sviluppatore.key}">${sviluppatore.username?cap_first}</a></h5>
+                            <p class="description_project2" >${sviluppatore.mail}</p>
+                        </div>
+                        <div class="gt_course_bottom default_width dev-prog">
+                            <h5><#list projects as key,value><#if key == sviluppatore.key> ${value}</#if></#list><span><a href="DeveloperProjects?n=${sviluppatore.key}">Progetti</a></span></h5>
+                            <a href="DeveloperCollaborations?n=${sviluppatore.key}"><h5><#list votes as key,value><#if key == sviluppatore.key> ${value}</#if></#list><span>Voto</span></h5></a>
+                                
+                        </div>
+                        <div class="gt_course_bottom default_width invite-dev">
+                            <!--<input type="button" class="btn btn-default inviteDeveloper" value="Invita">-->
+                            <input type="submit" class="join-btn" onclick="send_request_dft(${task.key},${sviluppatore.key},this)" value="SEND REQUEST">
+                                
+                        </div>
+                    </div>
+                </div></div>
+        </div>
+        </#list>
+    </div>  
+    <#else>
+    <div class="dev-for-task">
+        <h2>${task.name}</h2>
+        <h6>There are no developers fit for this task</h6>
+    </div>
+    </#if>
+</div>
+</#list>

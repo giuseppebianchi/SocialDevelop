@@ -1,0 +1,332 @@
+<!--Main Content Wrap Start-->
+<div class="container">
+    <!--PROJECT CARD-->
+    <div class="row project-card">        
+        <div class="">
+            <div class="col-md-8 project-detail">
+                <div class="project-title">
+                    <h2>${projectname?cap_first}</h2>
+                </div>
+                <div class="gt_cd_mata_wrap default_width project-info">
+                    <ul>
+                        <li>
+                            <figure>
+                                <img src="${coordinatorpic}" alt="">
+                            </figure>
+                            <div class="gt_course_meta_des">
+                                <h6>Project Coordinator</h6>
+                                <span><a href="DeveloperProfile?n=${coordinator.key}">${coordinator.username?cap_first}</a></span>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="icon-cup"></i>
+                            <div class="gt_course_meta_des">
+                                <h6>Project Closed</h6>
+                                <span>${percProg} %</span>
+                            </div>
+                        </li> 
+                        <li>
+                            <i class="icon-people"></i>
+                            <div class="gt_course_meta_des">
+                                <h6>Project Collaborators</h6>
+                                <span>${nProjectCollaborators}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="project-descr">
+                    <p>${projectdescr?cap_first}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="gt_cd_des_wrap border_bottom default_width project-card-task">
+                <h4>Tasks</h4>
+                <ul>
+                    <#list tasks as task>
+                    <li><a href="#${task.key}"> ${task.name} </a></li>
+                    </#list>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-12 show-msg">
+            <a href="#show-msg"><p>Show Messages</p></a>
+        </div>
+    </div>
+        
+        
+    <div class="row">         <!--LIST OF TASKS-->  
+        <div class="gt_hdg_1 default_width">
+            <h3>List of tasks</h3>
+            <span class="gt_hdg_left"></span>
+            <span class="gt_hdg_right"></span></div></div>
+                
+    <#list tasks as task>
+    <div class="row task-card"><a name="${task.key}"></a>
+        <div class="">
+            <div class="task-title ">
+                <h4>${task.name}</h4>
+            </div>
+            <div class="col-md-7">
+                <div class="col-md-12 gt_course_dur_list task-detail">
+                    <i class="fa fa-tasks"></i>
+                    <span>Type: ${tasks_types[task?index].type}</span>
+                </div>   
+                <div class="col-md-6 gt_course_dur_list task-detail">
+                    <i class="icon-clock-1"></i>
+                    <span>Start Date: ${task.getStartDate().time?date?string.short}</span>
+                </div>    
+                <div class="col-md-6 gt_course_dur_list task-detail">
+                    <i class="icon-clock-1"></i>
+                    <span>End Date: ${task.getEndDate().time?date?string.short}</span>
+                </div>    
+                <div class="col-md-6 gt_course_dur_list task-detail">
+                    <i class="icon-student"></i>
+                    <span>Number of Collaborators: ${task.numCollaborators}</span>
+                </div>
+                <div class="col-md-6 gt_course_dur_list mb20">
+                    <i class="icon-classroom-with-students-group-and-the-teacher" ></i>
+                    <span> Status: ${task.open?then('Open','Close')} </span>
+                </div>
+                <div class="default_width mb20">
+                    <p>${task.description}</p>
+                </div>           
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4 task-card-right"> 
+                <div class="gt_cd_des_wrap border_bottom default_width skill-required">
+                    <h5>Skills Required</h5>
+                    <ul>
+                        <#list skills[task?index] as key,value>
+                        <li>${key.name}&nbsp;(${value}/10)</li>
+                        </#list>
+                    </ul>
+                </div>
+                    
+            </div>
+        </div>
+        <div class="row join-task">
+            <div class="col-md-6"></div>
+            <#if isLogged??>
+            <#if isCoordinator??>
+            <div class="col-md-6">
+                <form action="DeveloperForTask" method="get">               
+                    <input id="find_devs" type="submit" value="Find Developers"/>
+                    <input type="text" class="hidden" name="n" value="${projectkey}">
+                        
+                </form>
+            </div>
+            <#else>
+            <#if task.open?then("Y","N")=="Y">
+            <div class="col-md-6">
+                <input type="submit" class="join-btn" onclick="join_task(${task.key},this)" value="Send Request">
+                <p class="join-msg hidden center"></p>
+            </div>
+            </#if>
+            </#if>
+            </#if>
+        </div>
+    </div>
+    </#list>
+        
+        
+    <div class="gt_event_tab default_width msg-project"><a name="show-msg"></a>
+        
+        <div class="gt_event_inside_tab default_width">
+            <ul data-tabs="tabs">
+                <li class="active"><a data-toggle="tab" href="#annunci">Ads</a></li>
+                <li><a data-toggle="tab" href="#richieste">Requests</a></li>
+                <li><a data-toggle="tab" href="#discussioni">Discussions</a></li>
+            </ul>
+            <!--ANNUNCI-->
+            <div class="tab-content">
+                <div class="tab-pane active" id="annunci">
+                    <div class="gt_comment_list_wrap gt_detail_hdg all-msg">  
+                        <#if messages?has_content>
+                        <#list messages as message>
+                        <#if message.type=="annuncio">
+                        <ul>
+                            <li>
+                                <div class="gt_comment_wrap single-msg">
+                                    <figure>
+                                        <img src="${foto_msg[message?index]}" alt="No image avalaible">
+                                    </figure>
+                                    <div class="gt_comment_des">
+                                        <h6><a href="DeveloperProfile?n=${by[message?index].key}">${by[message?index].username}</a></h6>
+                                        <p>${message.text}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        </#if>
+                        </#list>
+                        <#else>
+                        <ul>
+                            <li>
+                                <p>There are no ads here</p>
+                            </li>
+                        </ul>
+                        </#if>
+                    </div> 
+                        
+                    <#if userid??>
+                    <div class="gt_post_comment_wrap gt_detail_hdg">
+                        <h5>Post Your Ad</h5>
+                        <form class="gt_contact_form" id="contact-form" action="PostAd" method="post">
+                            <div class="col-md-3">
+                                <div class="gt_privacy_field default_width mb20">
+                                    <input class="c_ph" type="text" readonly="readonly" value="Privacy">
+                                    <label class="switch">
+                                        <input type="checkbox" class="private-check"/>
+                                        <div class="slider round"><span>Private</span></div>
+                                    </label>
+                                    <input type="text" class="hidden isPrivate" id="isPrivate-ad" name="isPrivate-ad" value="1"/>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="gt_contact_us_field">
+                                    <textarea class="gt_c_bg" name="ad" id="ad" placeholder="Message" required=""></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="gt_contact_us_field">
+                                    <input id="submit-message" type="submit" value="Post" name="submit_ad">
+                                </div>
+                                <!--Alert Message-->
+                                <div id="contact-result">
+                                </div>
+                            </div>
+                            <input class="hidden" type="text" value="${projectkey}" name="project_key"/>
+                        </form>
+                    </div>
+                    </#if>
+                </div>
+                <!-- fine annunci -->
+                <!-- RICHIESTE -->  
+                <div class="tab-pane" id="richieste">
+                    <div class="gt_comment_list_wrap gt_detail_hdg all-msg">
+                        <#if messages?has_content>
+                        <#list messages as message>
+                        <#if message.type=="richiesta">
+                        <ul>
+                            <li>
+                                <div class="gt_comment_wrap single-msg">
+                                    <figure>
+                                        <img src="${foto_msg[message?index]}" alt="No image avalaible">
+                                    </figure>
+                                    <div class="gt_comment_des">
+                                        <h6><a href="DeveloperProfile?n=${by[message?index].key}">${by[message?index].username}</a></h6>
+                                        <p>${message.text}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        </#if>
+                        </#list>
+                        <#else>
+                        <ul>
+                            <li>
+                                <p>There are no requests here</p>
+                            </li>
+                        </ul>
+                        </#if>
+                    </div>
+                    <#if userid??>
+                    <div class="gt_post_comment_wrap gt_detail_hdg">
+                        <h5>Post Your Request</h5>
+                        <form class="gt_contact_form" id="contact-form" action="PostRequest" method="post">
+                            <div class="col-md-3">
+                                <div class="gt_privacy_field default_width mb20">
+                                    <input class="c_ph" type="text" readonly="readonly" value="Privacy">
+                                    <label class="switch">
+                                        <input type="checkbox" class="private-check"/>
+                                        <div class="slider round"><span>Private</span></div>
+                                    </label>
+                                    <input type="text" class="hidden isPrivate" id="isPrivate-request" name="isPrivate-request" value="1"/>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="gt_contact_us_field">
+                                    <textarea class="gt_c_bg" name="request" id="request" placeholder="Message" required=""></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="gt_contact_us_field">
+                                    <input id="submit-message" type="submit" value="Post" name="submit_request">
+                                </div>
+                                <!--Alert Message-->
+                                <div id="contact-result">
+                                </div>
+                            </div>
+                            <input class="hidden" type="text" value="${projectkey}" name="project_key"/>
+                        </form>
+                    </div>
+                    </#if>
+                </div>
+                <!-- fine richieste -->
+                <!-- DISCUSSIONI -->
+                <div class="tab-pane" id="discussioni">
+                    <div class="gt_comment_list_wrap gt_detail_hdg all-msg">
+                        <#if messages?has_content>
+                        <#list messages as message>
+                        <#if message.type=="discussione">
+                        <ul>
+                            <li>
+                                <div class="gt_comment_wrap single-msg">
+                                    <figure>
+                                        <img src="${foto_msg[message?index]}" alt="No image avalaible">
+                                    </figure>
+                                    <div class="gt_comment_des">
+                                        <h6><a href="DeveloperProfile?n=${by[message?index].key}">${by[message?index].username}</a></h6>
+                                        <p>${message.text}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        </#if>
+                        </#list>
+                        <#else>
+                        <ul>
+                            <li>
+                                <p>There are no discussions here</p>
+                            </li>
+                        </ul>
+                        </#if>
+                    </div> 
+                    <#if userid??>
+                    <div class="gt_post_comment_wrap gt_detail_hdg">
+                        <h5>Post Your Discussion</h5>
+                        <form class="gt_contact_form" id="contact-form" action="PostDiscussion" method="post">
+                            <div class="col-md-3">
+                                <div class="gt_privacy_field default_width mb20">
+                                    <input class="c_ph" type="text" readonly="readonly" value="Privacy">
+                                    <label class="switch">
+                                        <input type="checkbox" class="private-check"/>
+                                        <div class="slider round"><span>Private</span></div>
+                                    </label>
+                                    <input type="text" class="hidden isPrivate" id="isPrivate-discussion" name="isPrivate-discussion" value="1"/>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="gt_contact_us_field">
+                                    <textarea class="gt_c_bg" name="discussion" id="discussion" placeholder="Message" required=""></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="gt_contact_us_field">
+                                    <input id="submit-message" type="submit" value="Post" name="submit_discussion">
+                                </div>
+                                <!--Alert Message-->
+                                <div id="contact-result">
+                                </div>
+                            </div>
+                            <input class="hidden" type="text" value="${projectkey}" name="project_key"/>
+                        </form>
+                    </div>
+                    </#if>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

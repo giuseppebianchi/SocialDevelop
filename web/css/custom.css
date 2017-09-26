@@ -1,0 +1,188 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29-mag-2017, 22.28.05
+    Author     : Hello World Group
+*/
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+   Created on : 29-mag-2017, 22.28.05
+   Author     : Hello World Group
+*/
+.create_project{
+   padding-bottom: 1%;
+}
+.title_project{
+   margin-left: 20%;
+   text-align: center;
+}  
+
+#grade-right{
+    float:right;
+}
+
+.grade-padding{
+    padding-right:3% !important; 
+}
+
+
+.projectDescription{
+    padding-bottom: 0%;
+    word-wrap: break-word;
+}
+.projectCoordinator{
+    background-color: #31b8f5;
+}
+.projects{
+    padding-top:5%; 
+}
+.description_project{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.piu_info{
+    padding-top: 1%;
+    padding-left: 50%;
+}
+
+.btn-upd{
+    width:100%
+}
+
+.btn-upd-foto{
+    text-align:center;
+}
+
+.btn-upd-cv{
+    text-align: left !important;
+}
+
+#a.hidden{
+    display:none;
+}
+
+.req {
+    border-color : red !important;
+    -moz-border-radius: 17px;
+    -webkit-border-radius: 17px;
+    -moz-box-shadow : 0 0 2px red;
+    -webkit-box-shadow: 0 0 2px red;
+}
+
+
+.req-list{
+    color:red;
+}
+
+.fullWidth{
+    width:100% !important;
+}
+
+
+.hidden{
+    display:none !important;
+}
+
+.view-update {
+    padding-bottom:2%;
+}
+
+.send-request-button{
+    padding-bottom: 15%;
+}
+
+#submit-project {
+    margin-top:5%;
+}
+.developerFinder
+{
+    border-width: 1px;
+    border-style: solid;
+    padding-bottom: 2%;
+    padding-top: 2%;
+    margin-bottom: 2%;
+}
+.titleDeveloper{
+    text-align: center;
+    font-size: large;
+}
+.singleProject{
+    padding-bottom: 8%;
+}
+
+.center{
+    text-align:center;
+}
+
+.taskrow{
+    padding-bottom: 8%;
+}
+
+.req-select{border-color: red !important;}
+
+.sidebar_fixed{
+    position: fixed;
+    top: 0;
+}
+
+.user-invite{
+    margin-top:5%;
+}
+
+.menu{
+    display:inline-block;
+    margin-left:50px;
+}
+
+.gt-shortlisted > li:hover > div > h5 > a {
+    color: black !important;
+}
+
+.gt-shortlisted > li:hover > div > p {
+    color: #333 !important;
+}
+
+
+.gt-shortlisted > li:hover > div > div > p {
+    color: #333 !important;
+}
+
+.foot{
+    height:100px;
+}
+
+.select-list-profile {
+    height: 42px !important;
+    border-radius: 50px !important;
+    width: 180px !important;
+    -moz-appereance: none !important;
+    -webkit-appereance: none !important;
+    overflow: hidden;
+    background:#fafafa url("./images/select-icon.png") no-repeat right !important;
+    
+}
+
+select::-ms-expand{
+    display:none;
+}
+
+select:not(:hover) {
+    background-color:transparent;
+}
+
+
+.single-dev-m{
+    min-height: 240px !important;
+}
+
+.guest a:hover{
+    color:#31B8F5 !important;
+}

@@ -1,0 +1,82 @@
+    <div class="col-md-12">
+        <!--types-->
+        <div class="col-md-6 mb30">
+            <div class="gt_d_classes_wrap default_width">
+                <div class="gt_d_fav_courses default_width">
+                    <ul class="gt_d_fav_hdg">
+                        <li>Add Type</li>
+                    </ul>                    
+                </div>
+                <div class="default_width mb20">
+                    
+                        <form action="addType" method="post">
+                            <div class="gt_contact_us_field ">
+                                <label id="label-pop">Type Name</label>
+                                <input class="c_ph" type="text" required="required" placeholder="Insert the type's name" id="type-name" name="type-name">
+                            </div>
+                            <div  id="type-submit" class="gt_contact_us_field">
+                                <input id="submit-type" value="ADD" name="submit-type" type="submit">
+                            </div>  
+                        </form>
+                    
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb30">
+            <div class="gt_advacnce_search_wrap default_width">
+                      <div class="gt_aside2_hdg mb30 gt_aside_category title-add-skill"> <!-- gt_aside_category -->
+                        <h5>Delete Types</h5>
+                      </div>
+                    <div class="add-skill"><!-- gt_advacnce_search_wrap default_width -->
+                     
+                        <form>
+                      <div class="lista-skill gt_aside_category">
+                        <ul class="list-skill">
+                          
+                        <#list types as type>
+                        <li><a class="type-name">${type.type}</a>
+                            <span><button onclick="remove_type(this)" type="button" id="rm-type-btn" class="btn btn-default btn-sm remove-type-button rm-type-btn">
+                            <span class="glyphicon glyphicon-remove"></span></button></span></li>
+                        </#list>
+                        </ul>
+                      </div>
+                           
+                        </form>
+                    </div>
+        </div>
+        
+        </div>
+        <div class="col-md-12">
+
+            <div class="gt_advacnce_search_wrap default_width">
+                <div class="gt_d_classes_wrap default_width">
+                    <div class="gt_d_fav_courses default_width  mb20">
+                        <ul class="gt_d_fav_hdg">
+                            <li>Update Type</li>
+                        </ul>                    
+                    </div>
+                       <form action="UpdateType" method="post"> 
+                        <div class="col-md-6">
+                            <div class="gt_privacy_field default_width mb20">
+                                <select class="form-control trial" id="old-type" required="required" name="old-type">
+                                    <option value="">Select the type to update</option>
+                                        <#list types as type>
+                                            <option value="${type.key}">${type.type}</option>
+                                        </#list>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="gt_contact_us_field col-md-6 ">
+                                
+                                <input class="c_ph" type="text" placeholder="Insert the type's new name" required="required" id="mod-type" name="mod-type">
+                            </div>
+                           <div id="type-update" class="gt_contact_us_field">
+                                <input id="update-type" value="UPDATE" name="update-type" type="submit">
+                            </div>  
+                           </form>
+                    </div>
+                </div>
+            </div>
+
+

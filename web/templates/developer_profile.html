@@ -1,0 +1,90 @@
+<!-- Dashboard Side Bar Wrap Start -->
+<div class="col-md-4">
+    <div class="gt-user-sidebar">
+        <div class="gt_d_author_wrap">
+            <div class="gt_d_author_pic">
+                <figure>
+                    <img src=${foto_profilo} alt="">
+                </figure>
+            </div>
+            <div class="gt_d_author_pic_des">
+                <h5>${username}</h5>
+                <span class="gt_hdg_span"></span>
+                <p>${fullname}</p>
+            </div>
+        </div>
+        <div class="gt-usser-account-list">
+            <ul>
+                <li class="active"><a href="DeveloperProfile?n=${id}"><i class="fa fa-user-circle-o gt-color"></i>Profile</a></li>
+                <li><a href="DeveloperProjects?n=${id}"><i class="fa fa-code gt-color"></i>Projects</a></li>
+                <li><a href="DeveloperCollaborators?n=${id}"><i class="fa fa-users gt-color"></i>Collaborators</a></li>
+                <li><a href="DeveloperCollaborations?n=${id}"><i class="fa fa-handshake-o gt-color"></i>Collaborations</a></li>
+                <li><a href="DeveloperSkills?n=${id}"><i class="icon-book gt-color"></i>Skills</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Dashboard Side Bar Wrap End -->
+
+<!--Classes List Wrap Start-->
+<div class="col-md-8">
+    <div class="gt_d_classes_wrap default_width mb20">
+        <div class="gt_d_profile_wrap default_width">
+            <figure>
+                <img src=${foto_profilo} alt="">
+            </figure>
+            <div class="gt_d_profile_detail">
+                <ul>
+                    <li>
+                        <span>Username:</span>
+                        <p>${username}</p>
+                    </li>
+                    <li>
+                        <span>Full Name:</span>
+                        <p>${fullname}</p>
+                    </li>
+                    <li>
+                        <span>Age:</span>
+                        <p>${age}</p>
+                    </li>
+                    <li>
+                        <span>Email Address:</span>
+                        <p>${mail}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="gt_event_tab2 default_width">
+            <div class="gt_event_inside_tab default_width">
+                <ul data-tabs="tabs">
+                    <li class="active"><a data-toggle="tab" href="#time_schedule">About ${username}</a></li>
+                    <li><a data-toggle="tab" href="#google_map">CV</a></li>
+                </ul>
+                <!--Event Tab List Start-->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="time_schedule">
+                        <div class="gt_event_map default_width">
+                            <p> ${bio} </p>
+                        </div>                        
+                    </div>
+                    
+                    <div class="tab-pane" id="google_map">
+                        <div class="gt_event_map default_width">
+                            <#if curriculum_pdf!=0>
+                            <form method="get" action="DownloadCurriculum">
+                                <label id="download">Downaload ${username} CV in PDF!</label>
+                                <input type="submit" id="download" value="download">
+                                <input type="text" name="curriculum_pdf" class="hidden" value=${curriculum_pdf} >
+                            </form> 
+                            <#else>
+                            <#if curriculum!="">
+                            ${curriculum?no_esc}
+                            </#if>
+                            </#if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

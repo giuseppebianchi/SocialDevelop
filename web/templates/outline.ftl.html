@@ -11,17 +11,25 @@
 <link href="/theme/css/css_1.css" rel="stylesheet" type="text/css">
 
 <!-- Style Sheet -->
+<#if bootstrap??>
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+</#if>
 <link rel="stylesheet" href="${request.getContextPath()}/theme/css/owl.carousel.css">
 <link rel="stylesheet" href="${request.getContextPath()}/theme/css/select2.min.css">
 <link rel="stylesheet" href="${request.getContextPath()}/theme/css/main-style.css">
+<link rel="stylesheet" href="${request.getContextPath()}/theme/plugins/summernote/summernote.css">
 <link rel="stylesheet" href="${request.getContextPath()}/theme/css/style.css">
-<script src="${request.getContextPath()}/theme/js/jquery-2.1.3.min.js"></script> 
+<script src="${request.getContextPath()}/theme/js/jquery-3.2.1.min.js"></script> 
+
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
+
 </head>
 
 <body>
@@ -48,7 +56,9 @@
         </a>
                     <nav class="nav pull-left">
           <ul class="sf-menu">
-          <li><form action="${request.getContextPath()}/search" id="search-menu-form"><input type="text" value="" placeholder="Search"><a href="#" id="search-button"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
+          <#if auth_user??>
+          <li><form action="${request.getContextPath()}/search" id="search-menu-form-1" class="search-menu-form"><input type="text" value="" placeholder="Search SocialDevelop"><a href="#" id="search-button"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
+          </#if>
           <li class="active"><a href="${request.getContextPath()}/home">HOME</a></li>
             <li> <a href="${request.getContextPath()}/projects">Projects</a></li>
             <li> <a href="${request.getContextPath()}/developers">Developers</a></li>
@@ -57,21 +67,25 @@
         <a href="#" class="mobile-sidebar-button mobile-sidebar-toggle"><span></span></a>
         <nav class="nav">
           <ul class="sf-menu">
-              <li><form action="${request.getContextPath()}/search" id="search-menu-form"><input type="text" value="" placeholder="Search"><a href="#" id="search-button"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
-            <li><a href="${request.getContextPath()}/signin">Sign In</a></li>
-            <li><a href="${request.getContextPath()}/signin">Sign Up</a></li>
+              
+            <#if auth_user??>
             <li><a href="${request.getContextPath()}/dashboard" id="notifications-icon" class="new-contents"><i class="fa fa-envelope"></i></a></li>
             <!--<li><a href="/signin" id="notifications-icon" class="new-contents"><i class="fa fa-tachometer"></i></a></li>-->
-            <li id="avatar-menu"><a href="${request.getContextPath()}/user"><div></div></a>
+            <li id="avatar-menu" ><a href="${request.getContextPath()}/user"><div <#if foto??>style="background-image: url('${request.getContextPath()}/theme/images/uploads/${foto}')"</#if>></div></a>
               <ul style="display: none;">
-                <li class="bordered">Signed in as<strong>Giuseppe Bianchi</strong></li>
+                <li class="bordered">Signed in as<strong>${fullname}</strong></li>
                 <li><a href="user">Your profile</a></li>
                 <li><a href="user-dashboard(connections)(hotkeys-disabled).html">Your projects</a></li>
                 <li class="bordered"><a href="user-dashboard(connections)(hotkeys-enabled).html">Your tasks</a></li>
                 <li><a href="${request.getContextPath()}/settings/profile">Settings</a></li>
-                <li><a href="blog-post.html">Sign Out</a></li>                
+                <li><a href="${request.getContextPath()}/logout">Sign Out</a></li>                
               </ul>
             </li>
+            <#else>
+            <li><form action="${request.getContextPath()}/search" id="search-menu-form-2" class="search-menu-form"><input type="text" value="" placeholder="Search SocialDevelop"><a href="#" id="search-button"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
+            <li><a href="${request.getContextPath()}/signin">Sign In</a></li>
+            <li><a href="${request.getContextPath()}/signin">Sign Up</a></li>
+            </#if>
             <!--<li class="search-block">
               <div class="search" method="get"> <a href="#" class="toggle fa fa-search"></a>
                  <form action="/search">
@@ -89,8 +103,6 @@
   
   
   <#include content_tpl>
-  
-  
 </div>
 
 <footer class="uou-block-4a secondary dark">
@@ -138,6 +150,7 @@
 <script src="${request.getContextPath()}/theme/js/select2.min.js"></script> 
 <script src="${request.getContextPath()}/theme/js/owl.carousel.min.js"></script> 
 <script src="${request.getContextPath()}/theme/js/gmap3.min.js"></script> 
+<script src="${request.getContextPath()}/theme/js/mustache.min.js"></script> 
 <script src="${request.getContextPath()}/theme/js/scripts.js"></script> 
 <script>
 
