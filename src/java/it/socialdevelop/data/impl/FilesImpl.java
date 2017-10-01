@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.socialdevelop.data.impl;
 
 import it.univaq.f4i.iw.framework.data.DataLayerException;
@@ -16,6 +11,7 @@ import it.socialdevelop.data.model.Files;
  * @author Hello World Group
  */
 public class FilesImpl implements Files {
+
     private int key;
     private int size;
     private String name;
@@ -23,10 +19,10 @@ public class FilesImpl implements Files {
     private GregorianCalendar updated;
     private String digest;
     private String type;
-    
+
     protected SocialDevelopDataLayer ownerdatalayer;
     private boolean dirty;
-    
+
     public FilesImpl(SocialDevelopDataLayer ownerdatalayer) {
         this.ownerdatalayer = ownerdatalayer;
         key = 0;
@@ -42,7 +38,6 @@ public class FilesImpl implements Files {
     /**
      * @return the key
      */
-
     @Override
     public int getKey() {
         return key;
@@ -51,7 +46,6 @@ public class FilesImpl implements Files {
     /**
      * @param key the key to set
      */
-   
     public void setKey(int key) {
         this.key = key;
         this.dirty = true;
@@ -157,7 +151,7 @@ public class FilesImpl implements Files {
     public void setDirty(boolean dirty) {
         this.dirty = dirty;
     }
-    
+
     @Override
     public void copyFrom(Files file) throws DataLayerException {
         key = file.getKey();
@@ -182,6 +176,6 @@ public class FilesImpl implements Files {
     @Override
     public void setSize(int size) {
         this.size = size;
-        this.dirty = true;        
+        this.dirty = true;
     }
 }

@@ -1,6 +1,5 @@
 package it.socialdevelop.controller;
 
-
 import it.univaq.f4i.iw.framework.result.FailureResult;
 import java.io.IOException;
 import javax.annotation.Resource;

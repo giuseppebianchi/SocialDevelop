@@ -1,8 +1,3 @@
-/*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
-*/
 package it.socialdevelop.controller;
 
 import it.univaq.f4i.iw.framework.data.DataLayerException;
@@ -31,37 +26,33 @@ import it.socialdevelop.data.model.Task;
  * @author Hello World Group
  */
 public class DeveloperCollaborators extends SocialDevelopBaseController {
-    
+
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         }
     }
-    
-    
-    
+
     private void getImg(HttpServletRequest request, HttpServletResponse response, Developer dev) throws IOException, SQLException, DataLayerException, NamingException {
         StreamResult result = new StreamResult(getServletContext());
-        
+
         SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-        if(dev.getFoto() != 0){
+        if (dev.getFoto() != 0) {
             Files foto_profilo = datalayer.getFile(dev.getFoto());
             request.setAttribute("foto_profilo", "uploaded-images/" + foto_profilo.getLocalFile());
-        }else{
+        } else {
             request.setAttribute("foto_profilo", "uploaded-images/foto_profilo_default.png");
         }
-        
+
     }
-    
-    
-    
+
     private void action_mycollaborators(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
-        SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer)request.getAttribute("datalayer");
+        SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
         int dev_key = Integer.parseInt(request.getParameter("n"));
         Developer dev = datalayer.getDeveloper(dev_key);
-        if(dev!=null){
+        if (dev != null) {
             request.setAttribute("username", dev.getUsername());
-            request.setAttribute("fullname", dev.getName()+" "+dev.getSurname());
+            request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
             long currentTime = System.currentTimeMillis();
             Calendar now = Calendar.getInstance();
             now.setTimeInMillis(currentTime);
@@ -72,15 +63,14 @@ public class DeveloperCollaborators extends SocialDevelopBaseController {
             request.setAttribute("id", dev_key);
             getImg(request, response, dev);
             //recupero progetti gestiti dall'utente (progetti dei quali è il coordinatore)
-            
-            
-            List<Task> tasks = new ArrayList<Task> (datalayer.getTasksByDeveloper(dev_key).keySet());
+
+            List<Task> tasks = new ArrayList<Task>(datalayer.getTasksByDeveloper(dev_key).keySet());
             List<Developer> collaborators = new ArrayList();
-            for(Task t : tasks){
-                List<Developer> t_coll = new ArrayList<Developer> (t.getCollaborators().keySet());
-                for(Developer d : t_coll){
-                    if(!d.equals(dev)){
-                        if(!collaborators.contains(d)){
+            for (Task t : tasks) {
+                List<Developer> t_coll = new ArrayList<Developer>(t.getCollaborators().keySet());
+                for (Developer d : t_coll) {
+                    if (!d.equals(dev)) {
+                        if (!collaborators.contains(d)) {
                             collaborators.add(d);
                         }
                     }
@@ -91,31 +81,29 @@ public class DeveloperCollaborators extends SocialDevelopBaseController {
             request.setAttribute("page_subtitle", dev.getUsername());
             request.setAttribute("notmy", "notmy");
             HttpSession s = request.getSession(true);
-            if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid"))>0) {
+            if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
                 request.setAttribute("logout", "Logout");
                 Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));
-                if(admin!=null){
+                if (admin != null) {
                     request.setAttribute("admin", "admin");
                 }
-            }else{
+            } else {
                 request.setAttribute("MyProfile", "hidden");
             }
-            
+
             datalayer.destroy();
             TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("developer_collaborators.html",request, response);
-            
-        }else{
+            res.activate("developer_collaborators.html", request, response);
+
+        } else {
             response.sendRedirect("index");
         }
-        
+
     }
-    
-    
-    
+
     @Override
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException{
-        
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+
         try {
             action_mycollaborators(request, response);
         } catch (IOException ex) {
@@ -132,15 +120,15 @@ public class DeveloperCollaborators extends SocialDevelopBaseController {
             action_error(request, response);
         } catch (DataLayerException ex) {
             request.setAttribute("exception", ex);
-            action_error(request, response);        }
-        
+            action_error(request, response);
+        }
+
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    
     @Override
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.socialdevelop.data.impl;
 
 import it.univaq.f4i.iw.framework.data.DataLayerException;
@@ -16,10 +11,8 @@ import it.socialdevelop.data.model.Task;
  *
  * @author Hello World Group
  */
+public class CollaborationRequestImpl implements CollaborationRequest {
 
-
-public class CollaborationRequestImpl implements CollaborationRequest{
-    
     private Developer coordinator;
     private int coordinator_key;
     private Task task;
@@ -31,10 +24,10 @@ public class CollaborationRequestImpl implements CollaborationRequest{
     private int sender_key; //chiave sender
     private Developer sender;
     private int vote;
-    
+
     protected SocialDevelopDataLayer ownerdatalayer;
     protected boolean dirty;
-    
+
     public CollaborationRequestImpl(SocialDevelopDataLayer ownerdatalayer) {
         this.ownerdatalayer = ownerdatalayer;
         coordinator = null;
@@ -50,36 +43,35 @@ public class CollaborationRequestImpl implements CollaborationRequest{
         vote = 0;
         dirty = false;
     }
-    
+
     @Override
-    public int getSender_key(){
+    public int getSender_key() {
         return sender_key;
     }
-    
-    @Override 
-    public void setSender_key(int sender_key){
+
+    @Override
+    public void setSender_key(int sender_key) {
         this.sender_key = sender_key;
         this.dirty = true;
     }
-    
+
     @Override
-    public Developer getSender() throws DataLayerException{
-        if(sender == null){
+    public Developer getSender() throws DataLayerException {
+        if (sender == null) {
             sender = ownerdatalayer.getDeveloper(sender_key);
         }
         return sender;
     }
-    
+
     @Override
-    public void setSender(Developer sender){
+    public void setSender(Developer sender) {
         this.sender = sender;
         this.sender_key = sender.getKey();
     }
-    
-    
+
     @Override
-    public Developer getCoordinatorRequest() throws DataLayerException{
-        if(coordinator == null){
+    public Developer getCoordinatorRequest() throws DataLayerException {
+        if (coordinator == null) {
             coordinator = ownerdatalayer.getCoordinatorByTask(this.task_key);
         }
         return coordinator;
@@ -93,34 +85,34 @@ public class CollaborationRequestImpl implements CollaborationRequest{
     }
 
     @Override
-    public void setCoordinatorKey(int coordinator_key){
+    public void setCoordinatorKey(int coordinator_key) {
         this.coordinator_key = coordinator_key;
         this.coordinator = null;
         this.dirty = true;
     }
-    
+
     @Override
-    public int getCoordinatorKey(){
+    public int getCoordinatorKey() {
         return coordinator_key;
     }
-    
+
     @Override
     public Task getTaskByRequest() throws DataLayerException {
-        if(task == null){
+        if (task == null) {
             task = ownerdatalayer.getTask(task_key);
         }
         return task;
     }
-    
+
     @Override
-    public void setTaskKey(int task_key){
+    public void setTaskKey(int task_key) {
         this.task_key = task_key;
         this.task = null;
         this.dirty = true;
     }
-    
+
     @Override
-    public int getTaskKey(){
+    public int getTaskKey() {
         return task_key;
     }
 
@@ -133,7 +125,7 @@ public class CollaborationRequestImpl implements CollaborationRequest{
 
     @Override
     public Developer getCollaboratorRequest() throws DataLayerException {
-        if(collaborator == null){
+        if (collaborator == null) {
             collaborator = ownerdatalayer.getDeveloper(this.collaborator_key);
         }
         return collaborator;
@@ -145,31 +137,30 @@ public class CollaborationRequestImpl implements CollaborationRequest{
         this.collaborator_key = collaborator.getKey();
         this.dirty = true;
     }
-    
-    
+
     @Override
-    public void setCollaboratorKey(int collaborator_key){
+    public void setCollaboratorKey(int collaborator_key) {
         this.collaborator_key = collaborator_key;
         this.collaborator = null;
         this.dirty = true;
     }
-    
+
     @Override
-    public int getCollaboratorKey(){
+    public int getCollaboratorKey() {
         return collaborator_key;
     }
 
     @Override
-    public void setVote(int vote){
+    public void setVote(int vote) {
         this.vote = vote;
         this.dirty = true;
     }
-    
+
     @Override
-    public int getVote(){
+    public int getVote() {
         return vote;
     }
-    
+
     @Override
     public GregorianCalendar getDate() {
         return date;
@@ -191,8 +182,8 @@ public class CollaborationRequestImpl implements CollaborationRequest{
         this.state = state;
         this.dirty = true;
     }
-    
-     @Override
+
+    @Override
     public void setDirty(boolean dirty) {
         this.dirty = dirty;
     }
@@ -201,7 +192,7 @@ public class CollaborationRequestImpl implements CollaborationRequest{
     public boolean isDirty() {
         return dirty;
     }
-    
+
     @Override
     public void copyFrom(CollaborationRequest request) throws DataLayerException {
         task_key = request.getTaskKey();
@@ -213,5 +204,5 @@ public class CollaborationRequestImpl implements CollaborationRequest{
         coordinator_key = request.getCoordinatorKey();
         this.dirty = true;
     }
-        
+
 }

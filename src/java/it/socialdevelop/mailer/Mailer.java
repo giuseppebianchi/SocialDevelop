@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.socialdevelop.mailer;
 
 import java.util.Properties;
@@ -19,17 +14,18 @@ import javax.mail.internet.MimeMessage;
  * @author Hello World Group
  */
 public class Mailer {
+
     String to;
     String ObjectMessage;
     String text;
-    
-    public Mailer(String to,String ObjectMessage,String text){
+
+    public Mailer(String to, String ObjectMessage, String text) {
         this.to = to;
         this.ObjectMessage = ObjectMessage;
         this.text = text;
-    }   
-    
-    public void sendEmail(){
+    }
+
+    public void sendEmail() {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.socketFactory.port", "465");
@@ -38,14 +34,14 @@ public class Mailer {
         props.put("mail.smtp.port", "465");
 
         Session session = Session.getDefaultInstance(props,
-            new javax.mail.Authenticator() {
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("email","pass");
-                }
-            });
+                new javax.mail.Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("email", "pass");
+            }
+        });
 
-            try {
+        try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("email"));
             message.setRecipients(Message.RecipientType.TO,
@@ -53,12 +49,12 @@ public class Mailer {
             message.setSubject(this.ObjectMessage);
             message.setText(this.text);
 
-        Transport.send(message);
+            Transport.send(message);
             System.out.println("email successfully sent..");
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
     }
-    
+
 }

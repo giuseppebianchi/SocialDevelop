@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.socialdevelop.controller;
 
 import it.univaq.f4i.iw.framework.data.DataLayerException;
@@ -25,71 +20,64 @@ import it.socialdevelop.data.model.SocialDevelopDataLayer;
  *
  * @author Hello World Group
  */
-
 public class UpdateSkillBack extends SocialDevelopBaseController {
-    
+
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         }
     }
-    
-    
-    
-    private void action_upskillback(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {    
-                
-                           
-                HttpSession s = request.getSession(true);
-                String u = (String) s.getAttribute("previous_url");
-                if(s.getAttribute("userid") != null && ((int) s.getAttribute("userid"))>0) {
-                    if(s.getAttribute("previous_url") != null && ((String) s.getAttribute("previous_url")).equals("/socialdevelop/BackEndSkill")){
-            
-                        SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-                        
-                        Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
-                        Admin admin = datalayer.getAdmin(dev.getKey());
-                        if (admin != null && admin.getDevelperKey() > 0){
-                        
-                        Skill updateSkill = datalayer.getSkill(parseInt(request.getParameter("old-skill")));
-                        
-                        if(request.getParameter("new-skill-name")!=""){
-                            updateSkill.setName(request.getParameter("new-skill-name"));
-                        }
-                        
-                        if(request.getParameter("new-father")!=""){
-                            updateSkill.setParentKey(parseInt(request.getParameter("new-father")));
-                        }
-                        
-                        if(request.getParameter("new-type")!=""){
-                            updateSkill.setType_key(parseInt(request.getParameter("new-type")));
-                        }
-                        
-                        datalayer.storeSkill(updateSkill);
 
-                        datalayer.destroy();
-                        s.removeAttribute("previous_url");
-                        response.sendRedirect(u.split("/")[2]);
-                        }else{
-                        s.removeAttribute("previous_url");
-                        response.sendRedirect("index");
+    private void action_upskillback(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
 
+        HttpSession s = request.getSession(true);
+        String u = (String) s.getAttribute("previous_url");
+        if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
+            if (s.getAttribute("previous_url") != null && ((String) s.getAttribute("previous_url")).equals("/socialdevelop/BackEndSkill")) {
+
+                SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
+
+                Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
+                Admin admin = datalayer.getAdmin(dev.getKey());
+                if (admin != null && admin.getDevelperKey() > 0) {
+
+                    Skill updateSkill = datalayer.getSkill(parseInt(request.getParameter("old-skill")));
+
+                    if (request.getParameter("new-skill-name") != "") {
+                        updateSkill.setName(request.getParameter("new-skill-name"));
                     }
 
-                    }else{
-                        s.removeAttribute("previous_url");
-                        response.sendRedirect("index");
-
+                    if (request.getParameter("new-father") != "") {
+                        updateSkill.setParentKey(parseInt(request.getParameter("new-father")));
                     }
-                }else{
+
+                    if (request.getParameter("new-type") != "") {
+                        updateSkill.setType_key(parseInt(request.getParameter("new-type")));
+                    }
+
+                    datalayer.storeSkill(updateSkill);
+
+                    datalayer.destroy();
+                    s.removeAttribute("previous_url");
+                    response.sendRedirect(u.split("/")[2]);
+                } else {
                     s.removeAttribute("previous_url");
                     response.sendRedirect("index");
+
                 }
 
+            } else {
+                s.removeAttribute("previous_url");
+                response.sendRedirect("index");
 
             }
-    
-    
-    
+        } else {
+            s.removeAttribute("previous_url");
+            response.sendRedirect("index");
+        }
+
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";
@@ -97,10 +85,9 @@ public class UpdateSkillBack extends SocialDevelopBaseController {
 
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-        try{
-            action_upskillback(request,response);
-        }
-        catch (IOException ex) {
+        try {
+            action_upskillback(request, response);
+        } catch (IOException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
         } catch (TemplateManagerException ex) {
@@ -116,7 +103,5 @@ public class UpdateSkillBack extends SocialDevelopBaseController {
             request.setAttribute("exception", ex);
             action_error(request, response);
         }
-        }
     }
-
-
+}

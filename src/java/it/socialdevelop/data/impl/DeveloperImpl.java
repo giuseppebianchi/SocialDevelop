@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.socialdevelop.data.impl;
 
 import it.univaq.f4i.iw.framework.data.DataLayerException;
@@ -20,7 +15,7 @@ import it.socialdevelop.data.model.Task;
  * @author Hello World Group
  */
 public class DeveloperImpl implements Developer {
-    
+
     private int key;
     private String name;
     private String surname;
@@ -34,10 +29,10 @@ public class DeveloperImpl implements Developer {
     private int curriculumFile;
     private int foto;
     private Files fotoFile;
-    private Map<Skill,Integer> skills;
+    private Map<Skill, Integer> skills;
     protected SocialDevelopDataLayer ownerdatalayer;
     protected boolean dirty;
-    
+
     public DeveloperImpl(SocialDevelopDataLayer ownerdatalayer) {
         this.ownerdatalayer = ownerdatalayer;
         key = 0;
@@ -56,149 +51,148 @@ public class DeveloperImpl implements Developer {
         skills = null;
         dirty = false;
     }
-    
+
     @Override
-    public int getKey(){
+    public int getKey() {
         return key;
     }
-    
+
     @Override
-    public void setUsername(String username){
+    public void setUsername(String username) {
         this.username = username;
         this.dirty = true;
     }
-    
+
     @Override
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
-    
+
     @Override
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
         this.dirty = true;
     }
-    
+
     @Override
-    public String getName(){
+    public String getName() {
         return name;
     }
-    
+
     @Override
-    public void setSurname(String surname){
+    public void setSurname(String surname) {
         this.surname = surname;
         this.dirty = true;
     }
-    
+
     @Override
-    public String getSurname(){
+    public String getSurname() {
         return surname;
     }
-    
+
     @Override
-    public void setMail(String mail){
+    public void setMail(String mail) {
         this.mail = mail;
         this.dirty = true;
     }
-    
+
     @Override
-    public String getMail(){
+    public String getMail() {
         return mail;
     }
-    
+
     @Override
-    public void setPwd(String pwd){
+    public void setPwd(String pwd) {
         this.pwd = pwd;
         this.dirty = true;
     }
-    
+
     @Override
-    public String getPwd(){
+    public String getPwd() {
         return pwd;
     }
-    
+
     @Override
-    public void setBirthDate(GregorianCalendar birthdate){
+    public void setBirthDate(GregorianCalendar birthdate) {
         this.birthdate = birthdate;
         this.dirty = true;
     }
-    
+
     @Override
-    public GregorianCalendar getBirthDate(){
+    public GregorianCalendar getBirthDate() {
         return birthdate;
     }
-    
+
     @Override
-    public void setBiography(String biography){
+    public void setBiography(String biography) {
         this.biography = biography;
         this.dirty = true;
     }
-    
+
     @Override
-    public String getBiography(){
+    public String getBiography() {
         return biography;
     }
-    
+
     @Override
-    public void setCurriculum(int curriculum){
+    public void setCurriculum(int curriculum) {
         this.curriculumFile = curriculum;
         this.dirty = true;
     }
-    
+
     @Override
-    public void setCurriculum(String curriculum){
+    public void setCurriculum(String curriculum) {
         this.curriculumString = curriculum;
         this.dirty = true;
     }
-    
+
     @Override
-    public int getCurriculumFile(){
+    public int getCurriculumFile() {
         return curriculumFile;
     }
-    
+
     @Override
-    public String getCurriculumString(){
+    public String getCurriculumString() {
         return curriculumString;
     }
-    
+
     @Override
-    public void setSkills(Map<Skill, Integer> skills){
+    public void setSkills(Map<Skill, Integer> skills) {
         this.skills = skills;
         this.dirty = true;
     }
-    
+
     @Override
-    public Map<Skill, Integer> getSkillsByDeveloper() throws DataLayerException{
-        if(skills == null){
+    public Map<Skill, Integer> getSkillsByDeveloper() throws DataLayerException {
+        if (skills == null) {
             skills = ownerdatalayer.getSkillsByDeveloper(this.key);
         }
         return skills;
     }
-    
-     @Override
-    public void addSkill(Skill skill, int level){
-        this.skills.put(skill,level);
-        this.dirty = true;
-    }
-    
+
     @Override
-    public void removeSkill(Skill skill){
-        this.skills.remove(skill);
-        this.dirty = true;
-    }
-    
-    @Override
-    public void modSkillLevel(Skill skill, int level){
+    public void addSkill(Skill skill, int level) {
         this.skills.put(skill, level);
         this.dirty = true;
     }
-    
 
     @Override
-    public Map<Task, Integer> getTasksByDeveloper() throws DataLayerException{
+    public void removeSkill(Skill skill) {
+        this.skills.remove(skill);
+        this.dirty = true;
+    }
+
+    @Override
+    public void modSkillLevel(Skill skill, int level) {
+        this.skills.put(skill, level);
+        this.dirty = true;
+    }
+
+    @Override
+    public Map<Task, Integer> getTasksByDeveloper() throws DataLayerException {
         return ownerdatalayer.getTasksByDeveloper(this.key);
-    } 
-        
+    }
+
     @Override
     public void setDirty(boolean dirty) {
         this.dirty = dirty;
@@ -208,21 +202,21 @@ public class DeveloperImpl implements Developer {
     public boolean isDirty() {
         return dirty;
     }
-    
+
     protected void setKey(int key) {
         this.key = key;
     }
-    
+
     @Override
-    public void setFoto(int foto){
+    public void setFoto(int foto) {
         this.foto = foto;
     }
-    
+
     @Override
-    public int getFoto(){
+    public int getFoto() {
         return foto;
     }
-      
+
     @Override
     public void copyFrom(Developer developer) throws DataLayerException {
         key = developer.getKey();
@@ -244,7 +238,7 @@ public class DeveloperImpl implements Developer {
      */
     @Override
     public Files getFotoFile() throws DataLayerException {
-        if(foto>0 && fotoFile==null){
+        if (foto > 0 && fotoFile == null) {
             this.fotoFile = ownerdatalayer.getFile(foto);
         }
         return fotoFile;
@@ -263,18 +257,20 @@ public class DeveloperImpl implements Developer {
     @Override
     public boolean equals(Object o) {
 
-        if (o == this) return true;
+        if (o == this) {
+            return true;
+        }
         if (!(o instanceof Developer)) {
             return false;
         }
 
-       Developer dev = (Developer) o;
+        Developer dev = (Developer) o;
 
-        return dev.getKey() == key && dev.getName().equals(name) &&
-               dev.getSurname().equals(surname) && dev.getUsername().equals(username) && dev.getPwd().equals(pwd) 
-                && dev.getMail().equals(mail) && dev.getBirthDate().equals(birthdate) && dev.getBiography().equals(biography) &&
-                dev.getCurriculumString().equals(curriculumString) && dev.getCurriculumFile() == curriculumFile && dev.getFoto() == foto;
-                
+        return dev.getKey() == key && dev.getName().equals(name)
+                && dev.getSurname().equals(surname) && dev.getUsername().equals(username) && dev.getPwd().equals(pwd)
+                && dev.getMail().equals(mail) && dev.getBirthDate().equals(birthdate) && dev.getBiography().equals(biography)
+                && dev.getCurriculumString().equals(curriculumString) && dev.getCurriculumFile() == curriculumFile && dev.getFoto() == foto;
+
     }
 
     @Override
@@ -304,7 +300,5 @@ public class DeveloperImpl implements Developer {
     public String getPicture() {
         return picture;
     }
-    
-
 
 }

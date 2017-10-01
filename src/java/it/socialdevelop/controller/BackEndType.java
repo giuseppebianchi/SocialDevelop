@@ -21,54 +21,48 @@ import it.socialdevelop.data.model.Type;
  *
  * @author Hello World Group
  */
-
 public class BackEndType extends SocialDevelopBaseController {
-    
+
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         }
     }
-    
-    
-    
-    private void action_backendt(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {    
-                
-                       
-                HttpSession s = request.getSession(true);
-                if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid"))>0){
-                    SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");    
-                    Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
-                    Admin admin = datalayer.getAdmin(dev.getKey());
-                    if (admin != null ){
-                        request.setAttribute("admin", "admin");
-                        request.setAttribute("page_title", "TYPE BACKEND");
-                        request.setAttribute("page_subtitle", "Manage the Types");
 
-                        List <Type> types = datalayer.getTypes();
-                        if (types != null){
-                            request.setAttribute("types",types);
-                        }
-                        request.setAttribute("logout", "Logout");
+    private void action_backendt(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
 
-                        datalayer.destroy();
-                        String act_url = request.getRequestURI();
-                        s.setAttribute("previous_url", act_url);
-                        TemplateResult res = new TemplateResult(getServletContext());
-                        res.activate("backend_type.html",request, response); 
-                    }else{
-                    s.removeAttribute("previous_url");
-                     response.sendRedirect("index");
+        HttpSession s = request.getSession(true);
+        if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
+            SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
+            Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
+            Admin admin = datalayer.getAdmin(dev.getKey());
+            if (admin != null) {
+                request.setAttribute("admin", "admin");
+                request.setAttribute("page_title", "TYPE BACKEND");
+                request.setAttribute("page_subtitle", "Manage the Types");
+
+                List<Type> types = datalayer.getTypes();
+                if (types != null) {
+                    request.setAttribute("types", types);
                 }
-                }else{
-                    s.removeAttribute("previous_url");
-                     response.sendRedirect("index");
-                }
-                
+                request.setAttribute("logout", "Logout");
+
+                datalayer.destroy();
+                String act_url = request.getRequestURI();
+                s.setAttribute("previous_url", act_url);
+                TemplateResult res = new TemplateResult(getServletContext());
+                res.activate("backend_type.html", request, response);
+            } else {
+                s.removeAttribute("previous_url");
+                response.sendRedirect("index");
+            }
+        } else {
+            s.removeAttribute("previous_url");
+            response.sendRedirect("index");
+        }
+
     }
-    
-    
-    
+
     @Override
     public String getServletInfo() {
         return "Short description";
@@ -76,10 +70,9 @@ public class BackEndType extends SocialDevelopBaseController {
 
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-        try{
-            action_backendt(request,response);
-        }
-        catch (IOException ex) {
+        try {
+            action_backendt(request, response);
+        } catch (IOException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
         } catch (TemplateManagerException ex) {
@@ -95,7 +88,5 @@ public class BackEndType extends SocialDevelopBaseController {
             request.setAttribute("exception", ex);
             action_error(request, response);
         }
-        }
     }
-
-
+}

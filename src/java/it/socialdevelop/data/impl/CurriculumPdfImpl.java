@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.socialdevelop.data.impl;
 
 import java.util.GregorianCalendar;
@@ -13,7 +8,8 @@ import it.socialdevelop.data.model.SocialDevelopDataLayer;
  *
  * @author Hello World Group
  */
-public class CurriculumPdfImpl implements CurriculumPdf{
+public class CurriculumPdfImpl implements CurriculumPdf {
+
     private int key;
     private String name;
     private int size;
@@ -22,8 +18,8 @@ public class CurriculumPdfImpl implements CurriculumPdf{
     private String digest;
     protected SocialDevelopDataLayer ownerdatalayer;
     private boolean dirty;
-    
-     public CurriculumPdfImpl(SocialDevelopDataLayer ownerdatalayer) {
+
+    public CurriculumPdfImpl(SocialDevelopDataLayer ownerdatalayer) {
         this.ownerdatalayer = ownerdatalayer;
         key = 0;
         name = "";
@@ -37,7 +33,7 @@ public class CurriculumPdfImpl implements CurriculumPdf{
     /**
      * @return the size
      */
-     @Override
+    @Override
     public int getSize() {
         return size;
     }
@@ -135,9 +131,9 @@ public class CurriculumPdfImpl implements CurriculumPdf{
         this.name = name;
         this.dirty = true;
     }
-     
+
     @Override
-    public int getKey(){
+    public int getKey() {
         return key;
     }
 }

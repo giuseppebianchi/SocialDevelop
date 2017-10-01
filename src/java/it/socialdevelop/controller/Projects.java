@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.socialdevelop.controller;
 
 import it.univaq.f4i.iw.framework.data.DataLayerException;
@@ -34,14 +29,14 @@ import it.socialdevelop.data.model.Task;
  * @author Hello World Group
  */
 public class Projects extends SocialDevelopBaseController {
-     
+
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         }
-    } 
-   
-     private void action_projects(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
+    }
+
+    private void action_projects(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         HttpSession s = request.getSession(true);
         Map data = new HashMap();
         data.put("request", request);
@@ -49,95 +44,91 @@ public class Projects extends SocialDevelopBaseController {
 
         data.put("page_subtitle", "Progetti");
         SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-        if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid"))>0) {
-                data.put("auth_user", s.getAttribute("userid"));
-                data.put("foto", s.getAttribute("foto"));
-                data.put("fullname", s.getAttribute("fullname"));         
+        if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
+            data.put("auth_user", s.getAttribute("userid"));
+            data.put("foto", s.getAttribute("foto"));
+            data.put("fullname", s.getAttribute("fullname"));
         }
         int npage = 1;
-        if(request.getParameter("n") == null){
+        if (request.getParameter("n") == null) {
             npage = 1;
-        }else{
+        } else {
             npage = Integer.parseInt(request.getParameter("n"));
         }
-        int n = ((npage)-1)*6;
-       
-        double pagesize = ceil((double)(datalayer.getProjects().size())/6);
-        data.put("page",pagesize);
-        data.put("selected",request.getParameter("n"));
+        int n = ((npage) - 1) * 6;
+
+        double pagesize = ceil((double) (datalayer.getProjects().size()) / 6);
+        data.put("page", pagesize);
+        data.put("selected", request.getParameter("n"));
         List<Project> pro = datalayer.getProjectsLimit(n);
-            if (pro.size()!=0) {
-               data.put("listaprogetti", pro);
-               Date startdate[] = new Date[pro.size()];
-               Developer coordinatore ;
-               int ncollaboratori[] = new int[pro.size()];
-               int count = 0;
-               int c = 0;
-               int[] ntasks=new int[pro.size()];
-               startdate[c] = null;
-               for(Project progetto : pro){
-                   coordinatore=datalayer.getDeveloper(progetto.getCoordinatorKey());
-                   List <Task> tasks = datalayer.getTasks(progetto.getKey());
-                   ncollaboratori[count] = 0;
-                   ntasks[count]=tasks.size();
-                   startdate[c] = datalayer.getDateOfTaskByProject(progetto.getKey());
-                   for(Task task : tasks){
-                       ncollaboratori[count]+=task.getNumCollaborators();
-                   }
-                   progetto.setCoordinator(coordinatore);
-                   count ++;
-                   c++;
-               }
-               data.put("start", startdate);
-               data.put("ncollaboratori", ncollaboratori);
-               data.put("ntasks", ntasks);
-            }
-            else{
-                data.put("listaprogetti", pro);
-            }
-            List<Skill> skills = datalayer.getSkillsParentList();
-            if(skills!=null)
-            {
-                for(Skill skill : skills){
-                    List<Skill> child = datalayer.getChild(skill.getKey());
-                    if(child!=null){
-                        skill.setChild(child);
-                    }
+        if (pro.size() != 0) {
+            data.put("listaprogetti", pro);
+            Date startdate[] = new Date[pro.size()];
+            Developer coordinatore;
+            int ncollaboratori[] = new int[pro.size()];
+            int count = 0;
+            int c = 0;
+            int[] ntasks = new int[pro.size()];
+            startdate[c] = null;
+            for (Project progetto : pro) {
+                coordinatore = datalayer.getDeveloper(progetto.getCoordinatorKey());
+                List<Task> tasks = datalayer.getTasks(progetto.getKey());
+                ncollaboratori[count] = 0;
+                ntasks[count] = tasks.size();
+                startdate[c] = datalayer.getDateOfTaskByProject(progetto.getKey());
+                for (Task task : tasks) {
+                    ncollaboratori[count] += task.getNumCollaborators();
                 }
-                data.put("skills", skills);
+                progetto.setCoordinator(coordinatore);
+                count++;
+                c++;
             }
-           datalayer.destroy();
-           TemplateResult res = new TemplateResult(getServletContext());
-           res.activate("projects.ftl.html",data, response);
+            data.put("start", startdate);
+            data.put("ncollaboratori", ncollaboratori);
+            data.put("ntasks", ntasks);
+        } else {
+            data.put("listaprogetti", pro);
+        }
+        List<Skill> skills = datalayer.getSkillsParentList();
+        if (skills != null) {
+            for (Skill skill : skills) {
+                List<Skill> child = datalayer.getChild(skill.getKey());
+                if (child != null) {
+                    skill.setChild(child);
+                }
+            }
+            data.put("skills", skills);
+        }
+        datalayer.destroy();
+        TemplateResult res = new TemplateResult(getServletContext());
+        res.activate("projects.ftl.html", data, response);
     }
-    
-    
+
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
         try {
             action_projects(request, response);
         } catch (IOException ex) {
-           request.setAttribute("exception", ex);
-            action_error(request, response);  
+            request.setAttribute("exception", ex);
+            action_error(request, response);
         } catch (DataLayerException ex) {
-           request.setAttribute("exception", ex);
-            action_error(request, response);  
+            request.setAttribute("exception", ex);
+            action_error(request, response);
         } catch (SQLException ex) {
-           request.setAttribute("exception", ex);
-            action_error(request, response);  
+            request.setAttribute("exception", ex);
+            action_error(request, response);
         } catch (NamingException ex) {
-           request.setAttribute("exception", ex);
-            action_error(request, response);  
+            request.setAttribute("exception", ex);
+            action_error(request, response);
         } catch (TemplateManagerException ex) {
             request.setAttribute("excpetion", ex);
             action_error(request, response);
         }
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    
     @Override
     public String getServletInfo() {
         return "Short description";

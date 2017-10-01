@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.socialdevelop.data.impl;
 
 import it.univaq.f4i.iw.framework.data.DataLayerException;
@@ -15,8 +10,8 @@ import it.socialdevelop.data.model.SocialDevelopDataLayer;
  *
  * @author Hello World Group
  */
-public class MessageImpl implements Message{
-    
+public class MessageImpl implements Message {
+
     private int key;
     private String text;
     private boolean isPrivate;
@@ -27,7 +22,7 @@ public class MessageImpl implements Message{
     private Developer developer;
     protected SocialDevelopDataLayer ownerdatalayer;
     protected boolean dirty;
-    
+
     public MessageImpl(SocialDevelopDataLayer ownerdatalayer) {
         this.ownerdatalayer = ownerdatalayer;
         key = 0;
@@ -41,7 +36,6 @@ public class MessageImpl implements Message{
         dirty = false;
     }
 
-    
     @Override
     public int getKey() {
         return key;
@@ -57,17 +51,17 @@ public class MessageImpl implements Message{
         this.text = text;
         this.dirty = true;
     }
-    
+
     @Override
-    public void setProject(Project project){
+    public void setProject(Project project) {
         this.project = project;
         this.project_key = project.getKey();
         this.dirty = true;
     }
-    
+
     @Override
-    public Project getProject() throws DataLayerException{
-        
+    public Project getProject() throws DataLayerException {
+
         if (project == null && project_key > 0) {
             project = ownerdatalayer.getProject(project_key);
         }
@@ -75,48 +69,49 @@ public class MessageImpl implements Message{
         //dover venir ricaricato alle richieste successive, tuttavia, questo
         //puo' rende i dati potenzialmente disallineati: se il coordinatore viene modificato
         //nel DB, qui rimarrà la sua "vecchia" versione
-       
+
         return project;
     }
-    
+
     @Override
-    public void setProjectKey(int project_key){
+    public void setProjectKey(int project_key) {
         this.project = null;
         this.project_key = project_key;
         this.dirty = true;
     }
-    
+
     @Override
-    public int getProjectKey(){
+    public int getProjectKey() {
         return project_key;
     }
-    
-    @Override 
-    public Developer getDeveloper() throws DataLayerException{
-        if(developer == null && developer_key > 0) {
+
+    @Override
+    public Developer getDeveloper() throws DataLayerException {
+        if (developer == null && developer_key > 0) {
             developer = ownerdatalayer.getDeveloper(developer_key);
         }
         return developer;
     }
-    
+
     @Override
-    public void setDeveloper(Developer developer){
+    public void setDeveloper(Developer developer) {
         this.developer = developer;
         this.developer_key = developer.getKey();
         this.dirty = true;
     }
-    
+
     @Override
-    public void setDeveloperKey(int developer_key){
+    public void setDeveloperKey(int developer_key) {
         this.developer = null;
         this.developer_key = developer_key;
         this.dirty = true;
     }
-    
-    @Override 
-    public int getDeveloperKey(){
+
+    @Override
+    public int getDeveloperKey() {
         return developer_key;
     }
+
     @Override
     public boolean isPrivate() {
         return isPrivate;
@@ -138,7 +133,7 @@ public class MessageImpl implements Message{
         this.type = type;
         this.dirty = true;
     }
-    
+
     @Override
     public void setDirty(boolean dirty) {
         this.dirty = dirty;
@@ -148,11 +143,11 @@ public class MessageImpl implements Message{
     public boolean isDirty() {
         return dirty;
     }
-    
+
     protected void setKey(int key) {
         this.key = key;
     }
-    
+
     @Override
     public void copyFrom(Message message) throws DataLayerException {
         key = message.getKey();

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.socialdevelop.controller;
 
 import it.univaq.f4i.iw.framework.data.DataLayerException;
@@ -31,73 +26,68 @@ import it.socialdevelop.data.model.Type;
  * @author Hello World Group
  */
 public class BackEndSkill extends SocialDevelopBaseController {
-    
+
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
             (new FailureResult(getServletContext())).activate((Exception) request.getAttribute("exception"), request, response);
         }
     }
-    
-    
-    
-    private void action_backends(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {    
-                
-                         
-                HttpSession s = request.getSession(true);
-                if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid"))>0){
-                    SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");  
-                        Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
-                        Admin admin = datalayer.getAdmin(dev.getKey());
-                        if (admin != null ){
-                        request.setAttribute("admin", "admin");
-                        request.setAttribute("page_title", "SKILL BACKEND");
-                        request.setAttribute("page_subtitle", "Manage the Skills");
-                        List<Skill> skills = datalayer.getSkillsParentList();
-                        List<Skill> skills_ok = new ArrayList();
-                        if(skills!=null){
-                            for(Skill skill : skills){
-                                List<Skill> child = datalayer.getChild(skill.getKey());
-                                if(child!=null){
-                                    skill.setChild(child);
-                                }
-                                //riempiamo skills_ok con le skill cancellabili
-                                Map<Developer, Integer> devs = datalayer.getDevelopersBySkill(skill.getKey());
-                                if(devs.size()==0){
-                                    List<Task> tasks = datalayer.getTasksBySkill(skill.getKey());
-                                    if(tasks.size()==0){
-                                        skills_ok.add(skill);
-                                    }
-                                }
-                                
-                            }
-                            request.setAttribute("skillsD", skills_ok);
+
+    private void action_backends(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
+
+        HttpSession s = request.getSession(true);
+        if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
+            SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
+            Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
+            Admin admin = datalayer.getAdmin(dev.getKey());
+            if (admin != null) {
+                request.setAttribute("admin", "admin");
+                request.setAttribute("page_title", "SKILL BACKEND");
+                request.setAttribute("page_subtitle", "Manage the Skills");
+                List<Skill> skills = datalayer.getSkillsParentList();
+                List<Skill> skills_ok = new ArrayList();
+                if (skills != null) {
+                    for (Skill skill : skills) {
+                        List<Skill> child = datalayer.getChild(skill.getKey());
+                        if (child != null) {
+                            skill.setChild(child);
                         }
-                        request.setAttribute("skills", skills);
-                        List <Type> types = datalayer.getTypes();
-                        if (types != null){
-                            request.setAttribute("types", types);
+                        //riempiamo skills_ok con le skill cancellabili
+                        Map<Developer, Integer> devs = datalayer.getDevelopersBySkill(skill.getKey());
+                        if (devs.size() == 0) {
+                            List<Task> tasks = datalayer.getTasksBySkill(skill.getKey());
+                            if (tasks.size() == 0) {
+                                skills_ok.add(skill);
+                            }
                         }
 
-                        request.setAttribute("logout", "Logout");
-                        
-                        datalayer.destroy();
-                        String act_url = request.getRequestURI();
-                        s.setAttribute("previous_url", act_url);
-                        TemplateResult res = new TemplateResult(getServletContext());
-                        res.activate("backend_skills.html",request, response);  
-    
-                    }else{
-                        s.removeAttribute("previous_url");
-                        response.sendRedirect("index"); 
-                        }
-                }else{
-                        s.removeAttribute("previous_url");
-                        response.sendRedirect("index");   
-         }
+                    }
+                    request.setAttribute("skillsD", skills_ok);
+                }
+                request.setAttribute("skills", skills);
+                List<Type> types = datalayer.getTypes();
+                if (types != null) {
+                    request.setAttribute("types", types);
+                }
+
+                request.setAttribute("logout", "Logout");
+
+                datalayer.destroy();
+                String act_url = request.getRequestURI();
+                s.setAttribute("previous_url", act_url);
+                TemplateResult res = new TemplateResult(getServletContext());
+                res.activate("backend_skills.html", request, response);
+
+            } else {
+                s.removeAttribute("previous_url");
+                response.sendRedirect("index");
+            }
+        } else {
+            s.removeAttribute("previous_url");
+            response.sendRedirect("index");
+        }
     }
-    
-    
-    
+
     @Override
     public String getServletInfo() {
         return "Short description";
@@ -105,10 +95,9 @@ public class BackEndSkill extends SocialDevelopBaseController {
 
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-        try{
-            action_backends(request,response);
-        }
-        catch (IOException ex) {
+        try {
+            action_backends(request, response);
+        } catch (IOException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
         } catch (TemplateManagerException ex) {
@@ -124,7 +113,5 @@ public class BackEndSkill extends SocialDevelopBaseController {
             request.setAttribute("exception", ex);
             action_error(request, response);
         }
-        }
     }
-
-
+}

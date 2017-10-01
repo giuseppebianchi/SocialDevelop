@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.socialdevelop.data.model;
 
 import it.univaq.f4i.iw.framework.data.DataLayerException;
@@ -59,7 +54,6 @@ public interface Files {
      */
     void setDirty(boolean dirty);
 
-
     /**
      * @param localFile the localFile to set
      */
@@ -79,10 +73,10 @@ public interface Files {
      * @param updated the updated to set
      */
     void setUpdated(GregorianCalendar updated);
-    
+
     void setSize(int size);
-    
+
     int getSize();
-    
+
     void copyFrom(Files files) throws DataLayerException;
 }
