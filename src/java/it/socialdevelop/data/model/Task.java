@@ -15,8 +15,12 @@ import java.util.Map;
 public interface Task {
 
     int getKey();
-
+    
+    void setName(String name);
+    
     String getName();
+    
+    
 
     int getProjectKey();
 
@@ -25,8 +29,6 @@ public interface Task {
     Project getProject() throws DataLayerException;
 
     void setProject(Project project);
-
-    void setName(String name);
 
     void setNumCollaborators(int num); //tramite questa si può anche modificare il numCollaboratori
 

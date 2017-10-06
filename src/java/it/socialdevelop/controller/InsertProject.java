@@ -1,5 +1,9 @@
 package it.socialdevelop.controller;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import it.univaq.f4i.iw.framework.data.DataLayerException;
 import it.univaq.f4i.iw.framework.result.FailureResult;
 import it.univaq.f4i.iw.framework.result.TemplateManagerException;
@@ -14,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import it.socialdevelop.data.impl.ProjectImpl;
 import it.socialdevelop.data.impl.TaskImpl;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
+import java.util.Iterator;
 
 /**
  *
@@ -30,75 +35,97 @@ public class InsertProject extends SocialDevelopBaseController {
     private void action_insertproject(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         //recuperare coordinatore dalla sessione!
         HttpSession s = request.getSession(true);
+         
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
             String u = (String) s.getAttribute("previous_url");
-            if (s.getAttribute("previous_url") != null && u.equals("/SocialDevelop/CreateProject")) {
-                if (!request.getParameter("tasks").equals("")) {
+            if (s.getAttribute("previous_url") != null && u.equals("/SocialDevelop/projects/new")) {
+                if (true) {
                     SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-                    String project_name = request.getParameter("project_name");
-                    String project_descr = request.getParameter("project_descr");
+                    
+                    // this parses the json
+                    String JSONData = request.getParameter("data");
+                    JSONObject o = new JSONObject(JSONData);  
+                   
+                    String project_name = o.getString("project_name");
+                    String project_category = o.getString("project_category");
+                    String project_location = o.getString("project_location");
+                    String project_company = o.getString("project_company");
+                    String project_description = o.getString("project_description");
                     int userid = (int) s.getAttribute("userid");
                     //memorizziamo il progetto
                     ProjectImpl p = new ProjectImpl(datalayer);
                     p.setCoordinatorKey(userid);
                     p.setName(project_name);
-                    p.setDescription(project_descr);
+                    p.setCategory(project_category);
+                    p.setLocation(project_location);
+                    p.setCompany(project_company);
+                    p.setDescription(project_description);
                     int project_key = datalayer.storeProject(p);
                     //ora recuperiamo le info sui task e le memorizziamo
-                    String tasks = request.getParameter("tasks");
-                    String[] task = tasks.split("@");
-                    for (String t : task) {
-                        String[] thistask = t.split("#");
-                        TaskImpl current = new TaskImpl(datalayer);
-                        current.setName(thistask[0]);
-                        current.setProjectKey(project_key);
-                        String start = thistask[1];
-                        GregorianCalendar gc = new GregorianCalendar();
-                        gc.setLenient(false);
-                        gc.set(GregorianCalendar.YEAR, Integer.valueOf(start.split("/")[2]));
-                        gc.set(GregorianCalendar.MONTH, Integer.valueOf(start.split("/")[1]) - 1);
-                        gc.set(GregorianCalendar.DATE, Integer.valueOf(start.split("/")[0]));
-                        current.setStartDate(gc);
-
-                        String end = thistask[2];
-                        GregorianCalendar gc1 = new GregorianCalendar();
-                        gc1.setLenient(false);
-                        gc1.set(GregorianCalendar.YEAR, Integer.valueOf(end.split("/")[2]));
-                        gc1.set(GregorianCalendar.MONTH, Integer.valueOf(end.split("/")[1]) - 1);
-                        gc1.set(GregorianCalendar.DATE, Integer.valueOf(end.split("/")[0]));
-                        current.setEndDate(gc1);
-
-                        current.setDescription(thistask[3]);
-                        current.setNumCollaborators(Integer.parseInt(thistask[4]));
-                        current.setType_key(datalayer.getTypeByName(thistask[6]));
-                        if (thistask[7].equals("Open")) {
-                            current.setOpen(true);
-                        } else {
-                            current.setOpen(false);
-                        }
-                        int task_key = datalayer.storeTask(current);
-
-                        String[] skills = thistask[5].split(";");
-                        for (String skl : skills) {
-                            String[] split = skl.split("\\(");
-                            String n = split[0].trim();
-                            int l = Integer.parseInt(split[1].split("\\)")[0]);
-                            int skill_key = datalayer.getSkillByName(n);
-                            datalayer.storeTaskHasSkill(task_key, skill_key, l);
-                        }
+                    
+                    try {
+                        JSONObject tasks = o.getJSONObject("tasks");
+                        Iterator<String> temp = tasks.keys();
+                        while (temp.hasNext()) {
+                            String key = temp.next();
+                            JSONObject task = tasks.getJSONObject(key);
+                            
+                            TaskImpl t = new TaskImpl(datalayer);
+                            t.setName(task.getString("name"));
+                            t.setType_key(task.getInt("typev"));
+                            t.setProjectKey(project_key);
+                            
+                            String start = task.getString("tstart");
+                            String[] parts1 = start.split("-");
+                            GregorianCalendar gc = new GregorianCalendar();
+                            gc.setLenient(false);
+                            gc.set(GregorianCalendar.YEAR, Integer.valueOf(parts1[0]));
+                            gc.set(GregorianCalendar.MONTH, Integer.valueOf(parts1[1])-1);
+                            gc.set(GregorianCalendar.DATE, Integer.valueOf(parts1[2]));
+                            t.setStartDate(gc);
+ 
+                            String end = task.getString("tend");
+                            String[] parts2 = end.split("-");
+                            GregorianCalendar gc1 = new GregorianCalendar();
+                            gc1.setLenient(false);
+                            gc1.set(GregorianCalendar.YEAR, Integer.valueOf(parts2[0]));
+                            gc1.set(GregorianCalendar.MONTH, Integer.valueOf(parts2[1])-1);
+                            gc1.set(GregorianCalendar.DATE, Integer.valueOf(parts2[2]));
+                            t.setEndDate(gc1);
+                            
+                            t.setDescription(task.getString("dec"));
+                            t.setNumCollaborators(task.getInt("devs"));
+                            
+                            int task_key = datalayer.storeTask(t);
+                            
+                            JSONArray skills = task.getJSONArray("skills");
+                            
+                            for (int i=0; i < skills.length(); i++) {
+                                JSONObject sk = skills.getJSONObject(i);
+                                int skill_key = sk.getInt("key");
+                                int level = sk.getInt("level");
+                                datalayer.storeTaskHasSkill(task_key, skill_key, level);
+                            }
+                            
+                            
+                            }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+                    
                     datalayer.destroy();
                     String act_url = request.getRequestURI();
                     s.setAttribute("previous_url", act_url);
-                    response.sendRedirect("DeveloperForTask?n=" + project_key);
+                    response.sendRedirect("/SocialDevelop/projects/suggestions/" + project_key + "?created_project=1");
+                    
                 } else {
-                    response.sendRedirect("CreateProject");
+                    response.sendRedirect("/SocialDevelop");
                 }
             } else {
-                response.sendRedirect("CreateProject");
+                response.sendRedirect("/SocialDevelop");
             }
         } else {
-            response.sendRedirect("index");
+            response.sendRedirect("/SocialDevelop");
         }
     }
 

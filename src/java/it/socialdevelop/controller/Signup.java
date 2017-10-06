@@ -34,7 +34,7 @@ public class Signup extends SocialDevelopBaseController {
     private void action_registrati(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataLayerException, SQLException, NamingException {
         HttpSession s = request.getSession(true);
         String u = (String) s.getAttribute("previous_url");
-        if (s.getAttribute("previous_url") != null && (u.equals("/SocialDevelop/index") || u.equals("/socialdevelop/MakeLoginReg"))) {
+        if (s.getAttribute("previous_url") != null && (u.equals("/SocialDevelop") || u.equals("/SocialDevelop/home") || u.equals("/socialdevelop/MakeLoginReg"))) {
 
             String name = request.getParameter("first_name");
             String surname = request.getParameter("second_name");
@@ -72,19 +72,11 @@ public class Signup extends SocialDevelopBaseController {
                             request.setAttribute("username", dev.getUsername());
                             request.setAttribute("logout", "Logout");
                             //recupero skills che non hanno figli
-                            List<Skill> skills = datalayer.getSkillsParentList();
-                            //ora recuperiamo per ognuna di esse le skills figlie
-                            if (skills != null) {
-                                for (Skill skill : skills) {
-                                    List<Skill> child = datalayer.getChild(skill.getKey());
-                                    if (child != null) {
-                                        skill.setChild(child);
-                                    }
-                                }
-                            }
+                            List<Skill> skills = datalayer.getSkills();
+                            
                             request.setAttribute("skills", skills);
                             datalayer.destroy();
-                            HttpSession sess = SecurityLayer.createSession(request, dev.getUsername(), dev.getName(), dev.getPicture(), dev.getKey());
+                            HttpSession sess = SecurityLayer.createSession(request, dev.getUsername(), dev.getName() + " " + dev.getSurname(), dev.getPicture(), dev.getKey());
                             String act_url = request.getRequestURI();
                             sess.setAttribute("previous_url", act_url);
                             TemplateResult res = new TemplateResult(getServletContext());

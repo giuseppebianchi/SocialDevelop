@@ -1,0 +1,24 @@
+<div class="listing-ver-3 task-item">
+                      <div class="listing-heading">
+                        <a href="task"><h5>{{name}}</h5></a>
+                        <ul class="bookmark list-inline">
+                            <li><a href="#" class="remove-task-button text-danger" data-id="{{id}}"><i class="fa fa-times"></i></a></li>
+                        </ul>
+                      </div>
+                      <div class="listing-inner">
+                        <div class="listing-content">
+                          <h6 class="title-company">{{type}}</h6>
+                          <span class="location"> <i class="fa fa-users text-primary"></i> {{devs}} </span> <span class="type-work full-time"> Developers </span><br>
+                          <span class="location"><i class="fa fa-clock-o text-primary"></i> From: <span class="type-work full-time"> {{tstart}} </span>| To: <span class="type-work full-time"> {{tend}} </span></span>
+                          <p>{{{dec}}}</p>
+                          <h6 class="title-tags">Skills required:</h6>
+                          <ul class="tags list-inline">
+                            {{#skills}}
+                            <li><a href="#">{{name}}</a></li>
+                            {{/skills}}
+                          </ul>
+                        </div>
+                      </div>
+                      
+</div>
+<hr class="no-color">

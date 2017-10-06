@@ -37,10 +37,10 @@ public class Index extends SocialDevelopBaseController {
             Map user = new HashMap();
             SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
             Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
-            user.put("username", dev.getUsername());
-            user.put("id", s.getAttribute("userid"));
-            user.put("fullname", dev.getName() + " " + dev.getSurname());
-            data.put("auth_user", user);
+            data.put("auth_user", s.getAttribute("userid"));
+            data.put("foto", s.getAttribute("foto"));
+            data.put("fullname", s.getAttribute("fullname"));
+            data.put("menu_active", "home");
             datalayer.destroy();
         }
         s.getAttribute("name");

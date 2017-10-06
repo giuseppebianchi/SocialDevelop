@@ -36,20 +36,40 @@ public class DeveloperForTask extends SocialDevelopBaseController {
 
     private void action_developTask(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         HttpSession s = request.getSession(true);
-        request.setAttribute("page_title", "Suggested Developers");
-        request.setAttribute("page_subtitle", "find your collaborators!");
+        Map data = new HashMap();
+        data.put("request", request);
+        
+        data.put("page_title", "Suggested Developers");
+        data.put("request", request);
+        data.put("page_subtitle", "find your collaborators!");
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
             String u = (String) s.getAttribute("previous_url");
-            request.setAttribute("logout", "Logout");
-
+            data.put("logout", "Logout");
+            data.put("auth_user", s.getAttribute("userid"));
+                data.put("foto", s.getAttribute("foto"));
+                data.put("fullname", s.getAttribute("fullname"));
+                
             SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
             Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));
             if (admin != null) {
-                request.setAttribute("admin", "admin");
+                data.put("admin", "admin");
             }
-            Project p = datalayer.getProject(Integer.parseInt(request.getParameter("n")));
+            
+            String pathInfo = request.getPathInfo(); // /{value}/test
+            String x;
+            String[] pathParts = pathInfo.split("/");
+            String value = pathParts[1]; // {value}
+            int key = Integer.parseInt(value);
+                
+            Project p = datalayer.getProject(key);
+            data.put("progetto", p);
+            
+            if(request.getParameterMap().containsKey("created_project") && (Integer.parseInt(request.getParameter("created_project")) == 1)) { 
+                data.put("created_project", 1);
+            }
             if (p.getCoordinatorKey() == (int) s.getAttribute("userid")) {
-                List<Task> tasks = datalayer.getTasks(Integer.parseInt(request.getParameter("n")));
+                
+                List<Task> tasks = datalayer.getTasks(key);
                 List<List<Developer>> devs = new ArrayList<List<Developer>>();
                 HashMap<Integer, Integer> votes = new HashMap<Integer, Integer>();
                 HashMap<Integer, Integer> projects = new HashMap<Integer, Integer>();
@@ -98,18 +118,16 @@ public class DeveloperForTask extends SocialDevelopBaseController {
                     }
                     devs.add(devTask);
                 }
-                request.setAttribute("votes", votes);
-                request.setAttribute("projects", projects);
-                request.setAttribute("tasks", tasks);
-                request.setAttribute("devs", devs);
+                data.put("tasks", tasks);
+                data.put("devs", devs);
                 datalayer.destroy();
                 TemplateResult res = new TemplateResult(getServletContext());
-                res.activate("developer_for_task.html", request, response);
+                res.activate("project_suggestions.ftl.html", data, response);
             } else {
-                response.sendRedirect("index");
+                response.sendRedirect("home");
             }
         } else {
-            response.sendRedirect("index");
+            response.sendRedirect("home");
         }
     }
 

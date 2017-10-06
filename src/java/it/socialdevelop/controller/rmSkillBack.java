@@ -45,13 +45,7 @@ public class rmSkillBack extends SocialDevelopBaseController {
                 Admin admin = datalayer.getAdmin(dev.getKey());
                 if (admin != null && admin.getDevelperKey() > 0) {
                     Skill deadSkill = datalayer.getSkill(parseInt(request.getParameter("rm-skill-b")));
-                    List<Skill> skills = deadSkill.getChild();
-                    if (!(skills.isEmpty())) {
-                        for (Skill skill : skills) {
-                            skill.setParentKey(NULL);
-                            datalayer.storeSkill(skill);
-                        }
-                    }
+                    
 
                     //controlliamo se è utilizzata, se lo è non può essere rimossa
                     Map<Developer, Integer> devs = datalayer.getDevelopersBySkill(deadSkill.getKey());

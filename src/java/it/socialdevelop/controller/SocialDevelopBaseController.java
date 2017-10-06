@@ -25,7 +25,7 @@ public abstract class SocialDevelopBaseController extends HttpServlet {
     private void processBaseRequest(HttpServletRequest request, HttpServletResponse response) {
         //WARNING: never declare DB-related objects including references to Connection and Statement (as our data layer)
         //as class variables of a servlet. Since servlet instances are reused, concurrent requests may conflict on such
-        //variables leading to unexpected results. To always have different connections and statements on a per-request
+        //variables leading  to unexpected results. To always have different connections and statements on a per-request
         //(i.e., per-thread) basis, declare them in the doGet, doPost etc. (or in methods called by them) and 
         //(possibly) pass such variables through the request.
         try (SocialDevelopDataLayer datalayer = new SocialDevelopDataLayerMysqlImpl(ds)) {

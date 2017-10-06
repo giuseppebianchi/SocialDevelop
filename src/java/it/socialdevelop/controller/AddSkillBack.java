@@ -46,14 +46,6 @@ public class AddSkillBack extends SocialDevelopBaseController {
 
                     skill.setType_key(parseInt(request.getParameter("typeS")));
 
-                    if (!(request.getParameter("skill-father") == "")) {
-
-                        Skill skillFather = datalayer.getSkill(parseInt(request.getParameter("skill-father")));
-                        if (skill.getType_key() == skillFather.getType_key()) {
-                            skill.setParent(datalayer.getSkill(parseInt(request.getParameter("skill-father"))));
-                        }
-                    }
-
                     datalayer.storeSkill(skill);
 
                     datalayer.destroy();

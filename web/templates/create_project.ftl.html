@@ -1,0 +1,305 @@
+
+<!-- SUB Banner -->
+<div class="sub-bnr user-profile-bnr" style="url('${request.getContextPath()}/theme/images/pro-img-1.jpg')">
+    <div class="position-center-center">
+      <div class="container">
+        <h2>Create New Project</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compny Profile -->
+  <div class="compny-profile"> 
+    
+    <!-- Profile Company Content -->
+    <div class="profile-company-content" data-bg-color="fff">
+      <div class="container">
+        <div class="row"> 
+          
+
+          
+
+          <!-- Tab Content -->
+          <div class="col-md-12">
+            <div class="network pt50">
+                <h5 class="tab-title">Project Info</h5>
+                <hr class="mt10">
+                <form id="form-new-project" method="post" action="${request.getContextPath()}/projects/createproject">
+                    <input id="form-data" type="hidden" name="data">
+                <div class="row">
+                   
+                    <div class="col-xs-8">
+                         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin ni</p>
+                        <h6 class="input-label">Project Name</h6>
+                        <input id="project_name" type="text" value="" placeholder="">
+                        <h6 class="input-label">Category</h6>
+                        <input id="select-project-category" type="text" value="" placeholder="">
+                        
+                        <h6 class="input-label">Location</h6>
+                        <input id="project_location" type="text" value="" placeholder="">
+                        <h6 class="input-label">Company</h6>
+                        <input id="project_company" type="text" value="" placeholder="">
+                        </div>
+                    <div class="col-xs-4">
+                        <div class="img-block avatar-pic" style="background-image: url('${request.getContextPath()}/theme/images/user-banner.jpg')"></div>
+                        <br>
+                        <label for="#upload-picture" class="btn-block"><a class="btn btn-primary btn-block">Upload Picture</a></label>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-sm-12">
+                 <h6 class="input-label">Description</h6>
+                 <div id="summernote"></div>
+                 
+                </div>
+                </div>
+                
+                <hr>
+                <h5 class="tab-title">Tasks</h5>
+              
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.</p>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="listing listing-1 pb0">
+                                    <div class="listing-section" id="tasks-list">
+                                    </div>
+                                </div>
+                               
+                            </div>
+                            
+                        </div>
+                        <a id="create-new-task" hrf="#" class="btn btn-primary">Create a new Task</a>
+                         <hr>
+                      <div id="form-new-task">
+                        <div class="row">
+                    <div class="col-sm-8">
+                        <h5 class="tab-title">Create a Task</h5>
+                        <h6 class="input-label">Task Name</h6>
+                        <input id="task-form-name" type="text" value="" placeholder="">
+                        <h6 class="input-label">Task Type</h6>
+                        <select  id="task-form-type" class="js-example-placeholder-single" style="width: 100%; display: inline;">
+                          <option></option>
+                       <#list types as type>
+                        <option value="${type.key}" data-name="${type.type}">${type.type}</option>
+                        </#list>
+                      </select>   
+                        
+                    </div>
+                    
+                </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                        <h6 class="input-label">Number of Developers</h6>
+                        <input id="task-form-number" type="number" value="" placeholder="">
+                    </div>
+                        </div>
+                <div class="row">
+                    
+                    <div class="col-sm-4">
+                        <h6 class="input-label">Start Date</h6>
+                        <input id="task-form-start" type="date"  value="" placeholder="gg/mm/yyyy">
+                    </div>
+                    <div class="col-sm-4">
+                        <h6 class="input-label">End Date</h6>
+                        <input id="task-form-end" type="date" value="" placeholder="gg/mm/yyyy">
+                    </div>
+                </div>
+                    <h6 class="input-label">Required Skills</h6>
+                    <div id="skills-list"></div>
+                    <div class="row">
+                  <div class="col-sm-8">
+                      
+                      <select name="select_skill" id="select-skill" class="js-example-placeholder-single" style="width: 100%; display: inline;">
+                          <option></option>
+                          <#list skills as skill>
+                            <option class="option-skills" value="${skill.key}" data-name="${skill.name}">${skill.name}</option>
+                          </#list>
+                      </select>
+                  </div>
+                  <div class="col-sm-2">
+                      <select id="level-skill">
+                          <option>Level</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                      </select>
+                  </div>
+                  <div class="col-sm-2">
+                      <a class="btn btn-primary btn-block" id="add-new-skill">Add Skill</a>
+                  </div>
+                      
+              </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <h6 class="input-label">Task Description</h6>
+                                <div id="summernote-task"></div>
+                            </div>
+                        </div>
+                    <div class="row"><div class="col-sm-3"><a class="btn btn-primary btn-block" href="#" id="add-task">Add Task</a></div></div>
+              <hr>
+                  </div>
+                 
+               <div class="row">
+              <div class="col-sm-12">
+                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.</p>
+
+                <input id="create-new-project-button" type="submit" class="btn btn-success btn-large" value="Create Project">
+              </div>
+          </div>
+                </form>
+          </div>
+                 
+                </div>
+          
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <script src="${request.getContextPath()}/theme/plugins/summernote/summernote.min.js"></script> 
+  <script>
+  $(document).ready(function(){
+        var ctx = "${request.getContextPath()}";
+        var tname = $("#task-form-name");
+        var tnum = $("#task-form-number");
+        var ttype = $("#task-form-type");
+        var tstart = $("#task-form-start");
+        var tend = $("#task-form-end");
+        var tdec = $('#summernote-task');
+        var select_skill = $('#select-skill');
+        var level_skill = $('#level-skill');
+        var create_task_button = $('#create-new-task');
+        var task_form = $("#form-new-task");
+        var skillTemplate, taskTemplate;
+        
+        
+        $('#summernote').summernote({
+            minHeight: 300
+        });
+        
+        //task
+        var id_task = 0;
+        var tasks = {};
+        var taskTemplate = $.get(ctx + "/templates/mustache/taskTemplate.html", function(t){
+                taskTemplate = t;
+        });
+        ttype.select2({
+            placeholder: "Select a type for the task",
+            allowClear: true
+          });
+        select_skill.select2({
+            placeholder: "Select a skill",
+            allowClear: true
+          });
+        tdec.summernote({
+            minHeight: 300
+        });
+        var tasks_list = $("#tasks-list")
+        $('#add-task').click(function(e){
+            e.preventDefault();
+            var skills_array = $.map(skills, function(value, index) {
+                return value
+            });
+            tasks[id_task] = {
+                "name": tname.val(),
+                "type": ttype.find(":selected").data("name"),
+                "typev": ttype.val(),
+                "devs": tnum.val(),
+                "dec": tdec.summernote('code'),
+                "tstart": tstart.val(),
+                "tend": tend.val(),
+                "skills": skills_array,
+                "id": id_task
+            }
+            tasks_list.append(Mustache.render(taskTemplate, tasks[id_task]))
+            id_task++;
+            ttype.select2("val", "");
+            $("#form-new-task input").val('');
+            tdec.summernote('code', '');
+            skills = {};
+            id_skill = 0;
+            skills_list.html("");
+            $('.option-skills[disabled="disabled"]').removeAttr("disabled");
+            select_skill.select2();
+            task_form.hide();
+            create_task_button.show();
+        })
+        create_task_button.click(function(e){
+            e.preventDefault()
+            $(this).hide();
+            task_form.show();
+        })
+        
+        
+        //skills
+        var id_skill = 0;
+        var skills = {};
+        var options = {};
+        var skills_list = $("#skills-list")
+        $.get(ctx + "/templates/mustache/skillTemplate.html", function(t){
+                skillTemplate = t;
+        });
+        $('#add-new-skill').click(function(e){
+            e.preventDefault();
+            var key = select_skill.val();
+            options[key] = select_skill.find(":selected")[0];
+            skills[id_skill] = {
+                "name": $(options[key]).data("name"),
+                "key": key,
+                "level": level_skill.val(),
+                "id": id_skill
+            }
+            skills_list.append(Mustache.render(skillTemplate, skills[id_skill]))
+            id_skill++;
+            $(options[key]).attr("disabled", "disabled");
+            select_skill.select2();
+            select_skill.select2("val", "");
+            level_skill.get(0).selectedIndex = 0;
+        })
+        $("body").on("click", '.remove-skill-button', function(e){
+            e.preventDefault();
+            var id = $(this).data("id");
+            var key = $(this).data("key");
+            delete skills[id];
+            $(options[key]).removeAttr("disabled");
+            select_skill.select2();
+            delete options[key];
+            $("#skill-" + id).remove();
+        });
+        
+        
+        $("#form-new-project").submit(function(e){
+        var validation = true;
+            
+        var data = {
+                "project_name": $('#project_name').val(),
+                "project_category": $('#select-project-category').val(),
+                "project_location": $('#project_location').val(),
+                "project_company": $('#project_company').val(),
+                "project_description": $('#summernote').summernote('code'),
+                "tasks": tasks   
+            }
+            
+        //CONTROLLI
+
+        if(validation){
+            $("#form-data").val(JSON.stringify(data))
+            return true;
+        }else{
+            return false;
+        }
+            
+        })
+        
+    })
+    
+  </script>

@@ -59,9 +59,16 @@
           <#if auth_user??>
           <li><form action="${request.getContextPath()}/search" id="search-menu-form-1" class="search-menu-form"><input type="text" value="" placeholder="Search SocialDevelop"><a href="#" id="search-button"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
           </#if>
-          <li class="active"><a href="${request.getContextPath()}/home">HOME</a></li>
+          <#if menu_active??>
+          <li <#if menu_active == "home">class="active"</#if>><a href="${request.getContextPath()}/home">HOME</a></li>
+            <li <#if menu_active == "projects">class="active"</#if>> <a href="${request.getContextPath()}/projects">Projects</a></li>
+            <li <#if menu_active == "developers">class="active"</#if>> <a href="${request.getContextPath()}/developers">Developers</a></li>
+          <#else>
+          <li><a href="${request.getContextPath()}/home">HOME</a></li>
             <li> <a href="${request.getContextPath()}/projects">Projects</a></li>
             <li> <a href="${request.getContextPath()}/developers">Developers</a></li>
+            </#if>
+          
                     </ul>
                     </nav>
         <a href="#" class="mobile-sidebar-button mobile-sidebar-toggle"><span></span></a>
@@ -71,7 +78,7 @@
             <#if auth_user??>
             <li><a href="${request.getContextPath()}/dashboard" id="notifications-icon" class="new-contents"><i class="fa fa-envelope"></i></a></li>
             <!--<li><a href="/signin" id="notifications-icon" class="new-contents"><i class="fa fa-tachometer"></i></a></li>-->
-            <li id="avatar-menu" ><a href="${request.getContextPath()}/user"><div <#if foto??>style="background-image: url('${request.getContextPath()}/theme/images/uploads/${foto}')"</#if>></div></a>
+            <li id="avatar-menu" ><a href="${request.getContextPath()}/user"><div <#if foto??>style="background-image: url('${request.getContextPath()}/uploads/images/${foto}')"</#if>></div></a>
               <ul style="display: none;">
                 <li class="bordered">Signed in as<strong>${fullname}</strong></li>
                 <li><a href="user">Your profile</a></li>

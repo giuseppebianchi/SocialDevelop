@@ -61,6 +61,10 @@
         <servlet-class>it.socialdevelop.controller.Project_Detail</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Task_Detail</servlet-name>
+        <servlet-class>it.socialdevelop.controller.Task_Detail</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>MyCollaborations</servlet-name>
         <servlet-class>it.socialdevelop.controller.MyCollaborations</servlet-class>
     </servlet>
@@ -127,6 +131,10 @@
         <servlet-class>it.socialdevelop.controller.InsertProject</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>InsertTask</servlet-name>
+        <servlet-class>it.socialdevelop.controller.InsertTask</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>FindDeveloper</servlet-name>
         <servlet-class>it.socialdevelop.controller.FindDeveloper</servlet-class>
     </servlet>
@@ -137,6 +145,18 @@
     <servlet>
         <servlet-name>UpdateProject</servlet-name>
         <servlet-class>it.socialdevelop.controller.UpdateProject</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>NewTask</servlet-name>
+        <servlet-class>it.socialdevelop.controller.NewTask</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateTask</servlet-name>
+        <servlet-class>it.socialdevelop.controller.UpdateTask</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateTaskSave</servlet-name>
+        <servlet-class>it.socialdevelop.controller.UpdateTaskSave</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateProjectSave</servlet-name>
@@ -283,6 +303,10 @@
         <url-pattern>/projects</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>Project_Detail</servlet-name>
+        <url-pattern>/projects/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>provaDB2</servlet-name>
         <url-pattern>/provaDB2</url-pattern>
     </servlet-mapping>
@@ -315,6 +339,10 @@
         <url-pattern>/Project_Detail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>Task_Detail</servlet-name>
+        <url-pattern>/projects/tasks/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>MySkills</servlet-name>
         <url-pattern>/MySkills</url-pattern>
     </servlet-mapping>
@@ -328,7 +356,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CreateProject</servlet-name>
-        <url-pattern>/CreateProject</url-pattern>
+        <url-pattern>/projects/new</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NewTask</servlet-name>
+        <url-pattern>/projects/settings/new_task/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateProfile</servlet-name>
@@ -340,7 +372,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>InsertProject</servlet-name>
-        <url-pattern>/InsertProject</url-pattern>
+        <url-pattern>/projects/createproject</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertTask</servlet-name>
+        <url-pattern>/projects/settings/create_task</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FindDeveloper</servlet-name>
@@ -348,11 +384,19 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateProject</servlet-name>
-        <url-pattern>/UpdateProject</url-pattern>
+        <url-pattern>/projects/settings/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateTask</servlet-name>
+        <url-pattern>/projects/tasks/settings/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateProjectSave</servlet-name>
-        <url-pattern>/UpdateProjectSave</url-pattern>
+        <url-pattern>/projects/settings/update_project</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateTaskSave</servlet-name>
+        <url-pattern>/projects/tasks/settings/update_task</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeveloperProfile</servlet-name>
@@ -436,7 +480,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeveloperForTask</servlet-name>
-        <url-pattern>/DeveloperForTask</url-pattern>
+        <url-pattern>/projects/suggestions/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>sendRequest</servlet-name>

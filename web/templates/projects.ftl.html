@@ -2,8 +2,12 @@
   <div class="sub-bnr user-profile-bnr">
     <div class="position-center-center">
       <div class="container">
+          <#if auth_user??>
+        <a href="${request.getContextPath()}/projects/new" class="pull-right btn btn-success mt10"> Create new project</a>
+        </#if>
         <h2>Projects</h2>
-        <p>Proin gravida nibh vel velit auctor aliquet aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. </p>
+        
+        <p>Proin gravida nibh vel velit auctor aliquet aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsu. </p>
       </div>
     </div>
   </div>
@@ -49,9 +53,14 @@
 
                                     <a href="#" class="location">${progetto.coordinator.name?cap_first} ${progetto.coordinator.surname?cap_first}</a>
                                     <br>
-                                    <h6 class="project-type">Web Development ${ncollaboratori[progetto?index]}</h6>
-                                    <span class="project-type text-black"><span class="text-primary">${ntasks[progetto?index]}</span> Tasks </span>
-                                  <p>${progetto.description} <a href="${request.getContextPath()}/projects/${progetto.key}">read more</a></p>
+                                    <h6 class="project-type">${progetto.category}</h6>
+                                    <span class="project-type text-black"><span class="text-primary">${ntasks[progetto?index]}</span> Tasks | <span class="text-primary">${ncollaboratori[progetto?index]}</span> Developers</span>
+                                    <#assign dec = progetto.getTextDescription()>
+                                    <#if (dec?length > 251)>
+                                        <div>${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${progetto.key}">read more</a></div>
+                                    <#else>
+                                        <div>${dec} <a href="${request.getContextPath()}/projects/${progetto.key}"> read more</a></div>
+                                    </#if>
                                   <!--<h6 class="title-tags">Skills required:</h6>
                                   <ul class="tags list-inline">
                                     <li><a href="#">Javascript</a></li>

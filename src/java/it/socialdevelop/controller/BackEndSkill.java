@@ -44,14 +44,11 @@ public class BackEndSkill extends SocialDevelopBaseController {
                 request.setAttribute("admin", "admin");
                 request.setAttribute("page_title", "SKILL BACKEND");
                 request.setAttribute("page_subtitle", "Manage the Skills");
-                List<Skill> skills = datalayer.getSkillsParentList();
+                List<Skill> skills = datalayer.getSkills();
                 List<Skill> skills_ok = new ArrayList();
                 if (skills != null) {
                     for (Skill skill : skills) {
-                        List<Skill> child = datalayer.getChild(skill.getKey());
-                        if (child != null) {
-                            skill.setChild(child);
-                        }
+                        
                         //riempiamo skills_ok con le skill cancellabili
                         Map<Developer, Integer> devs = datalayer.getDevelopersBySkill(skill.getKey());
                         if (devs.size() == 0) {

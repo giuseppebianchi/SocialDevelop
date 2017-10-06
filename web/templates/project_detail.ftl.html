@@ -1,0 +1,360 @@
+
+  
+  <div class="compny-profile"> 
+    <!-- SUB Banner -->
+    <div class="profile-bnr overlay-up">
+        <a class="overlay"></a>
+      <div class="container overlay-up"> 
+        
+        <!-- User Iinfo -->
+        <div class="user-info background-transparent">
+          <h1>${projectname?cap_first}</h1>
+          <!--<h6 id="${coordinator.key}">${coordinator.name?cap_first} ${coordinator.surname?cap_first}</h6>-->
+          <h6>${projectcategory?cap_first}</h6>
+           <span>${percProg} %</span>
+          <hr>
+          <h6><a href="#">(${nTask})</a> Tasks  | <a href="#">${nProjectCollaborators}</a> Developers required</h6>
+          <!-- Stars 
+          <ul class="row">
+            <li class="col-sm-6">
+              
+            </li>
+            <li class="col-sm-6">
+              
+            </li>
+          </ul>-->
+          
+          <!-- Followers 
+          <div class="followr">
+            <ul class="row">
+              <li class="col-sm-6">
+                <p>Tasks <span>(31)</span></p>
+              </li>
+              <li class="col-sm-6">
+                <p>Following <span>(38)</span></p>
+              </li>
+            </ul>
+          </div>-->
+        </div>
+        
+        <!-- Top Riht Button -->
+        <div class="right-top-bnr">
+          <div class="connect"> 
+            <!--<a href="#." class="btn btn-primary">3 June 2017</a>-->
+            <#if auth_user??>
+                <#if isCoordinator??>
+                <a id="setting-project-button" href="${request.getContextPath()}/projects/settings/${projectkey}" class="btn btn-default"><i class="fa fa-cog"></i> Edit</a>
+                <div class="bt-ns"> <a href="#."><i class="fa fa-bookmark-o"></i> </a> <a href="#."><i class="fa fa-thumbs-up"></i> </a>  </div>
+                </#if>
+            <#else>
+            <div class="bt-ns"> <a href="#."><i class="fa fa-bookmark-o"></i> </a> <a href="#."><i class="fa fa-thumbs-up"></i> </a>  </div>
+          </#if>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal POPUP 
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="container">
+              <h6><a class="close" href="#." data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></a> Send Message</h6>
+              
+              <form action="#">
+                <ul class="row">
+                  <li class="col-xs-6">
+                    <input type="text" placeholder="First Name ">
+                  </li>
+                  <li class="col-xs-6">
+                    <input type="text" placeholder="Last Name">
+                  </li>
+                  <li class="col-xs-6">
+                    <input type="text" placeholder="Country">
+                  </li>
+                  <li class="col-xs-6">
+                    <input type="text" placeholder="Email">
+                  </li>
+                  <li class="col-xs-12">
+                    <textarea placeholder="Your Message"></textarea>
+                  </li>
+                  <li class="col-xs-12">
+                    <button class="btn btn-primary">Send message</button>
+                  </li>
+                </ul>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>-->
+    </div>
+    
+    <!-- Profile Company Content -->
+    <div class="profile-company-content main-user project-page" data-bg-color="f5f5f5">
+      <div class="container">
+        <div class="row"> 
+          
+          <!-- Nav Tabs -->
+          <div class="col-md-12 ">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" href="#profile">Project</a></li>
+              <li><a data-toggle="tab" href="#jobs">Tasks</a></li>
+              <li><a data-toggle="tab" href="#connections">Developers</a></li>
+              <li><a data-toggle="tab" href="#discussion">Discussion</a></li>
+            </ul>
+              <hr>
+          </div>
+          
+          
+          
+          
+          <!-- Tab Content -->
+          <div class="col-md-12">
+            <div class="tab-content"> 
+              
+              <!-- PROFILE -->
+              <div id="profile" class="tab-pane fade in active">
+              <!-- SIDE BAR -->
+              <h3 class="tab-title">Project</h3>
+              <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
+              <hr>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="profile-main">
+                      <h3 class="tab-title">Category</h3>
+                      <h5>${projectcategory}</h5>
+                      <hr>
+                    <h3 class="tab-title">About</h3>
+                    <div class="tab-content-body">
+                      ${projectdescr?no_esc}
+                    </div>
+                </div>
+                
+                    <hr>
+          </div>
+          <div class="col-md-12 similar"> 
+              <h3 class="tab-title">Company</h3>
+                      <p>${projectcompany}</p>
+                      <hr>
+                      <h3 class="tab-title">Location</h3>
+                      <p>${projectlocation}</p>
+                      <hr>
+                  <!-- DEVELOPER -->
+                  <h3 class="tab-title">Project's Coordinator</h3>
+                  <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia.</p>
+          <div class="developer-list">
+          <div class="media">
+            <div class="media-left">
+                <div class="inn-simi"> <div class="media-object" alt=""></div></div>
+            </div>
+            <div class="media-body">
+              <h4>${coordinator.name} ${coordinator.surname}</h4>
+              <p>SEO Specialist</p>
+              <div class="com-rate"><span><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i></span></div>
+              <br>
+              <a href="#">New York, USA</a>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, 
+                voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum 
+                accusantium deleniti neque architecto vitae.</p>
+              
+              
+              <!-- Share 
+              <div class="share-w"><a href="#."><i class="fa fa-bookmark-o"></i></a> <a href="#."><i class="fa fa-envelope-o"></i></a> <a href="#."><i class="fa fa-eye"></i></a></div>
+              -->
+            </div>
+          </div>
+          <!-- END DEVELOPER -->
+          </div>
+       
+                  <!-- Company Rating
+                  <div class="sidebar">
+                    <h5 class="main-title">Developer Rating</h5>
+                    <div class="sidebar-information">
+                      <ul class="single-category com-rate">
+                        <li class="row">
+                          <h6 class="title col-xs-6">Expertise:</h6>
+                          <span class="col-xs-6"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <i class="fa fa-star-o"></i></span> </li>
+                        <li class="row">
+                          <h6 class="title col-xs-6">Knowledge:</h6>
+                          <span class="col-xs-6"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i></span> </li>
+                        <li class="row">
+                          <h6 class="title col-xs-6">Quality::</h6>
+                          <span class="col-xs-6"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></span> </li>
+                      </ul>
+                    </div>
+                  </div> -->
+                  
+                  
+                </div>
+          </div>
+              </div>
+              
+              <!-- Jobs -->
+              <div id="jobs" class="tab-pane fade">
+                  <h3 class="tab-title">Tasks (<span class="text-primary">${nTask}</span>)</h3>
+              <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
+                <ul class="nav nav-tabs">
+                    <li><a>20 <span class="text-primary">Completed</span></a></li>
+                    <li><a>3 <span class="text-success">Open</span></a></li>
+                    <li><a>2 <span class="text-danger">Closed</span></a></li>
+                    
+                </ul>
+              <hr>
+                <div class="listing listing-1">
+                  <div class="listing-section">
+                      
+                   <#list tasks as task>
+                    <div class="listing-ver-3 task-item">
+                      <div class="listing-heading">
+                        <a href="${request.getContextPath()}/projects/tasks/${task.key}"><h5><#if task.open><i class="fa fa-check-circle text-success"></i><#else><i class="fa fa-dot-circle-o text-danger"></i></#if> ${task.name}</h5></a>
+                        <#if auth_user??>
+                            <#if isCoordinator??>
+                                <ul class="bookmark list-inline">
+                                  <li><a href="${request.getContextPath()}/projects/tasks/settings/${task.key}"><i class="fa fa-cog"></i></a></li>
+                                </ul>
+                            </#if>
+                        </#if>
+                      </div>
+                      <div class="listing-inner">
+                        <div class="listing-content">
+                          <h6 class="title-company">${tasks_types[task?index].type}</h6>
+                          <span class="location"> <i class="fa fa-map-marker"></i> Manhattan, New york, USA </span> <!--<span class="text-success"> Start Date</span>: ${task.getStartDate().time?date?string.short} |  <span class="text-danger">End Date</span>: ${task.getEndDate().time?date?string.short}-->
+                          <p>${task.description?no_esc}</p>
+                          <h6 class="title-tags">Skills required:</h6>
+                          <ul class="tags list-inline">
+                            <#list skills[task?index] as key,value>
+                            <li><a href="">${key.name} <span>${value}</span> </a></li>
+                        </#list>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="listing-tabs">
+                        <ul>
+                          <li class="hidden-xs"><#if task.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></li>
+                          <li><span><i class="fa fa-group text-primary"></i> <strong>${task.numCollaborators}</strong> Developers</span></li>
+                          <li><span><i class="fa fa-clock-o text-primary"></i> ${task.getStartDate().time?date?string.short} <strong class="text-primary">|</strong> ${task.getStartDate().time?date?string.short}</span></li>
+                          <li class="visible-xs"><#if task.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></li>
+                          <li><a href="${request.getContextPath()}/projects/tasks/${task.key}"><span class="text-primary">Show Task <i class="fa fa-chevron-right"></i></span></a></li>
+                        </ul>
+                      </div>
+                    </div>
+                   </#list> 
+                  </div>
+                </div>
+              </div>
+              <div id="connections" class="tab-pane fade">
+                  <#if auth_user??>
+                <#if isCoordinator??>
+                <a href="${request.getContextPath()}/projects/suggestions/${projectkey}" class="btn btn-primary pull-right">Find Developers</a>
+                </#if>
+              </#if>
+              <h3 class="tab-title">Developers</h3>
+              <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
+              
+              <ul class="nav nav-tabs">
+                    <li><a>${nProjectCollaborators} <span class="text-primary">Required</span></a></li>
+                    <li><a>20 <span class="text-success">Hired</span></a></li>
+                    <li><a>20 <span class="text-danger">Requests</span></a></li>
+                </ul>
+              <hr>
+                <div class="">
+                  <div class="similar developer-list">
+                      <!-- DEVELOPER -->
+          <div class="media">
+            <div class="media-left">
+                <div class="inn-simi"> <div class="media-object" alt=""></div></div>
+            </div>
+            <div class="media-body">
+              <h4>Giuseppe Bianchi</h4>
+              <p>SEO Specialist</p>
+              <div class="com-rate"><span><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i></span></div>
+              <a href="#">New York, USA</a>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, 
+                voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum 
+                accusantium deleniti neque architecto vitae.</p>
+              <span class="title-tags">Tasks:</span>
+                          <ul class="tags list-inline">
+                            
+                          </ul>
+              <!-- Share -->
+              <div class="share-w"><a href="#."><i class="fa fa-bookmark-o"></i></a> <a href="#."><i class="fa fa-envelope-o"></i></a> <a href="#."><i class="fa fa-eye"></i></a></div>
+            </div>
+          </div>
+          <!-- END DEVELOPER -->
+                    </div>
+
+                </div>                
+              </div>
+              <!-- Contact -->
+              <div id="discussion" class="tab-pane fade">
+                  <h3 class="tab-title">Discussion</h3>
+              <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
+              <hr>
+                  <div class="profile-in">
+                    <div class="uou-post-comment">
+                      <aside class="uou-block-14a">
+                        <h5 class="sidebar-title">Comments(<span>2</span>)</h5>
+                        <br>
+                        <ul>
+                          <li>
+                            <article class="comment">
+                              <img src="theme/images/p-post-1.png" alt="">
+
+                              <div>
+                                <header>
+                                  <a href="#" class="user">Jessica Walsh -</a>
+
+                                  <span class="time-ago">May 13, 2015(11.25)</span>
+                                  <a href="#" class="reply">Reply</a>
+                                </header>
+
+                                <p>Veniam minus obcaecati, quos facere et quibusdam debitis iure voluptate libero voluptas dolorem praesentium rerum adipisci ad fuga, odio molestiae. Soluta quos vel pariatur nemo fugit repellat. nemo fugit repellat</p>
+                              </div>
+                            </article>
+                          </li>
+
+
+                          <li>
+                            <article class="comment">
+                              <img src="${request.getContextPath()}/theme/images/p-post-1.png" alt="">
+
+                              <div>
+                                <header>
+                                  <a href="#" class="user">Jessica Walsh -</a>
+
+                                  <span class="time-ago">May 13, 2015(11.25)</span>
+                                  <a href="#" class="reply">Reply</a>
+                                </header>
+
+                                <p>Veniam minus obcaecati, quos facere et quibusdam debitis iure voluptate libero voluptas dolorem praesentium rerum adipisci ad fuga, odio molestiae. Soluta quos vel pariatur nemo fugit repellat. nemo fugit repellat</p>
+                              </div>
+                            </article>
+                          </li>
+
+                        </ul>
+                        <h4>Join Conversation</h4>
+                        <div class="uou-post-comment-form">
+                          <form role="form">
+                            <div class="row">
+
+                              <div class="col-sm-12">
+                                <textarea placeholder="Your comment"></textarea>
+                              </div>
+
+                              <div class="col-sm-12">
+                                <button class="btn btn-primary">Add Comment</button>
+                              </div>
+
+                            </div> <!-- end row -->
+                          </form>
+                        </div>
+                      </aside> <!-- end .uou-block-14a -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

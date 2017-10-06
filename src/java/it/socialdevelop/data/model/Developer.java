@@ -87,5 +87,9 @@ public interface Developer {
     void setPicture(String picture);
 
     String getPicture();
+    
+    void setHeadline(String picture);
+
+    String getHeadline();
 
 }

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import it.socialdevelop.data.impl.ProjectImpl;
 import it.socialdevelop.data.impl.TaskImpl;
 import it.socialdevelop.data.model.Admin;
+import it.socialdevelop.data.model.Project;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
 
@@ -33,93 +34,43 @@ public class UpdateProjectSave extends SocialDevelopBaseController {
         //recuperare coordinatore dalla sessione!
         HttpSession s = request.getSession(true);
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
-            if (!request.getParameter("tasks").equals("")) {
-                SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
+            
+            //controllo se chi sta modificando il progetto è veramente il propretario
+            int userid = (int) s.getAttribute("userid");
+            int project_key = Integer.parseInt(request.getParameter("project_id"));
+            SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
+            Project project = datalayer.getProject(project_key);
+            int coordinator_key = project.getCoordinatorKey();
+            
+            if (userid == coordinator_key) {
 
                 String project_name = request.getParameter("project_name");
-                String project_descr = request.getParameter("project_descr");
-                int userid = (int) s.getAttribute("userid");
+                String project_category = request.getParameter("project_category");
+                String project_location = request.getParameter("project_location");
+                String project_company = request.getParameter("project_company");
+                String project_descr = request.getParameter("project_description");
+                
+                
                 //memorizziamo il progetto
                 ProjectImpl p = new ProjectImpl(datalayer);
                 p.setCoordinatorKey(userid);
                 p.setName(project_name);
+                p.setCategory(project_category);
+                p.setLocation(project_location);
+                p.setCompany(project_company);
                 p.setDescription(project_descr);
-                String pk = request.getParameter("n");
-                p.setKey(Integer.parseInt(pk));
+                
+                p.setKey(project_key);
                 s.removeAttribute("projectKey");
-                String tasks = request.getParameter("tasks");
-
-                int project_key = datalayer.storeProject(p);
-                //ora recuperiamo le info sui task e le memorizziamo
-
-                String tasks_keys = request.getParameter("tasks_keys");
-                String[] task_key = tasks_keys.split(";");
-                String[] task = tasks.split("@");
-                //datalayer.deleteTasksFromProject(project_key);
-                int i = 0;
-                for (String t : task) {
-                    String[] thistask = t.split("#");
-                    TaskImpl current = new TaskImpl(datalayer);
-                    current.setName(thistask[0]);
-                    //int i;
-                    //for(i=0;i<task_key.length;i++){
-                    /*if(thistask[0].equals(task_key[i].split(",")[0])){
-                            current.setKey(Integer.parseInt(task_key[i].split(",")[1]));
-                        }*/
-                    if (i < task_key.length) {
-                        Task temp = datalayer.getTask(Integer.parseInt(task_key[i].split(",")[1]));
-                        if (temp != null) {
-                            current.setKey(Integer.parseInt(task_key[i].split(",")[1]));
-                            //}
-
-                        }
-                    }
-                    i++;
-
-                    current.setProjectKey(project_key);
-                    String start = thistask[1];
-                    GregorianCalendar gc = new GregorianCalendar();
-                    gc.setLenient(false);
-                    gc.set(GregorianCalendar.YEAR, Integer.valueOf(start.split("/")[2]));
-                    gc.set(GregorianCalendar.MONTH, Integer.valueOf(start.split("/")[1]) - 1);
-                    gc.set(GregorianCalendar.DATE, Integer.valueOf(start.split("/")[0]));
-                    current.setStartDate(gc);
-
-                    String end = thistask[2];
-                    GregorianCalendar gc1 = new GregorianCalendar();
-                    gc.setLenient(false);
-                    gc.set(GregorianCalendar.YEAR, Integer.valueOf(end.split("/")[2]));
-                    gc.set(GregorianCalendar.MONTH, Integer.valueOf(end.split("/")[1]) - 1);
-                    gc.set(GregorianCalendar.DATE, Integer.valueOf(end.split("/")[0]));
-                    current.setEndDate(gc1);
-
-                    current.setDescription(thistask[3]);
-                    current.setNumCollaborators(Integer.parseInt(thistask[4]));
-                    current.setType_key(datalayer.getTypeByName(thistask[6]));
-                    if (thistask[7].equals("Open")) {
-                        current.setOpen(true);
-                    } else {
-                        current.setOpen(false);
-                    }
-
-                    int task_key2 = datalayer.storeTask(current);
-                    datalayer.deleteSkillsFromTask(task_key2);
-                    String[] skills = thistask[5].split(";");
-                    for (String skl : skills) {
-                        String[] split = skl.split("\\(");
-                        String n = split[0].trim();
-                        int l = Integer.parseInt(split[1].split("\\)")[0]);
-                        int skill_key = datalayer.getSkillByName(n);
-                        datalayer.storeTaskHasSkill(task_key2, skill_key, l);
-                    }
-                }
+                datalayer.storeProject(p);
+                
                 datalayer.destroy();
-                response.sendRedirect("MyProjects");
+                response.sendRedirect("/SocialDevelop/projects/settings/" + project_key + "?updated_project=1");
             } else {
-                response.sendRedirect("UpdateProject?n=" + request.getParameter("n"));
+                response.sendRedirect("/SocialDevelop/projects/" + project_key);
             }
         } else {
-            response.sendRedirect("MyProjects");
+            response.sendRedirect("/SocialDevelop");
         }
 
     }

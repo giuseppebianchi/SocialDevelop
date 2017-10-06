@@ -3342,7 +3342,7 @@ ul, ol {
     display: block !important;
 }
 .project-list-content{
-    width: 70% !important;
+    width: 60% !important;
 }
 .search-menu-form{
     margin-bottom: 0;
@@ -3860,6 +3860,12 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
     padding: 10px 0px;
     margin: 20px 0 0;
     font-weight: 600;
+}
+#tasks-list .task-item{
+    border-left: 2px solid #0099ff;
+}
+.alert{
+    color: #fff;
 }
 @media (max-width: 767px) {
 	.projects-section .css-table-cell.image.has-bg-image{

@@ -8,11 +8,12 @@
         
         <!-- User Iinfo -->
         <div class="user-info background-transparent">
-          <h1>Name Project</h1>
-          <h6>Coordinator</h6>
+          <h1>${projectname?cap_first}</h1>
+          <h6 id="${coordinator.key}">${coordinator.fullname?cap_first}</h6>
           <h6>Type Project</h6>
+           <span>${percProg} %</span>
           <hr>
-          <h6><a href="#">(31)</a> Tasks  | <a href="#">N</a> Developers required</h6>
+          <h6><a href="#">(31)</a> Tasks  | <a href="#">${nProjectCollaborators}</a> Developers required</h6>
           <!-- Stars 
           <ul class="row">
             <li class="col-sm-6">
@@ -115,52 +116,7 @@
                   <div class="profile-main">
                     <h3 class="tab-title">About</h3>
                     <div class="tab-content-body">
-                      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus 
-                        similique aliquidautem laudantium sapiente ad enim ipsa modi labo rum accusantium deleniti neque. </p>
-                      <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea, nihil, dolores, culpa ullam vero ipsum placeat 
-                        accusamus nemoitate id molestiae consectetur quae pariatur repudi andae vel ex quaerat nam iusto aliquid 
-                        laborum quia adipisci aut ut imcati nisi deleniti tempore maxime sequi fugit reiciendis libero quo. Rerum
-                        assumenda.</p>
-                      
-                      <!-- Video -->
-                      <iframe src="https://www.youtube.com/embed/uVju5--RqtY"></iframe>
-                      
-                  <div class="profile-serv">
-                    <h6>Here’s an overview of the services we provide.</h6>
-                    <div class="media">
-                      <div class="media-left">
-                        <div class="icon"> <img src="theme/images/icon-prifile-1.png" alt=""> </div>
-                      </div>
-                      <div class="media-body">
-                        <h6>Engine diagnostics and repairs</h6>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, 
-                          mollitia, voluptatibus similique aliquidautem laudantium sapiente ad enim ipsa modi 
-                          labo rum accusantium deleniti neque.</p>
-                      </div>
-                    </div>
-                    <div class="media">
-                      <div class="media-left">
-                        <div class="icon"> <img src="theme/images/icon-prifile-2.png" alt=""> </div>
-                      </div>
-                      <div class="media-body">
-                        <h6>Engine diagnostics and repairs</h6>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, 
-                          mollitia, voluptatibus similique aliquidautem laudantium sapiente ad enim ipsa modi 
-                          labo rum accusantium deleniti neque.</p>
-                      </div>
-                    </div>
-                    <div class="media">
-                      <div class="media-left">
-                        <div class="icon"> <img src="theme/images/icon-prifile-3.png" alt=""> </div>
-                      </div>
-                      <div class="media-body">
-                        <h6>Engine diagnostics and repairs</h6>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, 
-                          mollitia, voluptatibus similique aliquidautem laudantium sapiente ad enim ipsa modi 
-                          labo rum accusantium deleniti neque.</p>
-                      </div>
-                    </div>
-                  </div>
+                      ${projectdescr}
                     </div>
                 </div>
                 
@@ -176,7 +132,7 @@
                 <div class="inn-simi"> <div class="media-object" alt=""></div></div>
             </div>
             <div class="media-body">
-              <h4>Giuseppe Bianchi</h4>
+              <h4>${coordinator.fullname?cap_first}</h4>
               <p>SEO Specialist</p>
               <div class="com-rate"><span><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i></span></div>
               <br>
@@ -229,38 +185,7 @@
               <hr>
                 <div class="listing listing-1">
                   <div class="listing-section">
-                    <div class="listing-ver-3 task-item">
-                      <div class="listing-heading">
-                        <a href="task"><h5><i class="fa fa-check-circle text-success"></i> Mars Planet Telecommunications Inc.</h5></a>
-                        <ul class="bookmark list-inline">
-                          <li><a href="#"><i class="fa fa-bookmark"></i></a></li>
-                        </ul>
-                      </div>
-                      <div class="listing-inner">
-                        <div class="listing-content">
-                          <h6 class="title-company">Front End Web Development</h6>
-                          <span class="location"> <i class="fa fa-map-marker"></i> Manhattan, New york, USA </span> <span class="type-work full-time"> Full Time </span>
-                          <p>Proin gravida nibh vel velit auctor aliquet aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio pellentesque habitant morbi tristique senectus et netus et malesuada. <a href="single_job.html">read more</a></p>
-                          <h6 class="title-tags">Skills required:</h6>
-                          <ul class="tags list-inline">
-                            <li><a href="#">Javascript</a></li>
-                            <li><a href="#">Wordpress</a></li>
-                            <li><a href="#">Presta</a></li>
-                            <li><a href="#">Sass</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div class="listing-tabs">
-                        <ul>
-                          <li class="hidden-xs"><span class="task-open">Open</span></li>
-                          <li><span><i class="fa fa-group text-primary"></i> <strong>10</strong> Developers</span></li>
-                          <li><span><i class="fa fa-clock-o text-primary"></i> <strong>8</strong> Hours/Days</span></li>
-                          <li class="visible-xs"><span class="task-open">Open</span></li>
-                          <li><span class="text-primary">Show Task <i class="fa fa-chevron-right"></i></span></li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="listing-ver-3 task-item">
+                      <div class="listing-ver-3 task-item">
                       <div class="listing-heading">
                         <h5><i class="fa fa-dot-circle-o text-danger"></i> Front-End Web Developer</h5>
                         <ul class="bookmark list-inline">
@@ -291,6 +216,40 @@
                         </ul>
                       </div>
                     </div>
+                   <#list tasks as task>
+                    <div class="listing-ver-3 task-item">
+                      <div class="listing-heading">
+                        <a href="project/{$projectkey}/tasks/${task.key}"><h5><#if task.open><i class="fa fa-check-circle text-success"></i><#else><i class="fa fa-dot-circle-o text-danger"></i></#if> ${task.name}</h5></a>
+                        <ul class="bookmark list-inline">
+                          <li><a href="#"><i class="fa fa-bookmark"></i></a></li>
+                        </ul>
+                      </div>
+                      <div class="listing-inner">
+                        <div class="listing-content">
+                          <h6 class="title-company">${tasks_types[task?index].type}</h6>
+                          <span>Start Date: ${task.getStartDate().time?date?string.short}</span>
+                          <span>End Date: ${task.getEndDate().time?date?string.short}</span>
+                          <span class="location"> <i class="fa fa-map-marker"></i> Manhattan, New york, USA </span> <span class="type-work full-time"> Full Time </span>
+                          <p>Proin gravida nibh vel velit auctor aliquet aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh vulputate cursus a sit amet mauris. Morbi accumsan ipsum velit. Nam nec tellus a odio tincidunt auctor a ornare odio pellentesque habitant morbi tristique senectus et netus et malesuada. <a href="single_job.html">read more</a></p>
+                          <h6 class="title-tags">Skills required:</h6>
+                          <ul class="tags list-inline">
+                            <#list skills[task?index] as key,value>
+                            <li><a href="">${key.name}&nbsp;(${value}/10)</a></li>
+                        </#list>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="listing-tabs">
+                        <ul>
+                          <li class="hidden-xs"><#if task.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></li>
+                          <li><span><i class="fa fa-group text-primary"></i> <strong>${task.numCollaborators}</strong> Developers</span></li>
+                          <li><span><i class="fa fa-clock-o text-primary"></i> <strong>8</strong> Hours/Days</span></li>
+                          <li class="visible-xs"><#if task.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></li>
+                          <li><span class="text-primary">Show Task <i class="fa fa-chevron-right"></i></span></li>
+                        </ul>
+                      </div>
+                    </div>
+                   </#list> 
                   </div>
                 </div>
               </div>
@@ -320,8 +279,7 @@
                 accusantium deleniti neque architecto vitae.</p>
               <span class="title-tags">Tasks:</span>
                           <ul class="tags list-inline">
-                            <li><a href="#">Front end development</a></li>
-                            <li><a href="#">Graphic design</a></li>
+                            
                           </ul>
               <!-- Share -->
               <div class="share-w"><a href="#."><i class="fa fa-bookmark-o"></i></a> <a href="#."><i class="fa fa-envelope-o"></i></a> <a href="#."><i class="fa fa-eye"></i></a></div>

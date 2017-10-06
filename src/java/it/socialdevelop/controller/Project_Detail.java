@@ -26,6 +26,7 @@ import it.socialdevelop.data.model.Skill;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
 import it.socialdevelop.data.model.Type;
+import java.util.HashMap;
 
 /**
  *
@@ -56,31 +57,43 @@ public class Project_Detail extends SocialDevelopBaseController {
 
         SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
         HttpSession s = request.getSession(true);
-        int key = Integer.parseInt(request.getParameter("n")); //project_key
+        Map data = new HashMap();
+        data.put("request", request);
+        //int key = Integer.parseInt(request.getParameter("n")); //project_key
+        String pathInfo = request.getPathInfo(); // /{value}/test
+        String[] pathParts = pathInfo.split("/");
+        String value = pathParts[1]; // {value}
+        int key = Integer.parseInt(value);
         Project project = datalayer.getProject(key);
         int coordinator_key = project.getCoordinatorKey();
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
-            request.setAttribute("logout", "Logout");
+            data.put("logout", "Logout");
+            data.put("auth_user", s.getAttribute("userid"));
+            data.put("foto", s.getAttribute("foto"));
+            data.put("fullname", s.getAttribute("fullname"));
             if (coordinator_key == (int) s.getAttribute("userid")) {
-                request.setAttribute("userid", coordinator_key);
+                data.put("userid", coordinator_key);
             }
             Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));
             if (admin != null) {
-                request.setAttribute("admin", "admin");
+                data.put("admin", "admin");
             }
 
         }
-        request.setAttribute("page_title", "Project" + " " + project.getName());
-        request.setAttribute("page_subtitle", "Check project info");
-        request.setAttribute("projectname", project.getName());
-        request.setAttribute("projectdescr", project.getDescription());
-        request.setAttribute("projectkey", key);
+        data.put("page_title", "Project" + " " + project.getName());
+        data.put("page_subtitle", "Check project info");
+        data.put("projectname", project.getName());
+        data.put("projectcategory", project.getCategory());
+        data.put("projectlocation", project.getLocation());
+        data.put("projectcompany", project.getCompany());
+        data.put("projectdescr", project.getDescription());
+        data.put("projectkey", key);
         List<Task> tasks = datalayer.getTasks(project.getKey()); //lista task del progetto
         List<Task> tasksEnded = new ArrayList();  //lista di quelli terminati
         List<Type> tasks_types = new ArrayList<>(); //lista dei tipi di ogni task
         int nProjectCollaborators = 0; //numero collaboratori totali task
         ArrayList skills = new ArrayList();
-        request.setAttribute("tasks", tasks);
+        data.put("tasks", tasks);
         boolean flag = false; //serve per controllare se l'utente loggato (se c'è) è tra i collaboratori del progetto
         for (Task task : tasks) {
             if (!task.isOpen()) {
@@ -92,19 +105,18 @@ public class Project_Detail extends SocialDevelopBaseController {
                 //se l'utente è loggato controlliamo se è un collaboratore del progetto.
                 //se lo è rendiamo visibili i messaggi privati e inoltre rendiamo visibile
                 //il form di inserimento del messaggio
-                request.setAttribute("isLogged", "isLogged");
+                
                 int dev_key = (int) s.getAttribute("userid");
                 Map<Developer, Integer> collaborators = datalayer.getCollaboratorsByTask(task.getKey());
                 for (Map.Entry<Developer, Integer> m : collaborators.entrySet()) {
                     if (m.getKey().getKey() == dev_key || dev_key == coordinator_key) {
-
                         flag = true;
-                        request.setAttribute("userid", dev_key);
+                        data.put("userid", dev_key);
                     }
 
                 }
                 if (dev_key == coordinator_key) {
-                    request.setAttribute("isCoordinator", 1);
+                    data.put("isCoordinator", 1);
                 }
             }
             nProjectCollaborators += task.getNumCollaborators();
@@ -123,17 +135,18 @@ public class Project_Detail extends SocialDevelopBaseController {
                 long endTime = endDate.getTime();
                 long diffTime = endTime - startTime;
                 long diffDays = diffTime / (1000 * 60 * 60 * 24);
-                request.setAttribute("daysleft", diffDays);
+                data.put("daysleft", diffDays);
             }
             Map<Skill, Integer> skillsList = datalayer.getSkillsByTask(task.getKey());
             skills.add(skillsList);
 
         }
-        request.setAttribute("nProjectCollaborators", nProjectCollaborators);
-        request.setAttribute("skills", skills);
-        request.setAttribute("tasks_types", tasks_types);
+        data.put("nProjectCollaborators", nProjectCollaborators);
+        data.put("nTask", tasks.size());
+        data.put("skills", skills);
+        data.put("tasks_types", tasks_types);
         double percProg = Math.round(((double) tasksEnded.size() / (double) tasks.size()) * 100);
-        request.setAttribute("percProg", percProg);
+        data.put("percProg", percProg);
         List<Message> messages = new ArrayList();
         if (flag) {
             messages = datalayer.getMessages(project.getKey());
@@ -141,7 +154,7 @@ public class Project_Detail extends SocialDevelopBaseController {
             messages = datalayer.getPublicMessages(project.getKey());
         }
 
-        request.setAttribute("messages", messages);
+        data.put("messages", messages);
         List<String> foto_msg = new ArrayList();
 
         List<Developer> by = new ArrayList();
@@ -151,18 +164,15 @@ public class Project_Detail extends SocialDevelopBaseController {
             foto_msg.add(foto);
             by.add(dev2);
         }
-        request.setAttribute("by", by);
-        request.setAttribute("foto_msg", foto_msg);
+        data.put("by", by);
+        data.put("foto_msg", foto_msg);
         Developer coordinator = datalayer.getDeveloper(project.getCoordinatorKey());
-        request.setAttribute("coordinator", coordinator);
-
-        String foto2 = getImg(request, response, coordinator);
-        request.setAttribute("coordinatorpic", foto2);
+        data.put("coordinator", coordinator);
         datalayer.destroy();
         String act_url = request.getRequestURI();
         s.setAttribute("previous_url", act_url);
         TemplateResult res = new TemplateResult(getServletContext());
-        res.activate("project_detail.html", request, response);
+        res.activate("project_detail.ftl.html", data, response);
 
     }
 

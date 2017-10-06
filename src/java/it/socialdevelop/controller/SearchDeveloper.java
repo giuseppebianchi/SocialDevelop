@@ -90,16 +90,8 @@ public class SearchDeveloper extends SocialDevelopBaseController {
             request.setAttribute("listasviluppatori", dev);
             request.setAttribute("nontrovato", "There are no developers with these parameters in the system..");
         }
-        List<Skill> skills = datalayer.getSkillsParentList();
-        //ora recuperiamo per ognuna di esse le skills figlie
-        if (skills != null) {
-            for (Skill skill : skills) {
-                List<Skill> child = datalayer.getChild(skill.getKey());
-                if (child != null) {
-                    skill.setChild(child);
-                }
-            }
-        }
+        List<Skill> skills = datalayer.getSkills();
+        
         request.setAttribute("skills", skills);
         datalayer.destroy();
         TemplateResult res = new TemplateResult(getServletContext());

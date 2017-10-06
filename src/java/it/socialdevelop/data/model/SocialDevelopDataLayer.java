@@ -161,6 +161,8 @@ public interface SocialDevelopDataLayer extends DataLayer {
     Date getDateOfTaskByProject(int project_key) throws DataLayerException;
 
     List<Skill> getSkillsParentList() throws DataLayerException;
+    
+    List<Skill> getSkills() throws DataLayerException;
 
     int getSkillByName(String name) throws DataLayerException;
 
@@ -179,8 +181,6 @@ public interface SocialDevelopDataLayer extends DataLayer {
     List<Integer> getDeveloperByUsernameLike(String username) throws DataLayerException;
 
     List<Developer> getCollaboratorRequestsByTask(int task_key) throws DataLayerException;
-
-    List<Skill> getSkills() throws DataLayerException;
 
     List<Developer> getDevelopersBySkillNoLevel(int skill_key, int level) throws DataLayerException;
 

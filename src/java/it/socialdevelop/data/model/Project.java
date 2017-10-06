@@ -14,10 +14,22 @@ public interface Project {
     void setName(String name);
 
     String getName();
+    
+    void setCategory(String category);
+    
+    String getCategory();
 
     String getDescription();
 
     void setDescription(String description);
+    
+    String getLocation();
+
+    void setLocation(String location);
+    
+    String getCompany();
+
+    void setCompany(String company);
 
     void setCoordinator(Developer coordinator);
 
@@ -53,5 +65,7 @@ public interface Project {
     void setPicture(String picture);
 
     String getPicture();
+    
+    String getTextDescription();
 
 }

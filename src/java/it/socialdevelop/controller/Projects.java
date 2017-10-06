@@ -48,6 +48,7 @@ public class Projects extends SocialDevelopBaseController {
             data.put("auth_user", s.getAttribute("userid"));
             data.put("foto", s.getAttribute("foto"));
             data.put("fullname", s.getAttribute("fullname"));
+            data.put("menu_active", "projects");
         }
         int npage = 1;
         if (request.getParameter("n") == null) {
@@ -89,16 +90,8 @@ public class Projects extends SocialDevelopBaseController {
         } else {
             data.put("listaprogetti", pro);
         }
-        List<Skill> skills = datalayer.getSkillsParentList();
-        if (skills != null) {
-            for (Skill skill : skills) {
-                List<Skill> child = datalayer.getChild(skill.getKey());
-                if (child != null) {
-                    skill.setChild(child);
-                }
-            }
-            data.put("skills", skills);
-        }
+        List<Skill> skills = datalayer.getSkills();
+        
         datalayer.destroy();
         TemplateResult res = new TemplateResult(getServletContext());
         res.activate("projects.ftl.html", data, response);

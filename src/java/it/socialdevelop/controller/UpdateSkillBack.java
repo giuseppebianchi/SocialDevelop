@@ -47,10 +47,6 @@ public class UpdateSkillBack extends SocialDevelopBaseController {
                         updateSkill.setName(request.getParameter("new-skill-name"));
                     }
 
-                    if (request.getParameter("new-father") != "") {
-                        updateSkill.setParentKey(parseInt(request.getParameter("new-father")));
-                    }
-
                     if (request.getParameter("new-type") != "") {
                         updateSkill.setType_key(parseInt(request.getParameter("new-type")));
                     }

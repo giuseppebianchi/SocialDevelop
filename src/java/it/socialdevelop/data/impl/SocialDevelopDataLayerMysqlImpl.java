@@ -191,8 +191,8 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
              */
             sOffertsByDeveloperID = connection.prepareStatement("SELECT task_ID FROM (SELECT skill_ID FROM skill_has_developer WHERE developer_ID=?) AS shd "
                     + "INNER JOIN task_has_skill AS ths ON (shd.skill_ID = ths.skill_ID) WHERE task_ID NOT IN (SELECT task_ID FROM task_has_developer WHERE developer_ID=?) GROUP BY task_ID");
-            iProject = connection.prepareStatement("INSERT INTO project (name,description,coordinator_ID) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            uProject = connection.prepareStatement("UPDATE project SET name=?,description=?,coordinator_ID=? WHERE ID=?");
+            iProject = connection.prepareStatement("INSERT INTO project (name, category, location, company, description,coordinator_ID) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            uProject = connection.prepareStatement("UPDATE project SET name=?, category=?, location=?, company=?, description=?, coordinator_ID=? WHERE ID=?");
             dProject = connection.prepareStatement("DELETE FROM project WHERE ID=?");
 
             iSkill = connection.prepareStatement("INSERT INTO skill (name,parent_ID,type_ID) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -262,6 +262,9 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             ProjectImpl a = new ProjectImpl(this);
             a.setKey(rs.getInt("ID"));
             a.setName(rs.getString("name"));
+            a.setCategory(rs.getString("category"));
+            a.setLocation(rs.getString("location"));
+            a.setCompany(rs.getString("company"));
             a.setDescription(rs.getString("description"));
             a.setCoordinatorKey(rs.getInt("coordinator_ID"));
             //a.setTasks(getTasks(a.getKey()));
@@ -313,11 +316,6 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             SkillImpl a = new SkillImpl(this);
             a.setKey(rs.getInt("ID"));
             a.setName(rs.getString("name"));
-            if (rs.getObject("parent_ID") != null && !rs.wasNull()) {
-                a.setParentKey(rs.getInt("parent_ID"));
-            } else {
-                a.setParentKey(-1);
-            }
             a.setType_key(rs.getInt("type_ID"));
 
             return a;
@@ -338,6 +336,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             a.setName(rs.getString("name"));
             a.setSurname(rs.getString("surname"));
             a.setUsername(rs.getString("username"));
+            a.setHeadline(rs.getString("headline"));
             a.setMail(rs.getString("mail"));
             a.setPwd(rs.getString("pwd"));
             a.setBiography(rs.getString("biography"));
@@ -1251,21 +1250,27 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
                     return key;
                 }
                 uProject.setString(1, project.getName());
-                uProject.setString(2, project.getDescription());
+                uProject.setString(2, project.getCategory());
+                uProject.setString(3, project.getLocation());
+                uProject.setString(4, project.getCompany());
+                uProject.setString(5, project.getDescription());
                 if (project.getCoordinator() != null) {
-                    uProject.setInt(3, project.getCoordinator().getKey());
+                    uProject.setInt(6, project.getCoordinator().getKey());
                 } else {
-                    uProject.setNull(3, java.sql.Types.INTEGER);
+                    uProject.setNull(6, java.sql.Types.INTEGER);
                 }
-                uProject.setInt(4, project.getKey());
+                uProject.setInt(7, project.getKey());
                 uProject.executeUpdate();
             } else { //insert
                 iProject.setString(1, project.getName());
-                iProject.setString(2, project.getDescription());
+                iProject.setString(2, project.getCategory());
+                iProject.setString(3, project.getLocation());
+                iProject.setString(4, project.getCompany());
+                iProject.setString(5, project.getDescription());
                 if (project.getCoordinator() != null) {
-                    iProject.setInt(3, project.getCoordinator().getKey());
+                    iProject.setInt(6, project.getCoordinator().getKey());
                 } else {
-                    iProject.setNull(3, java.sql.Types.INTEGER);
+                    iProject.setNull(6, java.sql.Types.INTEGER);
                 }
 
                 if (iProject.executeUpdate() == 1) {
@@ -1494,21 +1499,10 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
                     return;
                 }
                 uSkill.setString(1, skill.getName());
-                if (skill.getParent() != null) {
-                    uSkill.setInt(2, skill.getParent().getKey());
-                } else {
-                    uSkill.setNull(2, java.sql.Types.INTEGER);
-                }
                 uSkill.setInt(3, skill.getKey());
                 uSkill.executeUpdate();
             } else { //insert
                 iSkill.setString(1, skill.getName());
-                if (skill.getParent() != null) {
-                    iSkill.setInt(2, skill.getParent().getKey());
-                } else {
-                    iSkill.setNull(2, java.sql.Types.INTEGER);
-                    skill.setParentKey(-1);
-                }
                 iSkill.setInt(3, skill.getType_key());
                 if (iSkill.executeUpdate() == 1) {
                     try (ResultSet keys = iSkill.getGeneratedKeys()) {
@@ -1520,7 +1514,6 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             }
 
             if (key > 0) {
-                //getSkill(key).setParentKey(-1);
                 skill.copyFrom(getSkill(key));
             }
             skill.setDirty(false);

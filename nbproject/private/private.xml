@@ -11,6 +11,26 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/src/java/it/socialdevelop/controller/UpdateTask.java</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/web/templates/create_project.ftl.html</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/web/theme/css/style.css</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/web/templates/project_settings.ftl.html</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/src/java/it/socialdevelop/controller/UpdateProject.java</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/web/templates/task_detail.ftl.html</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/web/templates/outline.ftl.html</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/src/java/it/socialdevelop/controller/Task_Detail.java</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/src/java/it/socialdevelop/data/model/Task.java</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/web/templates/task_settings.ftl.html</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/src/java/it/socialdevelop/data/model/Project.java</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/src/java/it/socialdevelop/data/impl/TaskImpl.java</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/web/templates/update_project.html</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/src/java/it/socialdevelop/data/impl/SocialDevelopDataLayerMysqlImpl.java</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/src/java/it/socialdevelop/controller/UpdateProjectSave.java</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/web/templates/project_detail.ftl.html</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/src/java/it/socialdevelop/controller/Project_Detail.java</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/src/java/it/socialdevelop/controller/CreateProject.java</file>
+            <file>file:/Users/Giuseppe/Development/SocialDevelop/web/WEB-INF/web.xml</file>
+        </group>
     </open-files>
 </project-private>

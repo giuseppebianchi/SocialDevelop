@@ -21,6 +21,7 @@ public class DeveloperImpl implements Developer {
     private String surname;
     private String username;
     private String picture;
+    private String headline;
     private String pwd;
     private String mail;
     private GregorianCalendar birthdate;
@@ -40,6 +41,7 @@ public class DeveloperImpl implements Developer {
         surname = "";
         username = "";
         picture = "blog-image-4.png";
+        headline = "";
         pwd = "";
         mail = "";
         foto = 0;
@@ -299,6 +301,17 @@ public class DeveloperImpl implements Developer {
     @Override
     public String getPicture() {
         return picture;
+    }
+    
+    @Override
+    public void setHeadline(String headline) {
+        this.headline = headline;
+        this.dirty = true;
+    }
+
+    @Override
+    public String getHeadline() {
+        return headline;
     }
 
 }

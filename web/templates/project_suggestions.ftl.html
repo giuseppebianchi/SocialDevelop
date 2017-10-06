@@ -1,0 +1,127 @@
+
+<!-- SUB Banner -->
+<div class="sub-bnr user-profile-bnr" style="url('${request.getContextPath()}/theme/images/pro-img-1.jpg')">
+    <div class="position-center-center">
+      <div class="container">
+        <#if created_project??>
+        <h2>Project has been created.</h2>
+        <p>We have found some developers you could be interested for your project.</p>
+        <#else>
+            
+              <h2>Find developers for your project</h2>
+              
+            <p>We have found some developers you could be interested for your project.</p>
+        </#if>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compny Profile -->
+  <div class="compny-profile"> 
+    
+    <!-- Profile Company Content -->
+    <div class="profile-company-content" data-bg-color="fff">
+      <div class="container">
+        <div class="row"> 
+          
+
+          
+
+          <!-- Tab Content -->
+          <div class="col-md-12">
+              <#if created_project??>
+              <a href="${request.getContextPath()}/projects/${progetto.key}" class="pull-right btn btn-primary mt10">Skip <i class="fa fa-chevron-right"></i></a>
+              <h1>Find some developers</h1>
+               <p>We have found some developers you could be interested for your project.</p>
+               </#if>
+            <!-- PROJECT -->
+            
+      <div class="project-list-item mt30">
+        <div class="uou-block-7a">
+          <div class="css-table">
+
+           <a href="${request.getContextPath()}/projects/${progetto.key}"><div class="project-list-img img-block" data-bg-image="${request.getContextPath()}/theme/images/${progetto.picture}" style="background-image: url('${request.getContextPath()}/theme/images/${progetto.picture}');"></div></a>
+                  <div class="css-table-cell content project-list-content" style="background: #fff"> 
+                          <h1><a href="${request.getContextPath()}/projects/${progetto.key}">${progetto.name?cap_first}</a></h1><div class="listing listing-1" style="padding-bottom: 0;">
+                          <div class="listing-section">
+                            <div class="listing-ver-3" style="margin:0">
+
+                              <div class="listing-inner">
+                                <div class="listing-content">
+
+                                    <#assign dec = progetto.getTextDescription()>
+                                    <#if (dec?length > 251)>
+                                        <div>${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${progetto.key}">read more</a></div>
+                                    <#else>
+                                        <div>${dec} <a href="${request.getContextPath()}/projects/${progetto.key}"> read more</a></div>
+                                    </#if>
+                                  <!--<h6 class="title-tags">Skills required:</h6>
+                                  <ul class="tags list-inline">
+                                    <li><a href="#">Javascript</a></li>
+                                    <li><a href="#">Wordpress</a></li>
+                                    <li><a href="#">Presta</a></li>
+                                    <li><a href="#">Sass</a></li>
+                                  </ul>-->
+                                </div>
+                              </div>
+
+                            </div>
+
+                          </div>
+                        </div>
+                  </div>
+          </div>
+        </div>
+        <!-- end .uou-block-7a --> 
+      </div>
+      <br>
+      <!-- END PROJECT -->
+      <!--<h1>Find some developers</h1>
+      <p>We have found some developers you could be interested for your project.</p>-->
+      <hr>
+      
+      <#list tasks as task>
+      <#if devs[task?index]?has_content>
+      <div class="row">
+          <div class="col-sm-12">
+              <h5>Developers for task:</h5>
+            <h2 class="text-primary"><i class="fa fa-circle"></i> ${task.name}</h2>
+            <div>
+                <#assign dec = progetto.getTextDescription()>
+                <#if (dec?length > 251)>
+                    <div>${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${progetto.key}" target="_blank">read more</a></div>
+                <#else>
+                    <div>${dec}</div>
+                </#if>
+            </div>
+            <hr>
+          </div>
+      </div>
+                <div class="row">
+                <#list devs[task?index] as sviluppatore>
+               <div class="col-sm-3">
+
+                   <div class="uou-block-6a"><a href="${request.getContextPath()}/developers/${sviluppatore.key}"><div class="img-block img-3 rounded"></div></a>
+                       <h6>${sviluppatore.name?cap_first} ${sviluppatore.surname?cap_first} <span>${sviluppatore.headline?cap_first}</span> <span><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></span></h6>
+                   <a href="developers/${sviluppatore.key}" class="btn btn-transparent-primary">Hire</a>
+
+                 </div>
+
+                 <!-- end .uou-block-6a --> 
+               </div>
+                </#list>
+             </div> 
+        <#else>
+        <div class="dev-for-task">
+            <h5>Developers for task:</h5>
+            <h2 class="text-primary"><i class="fa fa-circle"></i> ${task.name}</h2>
+            <h6>There is no developer who satisfies required skills for this project.</h6>
+        </div>
+        </#if>
+        </#list>
+      </div>
+          
+            </div>
+          </div>
+        </div>
+      </div>
