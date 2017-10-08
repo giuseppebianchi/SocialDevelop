@@ -34,7 +34,7 @@
     </servlet>
     <servlet>
         <servlet-name>Logout</servlet-name>
-        <servlet-class>socialdevelop.controller.logout</servlet-class>
+        <servlet-class>it.socialdevelop.controller.Logout</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Profile</servlet-name>
@@ -46,15 +46,15 @@
     </servlet>
     <servlet>
         <servlet-name>Progetto</servlet-name>
-        <servlet-class>socialdevelop.data.model.Project</servlet-class>
+        <servlet-class>it.socialdevelop.data.model.Project</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>provaDB2</servlet-name>
-        <servlet-class>socialdevelop.data.impl.provaDB2</servlet-class>
+        <servlet-class>it.socialdevelop.data.impl.provaDB2</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MakeLoginReg</servlet-name>
-        <servlet-class>socialdevelop.controller.MakeLoginReg</servlet-class>
+        <servlet-class>it.socialdevelop.controller.MakeLoginReg</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Project_Detail</servlet-name>
@@ -256,7 +256,7 @@
     </servlet>
     <servlet>
         <servlet-name>declineProposal</servlet-name>
-        <servlet-class>socialdevelop.controller.declineProposal</servlet-class>
+        <servlet-class>it.socialdevelop.controller.declineProposal</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PannelloDelleOfferte</servlet-name>
@@ -276,7 +276,7 @@
     </servlet>
     <servlet>
         <servlet-name>GetPhoto</servlet-name>
-        <servlet-class>socialdevelop.controller.GetPhoto</servlet-class>
+        <servlet-class>it.socialdevelop.controller.GetPhoto</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
@@ -292,7 +292,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
-        <url-pattern>/Logout</url-pattern>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Profile</servlet-name>

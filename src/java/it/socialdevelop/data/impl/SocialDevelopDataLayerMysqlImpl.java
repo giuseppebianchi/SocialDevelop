@@ -336,7 +336,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             a.setName(rs.getString("name"));
             a.setSurname(rs.getString("surname"));
             a.setUsername(rs.getString("username"));
-            a.setHeadline(rs.getString("headline"));
+            //a.setHeadline(rs.getString("headline"));
             a.setMail(rs.getString("mail"));
             a.setPwd(rs.getString("pwd"));
             a.setBiography(rs.getString("biography"));
