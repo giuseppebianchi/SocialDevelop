@@ -85,26 +85,26 @@ public class Signup extends SocialDevelopBaseController {
                             //pwd non coincidono
                             //signup_error(request, response, "pwd");
                             s.setAttribute("problem", "reg_pwd");
-                            response.sendRedirect("index");
+                            response.sendRedirect("home");
                         }
                     } else {
                         //username esiste già
                         //signup_error(request, response, "username");
                         s.setAttribute("problem", "reg_username");
-                        response.sendRedirect("index");
+                        response.sendRedirect("home");
                     }
                 } else {
                     //email esiste già
                     //signup_error(request, response, "email");
                     s.setAttribute("problem", "reg_email");
-                    response.sendRedirect("index");
+                    response.sendRedirect("home");
                 }
             } else {
                 s.setAttribute("problem", "reg_all");
-                response.sendRedirect("index");
+                response.sendRedirect("home");
             }
         } else {
-            response.sendRedirect("index");
+            response.sendRedirect("home");
         }
 
     }
