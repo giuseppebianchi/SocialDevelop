@@ -1,5 +1,5 @@
-dist/
-build/
-nbproject/
-out/
+/dist/
+/build/
+/nbproject/
+/out/
 .DS_Store

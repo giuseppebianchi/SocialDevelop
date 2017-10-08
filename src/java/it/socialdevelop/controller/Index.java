@@ -67,7 +67,7 @@ public class Index extends SocialDevelopBaseController {
         }
 
         String u = (String) s.getAttribute("previous_url");
-        if (s.getAttribute("previous_url") != null && (u.equals("/SocialDevelop/signup"))) {
+        if (s.getAttribute("previous_url") != null && (u.equals("/socialdevelop/signup"))) {
             data.put("active", "register");
         } else {
             data.put("active", "login");

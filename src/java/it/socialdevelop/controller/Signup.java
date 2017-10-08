@@ -34,7 +34,7 @@ public class Signup extends SocialDevelopBaseController {
     private void action_registrati(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, DataLayerException, SQLException, NamingException {
         HttpSession s = request.getSession(true);
         String u = (String) s.getAttribute("previous_url");
-        if (s.getAttribute("previous_url") != null && (u.equals("/SocialDevelop") || u.equals("/SocialDevelop/home") || u.equals("/socialdevelop/MakeLoginReg"))) {
+        if (s.getAttribute("previous_url") != null && (u.equals("/socialdevelop") || u.equals("/socialdevelop/home") || u.equals("/socialdevelop/MakeLoginReg"))) {
 
             String name = request.getParameter("first_name");
             String surname = request.getParameter("second_name");
