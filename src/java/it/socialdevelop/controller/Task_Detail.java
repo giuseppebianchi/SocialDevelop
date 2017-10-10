@@ -40,18 +40,7 @@ public class Task_Detail extends SocialDevelopBaseController {
         }
     }
 
-    private String getImg(HttpServletRequest request, HttpServletResponse response, Developer dev) throws IOException, SQLException, DataLayerException, NamingException {
-        StreamResult result = new StreamResult(getServletContext());
-
-        SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-        if (dev.getFoto() != 0) {
-            Files foto_profilo = datalayer.getFile(dev.getFoto());
-            return "uploaded-images/" + foto_profilo.getLocalFile();
-        } else {
-            return "uploaded-images/foto_profilo_default.png";
-        }
-
-    }
+    
 
     private void action_task(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
 
@@ -144,8 +133,6 @@ public class Task_Detail extends SocialDevelopBaseController {
         List<Developer> by = new ArrayList();
         for (Message message : messages) {
             Developer dev2 = message.getDeveloper();
-            String foto = getImg(request, response, dev2);
-            foto_msg.add(foto);
             by.add(dev2);
         }
         data.put("by", by);

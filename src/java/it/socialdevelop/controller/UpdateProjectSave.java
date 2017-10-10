@@ -65,12 +65,12 @@ public class UpdateProjectSave extends SocialDevelopBaseController {
                 datalayer.storeProject(p);
                 
                 datalayer.destroy();
-                response.sendRedirect("/socialdevelop/projects/settings/" + project_key + "?updated_project=1");
+                response.sendRedirect("/SocialDevelop/projects/settings/" + project_key + "?updated_project=1");
             } else {
-                response.sendRedirect("/socialdevelop/projects/" + project_key);
+                response.sendRedirect("/SocialDevelop/projects/" + project_key);
             }
         } else {
-            response.sendRedirect("/socialdevelop");
+            response.sendRedirect("/SocialDevelop");
         }
 
     }

@@ -38,7 +38,7 @@ public class InsertProject extends SocialDevelopBaseController {
          
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
             String u = (String) s.getAttribute("previous_url");
-            if (s.getAttribute("previous_url") != null && u.equals("/socialdevelop/projects/new")) {
+            if (s.getAttribute("previous_url") != null && u.equals("/SocialDevelop/projects/new")) {
                 if (true) {
                     SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
                     
@@ -116,16 +116,16 @@ public class InsertProject extends SocialDevelopBaseController {
                     datalayer.destroy();
                     String act_url = request.getRequestURI();
                     s.setAttribute("previous_url", act_url);
-                    response.sendRedirect("/socialdevelop/projects/suggestions/" + project_key + "?created_project=1");
+                    response.sendRedirect("/SocialDevelop/projects/suggestions/" + project_key + "?created_project=1");
                     
                 } else {
-                    response.sendRedirect("/socialdevelop");
+                    response.sendRedirect("/SocialDevelop");
                 }
             } else {
-                response.sendRedirect("/socialdevelop");
+                response.sendRedirect("/SocialDevelop");
             }
         } else {
-            response.sendRedirect("/socialdevelop");
+            response.sendRedirect("/SocialDevelop");
         }
     }
 

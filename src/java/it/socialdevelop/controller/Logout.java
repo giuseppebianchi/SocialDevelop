@@ -24,7 +24,7 @@ public class Logout extends SocialDevelopBaseController {
         SecurityLayer.disposeSession(request);
         request.setAttribute("slider", "hidden");
         request.setAttribute("home_background", "home_background");
-        response.sendRedirect("home");
+        response.sendRedirect("/SocialDevelop");
     }
 
     @Override

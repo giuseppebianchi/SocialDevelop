@@ -74,24 +74,6 @@ public class UpdateProfileSubmit extends SocialDevelopBaseController {
                 File uploaded_curriculum;
                 int foto_key = 0;
                 int curriculum_key = 0;
-
-                if (foto_to_upload != null && foto_to_upload.getSize() > 0) {
-                    uploaded_foto = File.createTempFile("foto_profilo", "", new File(getServletContext().getInitParameter("uploaded-images.directory")));
-                    String digest_foto = getDigest(foto_to_upload, uploaded_foto);
-                    foto_key = datalayer.storeFile(foto_to_upload, uploaded_foto, digest_foto);
-                    dev.setFoto(foto_key);
-                }
-                if (curriculum_to_upload != null && curriculum_to_upload.getSize() > 0) {
-                    uploaded_curriculum = File.createTempFile("curriculum", ".pdf", new File(getServletContext().getInitParameter("curriculums.directory")));
-                    String digest_curriculum = getDigest(curriculum_to_upload, uploaded_curriculum);
-                    curriculum_key = datalayer.storeFile(curriculum_to_upload, uploaded_curriculum, digest_curriculum);
-                    dev.setCurriculum(curriculum_key);
-                    dev.setCurriculum("");
-                    curriculum = "";
-                } else {
-                    dev.setCurriculum(0);
-                    dev.setCurriculum(curriculum);
-                }
                 dev.setBiography(bio);
                 datalayer.storeDeveloper(dev);
                 datalayer.destroy();

@@ -30,18 +30,7 @@ public class UpdateProfile extends SocialDevelopBaseController {
         }
     }
 
-    private void getImg(HttpServletRequest request, HttpServletResponse response, Developer dev) throws IOException, SQLException, DataLayerException, NamingException {
-        StreamResult result = new StreamResult(getServletContext());
-
-        SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-        if (dev.getFoto() != 0) {
-            Files foto_profilo = datalayer.getFile(dev.getFoto());
-            request.setAttribute("foto_profilo", "uploaded-images/" + foto_profilo.getLocalFile());
-        } else {
-            request.setAttribute("foto_profilo", "uploaded-images/foto_profilo_default.png");
-        }
-
-    }
+    
 
     private void action_updprofile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         HttpSession s = request.getSession(true);
@@ -61,11 +50,8 @@ public class UpdateProfile extends SocialDevelopBaseController {
             request.setAttribute("bio", dev.getBiography());
             request.setAttribute("username", dev.getUsername());
             request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
-            request.setAttribute("curriculum", dev.getCurriculumString());
-            request.setAttribute("curriculum_pdf", dev.getCurriculumFile());
             request.setAttribute("logout", "Logout");
             request.setAttribute("datalayer", datalayer);
-            getImg(request, response, dev);
             String act_url = request.getRequestURI();
             s.setAttribute("previous_url", act_url);
             datalayer.destroy();

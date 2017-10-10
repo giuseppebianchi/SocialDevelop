@@ -39,12 +39,7 @@ public class DeveloperCollaborations extends SocialDevelopBaseController {
         StreamResult result = new StreamResult(getServletContext());
 
         SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-        if (dev.getFoto() != 0) {
-            Files foto_profilo = datalayer.getFile(dev.getFoto());
-            request.setAttribute("foto_profilo", "uploaded-images/" + foto_profilo.getLocalFile());
-        } else {
-            request.setAttribute("foto_profilo", "uploaded-images/foto_profilo_default.png");
-        }
+        
 
     }
 
@@ -59,7 +54,6 @@ public class DeveloperCollaborations extends SocialDevelopBaseController {
             Calendar now = Calendar.getInstance();
             now.setTimeInMillis(currentTime);
             //Get difference between years
-            request.setAttribute("age", now.get(Calendar.YEAR) - dev.getBirthDate().get(Calendar.YEAR));
             request.setAttribute("bio", dev.getBiography());
             request.setAttribute("mail", dev.getMail());
             request.setAttribute("id", dev_key);

@@ -35,18 +35,7 @@ public class PannelloDelleDomande extends SocialDevelopBaseController {
         }
     }
 
-    private void getImg(HttpServletRequest request, HttpServletResponse response, Developer dev) throws IOException, SQLException, DataLayerException, NamingException {
-        StreamResult result = new StreamResult(getServletContext());
-
-        SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-        if (dev.getFoto() != 0) {
-            Files foto_profilo = datalayer.getFile(dev.getFoto());
-            request.setAttribute("foto_profilo", "uploaded-images/" + foto_profilo.getLocalFile());
-        } else {
-            request.setAttribute("foto_profilo", "uploaded-images/foto_profilo_default.png");
-        }
-
-    }
+    
 
     private void action_domande(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         HttpSession s = request.getSession(true);
@@ -62,15 +51,11 @@ public class PannelloDelleDomande extends SocialDevelopBaseController {
             Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
             request.setAttribute("username", dev.getUsername());
             request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
-            long currentTime = System.currentTimeMillis();
-            Calendar now = Calendar.getInstance();
-            now.setTimeInMillis(currentTime);
-            //Get difference between years
-            request.setAttribute("age", now.get(Calendar.YEAR) - dev.getBirthDate().get(Calendar.YEAR));
+
             request.setAttribute("bio", dev.getBiography());
             request.setAttribute("mail", dev.getMail());
             request.setAttribute("logout", "Logout");
-            getImg(request, response, dev);
+
 
             //recuperiamo le proposte
             List<CollaborationRequest> demends = datalayer.getQuestionsByCoordinator(dev.getKey());
@@ -82,10 +67,7 @@ public class PannelloDelleDomande extends SocialDevelopBaseController {
                 Task t = datalayer.getTask(q.getTaskKey());
                 Project pr = datalayer.getProject(t.getProjectKey());
                 Developer d = datalayer.getDeveloper(q.getSender_key());
-                int foto_key = d.getFoto();
-                if (foto_key > 0) {
-                    d.setFotoFile(datalayer.getFile(foto_key));
-                }
+                
                 t.setProject(pr);
                 q.setTaskRequest(t);
                 q.setSender(d);

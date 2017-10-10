@@ -29,6 +29,14 @@
         <servlet-class>it.socialdevelop.controller.Signup</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SignupSubmit</servlet-name>
+        <servlet-class>it.socialdevelop.controller.SignupSubmit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Signin</servlet-name>
+        <servlet-class>it.socialdevelop.controller.Signin</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>it.socialdevelop.controller.Login</servlet-class>
     </servlet>
@@ -46,19 +54,23 @@
     </servlet>
     <servlet>
         <servlet-name>Progetto</servlet-name>
-        <servlet-class>it.socialdevelop.data.model.Project</servlet-class>
+        <servlet-class>socialdevelop.data.model.Project</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>provaDB2</servlet-name>
-        <servlet-class>it.socialdevelop.data.impl.provaDB2</servlet-class>
+        <servlet-class>socialdevelop.data.impl.provaDB2</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MakeLoginReg</servlet-name>
-        <servlet-class>it.socialdevelop.controller.MakeLoginReg</servlet-class>
+        <servlet-class>socialdevelop.controller.MakeLoginReg</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Project_Detail</servlet-name>
         <servlet-class>it.socialdevelop.controller.Project_Detail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Developers</servlet-name>
+        <servlet-class>it.socialdevelop.controller.Developers</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Task_Detail</servlet-name>
@@ -73,17 +85,12 @@
         <servlet-class>it.socialdevelop.controller.SearchProject</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CompletaRegistrazione</servlet-name>
-        <servlet-class>it.socialdevelop.controller.CompletaRegistrazione</servlet-class>
-        <multipart-config>
-            <!--
-            <location>/tmp</location> temporary files location (DEF: "") -->
-            <max-file-size>20848820</max-file-size>
-            <!-- max size of accepted uploadd (DEF: unlimited!) -->
-            <max-request-size>418018841</max-request-size>
-            <!-- max size of multipart requests (may contain more files or data) (DEF: ulimited!) -->
-            <!-- <file-size-threshold>1048576</file-size-threshold> max size of files to hold in memory (without writing to temporary disk file) (DEF: 0) -->
-        </multipart-config>
+        <servlet-name>CompleteRegistration</servlet-name>
+        <servlet-class>it.socialdevelop.controller.CompleteRegistration</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CompleteRegistrationSubmit</servlet-name>
+        <servlet-class>it.socialdevelop.controller.CompleteRegistrationSubmit</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DownloadCurriculum</servlet-name>
@@ -256,7 +263,7 @@
     </servlet>
     <servlet>
         <servlet-name>declineProposal</servlet-name>
-        <servlet-class>it.socialdevelop.controller.declineProposal</servlet-class>
+        <servlet-class>socialdevelop.controller.declineProposal</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PannelloDelleOfferte</servlet-name>
@@ -276,7 +283,7 @@
     </servlet>
     <servlet>
         <servlet-name>GetPhoto</servlet-name>
-        <servlet-class>it.socialdevelop.controller.GetPhoto</servlet-class>
+        <servlet-class>socialdevelop.controller.GetPhoto</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
@@ -285,6 +292,14 @@
     <servlet-mapping>
         <servlet-name>Signup</servlet-name>
         <url-pattern>/signup</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignupSubmit</servlet-name>
+        <url-pattern>/signup/signup_submit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Signin</servlet-name>
+        <url-pattern>/signin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -307,6 +322,10 @@
         <url-pattern>/projects/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>Developers</servlet-name>
+        <url-pattern>/developers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>provaDB2</servlet-name>
         <url-pattern>/provaDB2</url-pattern>
     </servlet-mapping>
@@ -319,8 +338,12 @@
         <url-pattern>/MyProjects</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CompletaRegistrazione</servlet-name>
-        <url-pattern>/CompletaRegistrazione</url-pattern>
+        <servlet-name>CompleteRegistration</servlet-name>
+        <url-pattern>/signup/complete_registration</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompleteRegistrationSubmit</servlet-name>
+        <url-pattern>/signup/complete_registration_save</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MyCollaborations</servlet-name>
@@ -380,7 +403,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FindDeveloper</servlet-name>
-        <url-pattern>/developers/search</url-pattern>
+        <url-pattern>/FindDevelopers</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateProject</servlet-name>
@@ -400,7 +423,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeveloperProfile</servlet-name>
-        <url-pattern>/DeveloperProfile</url-pattern>
+        <url-pattern>/developers/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeveloperCollaborations</servlet-name>
@@ -408,7 +431,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeveloperProjects</servlet-name>
-        <url-pattern>/DeveloperProjects</url-pattern>
+        <url-pattern>/developers/projects/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeveloperSkills</servlet-name>

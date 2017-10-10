@@ -218,7 +218,14 @@
                         <div class="listing-content">
                           <h6 class="title-company">${tasks_types[task?index].type}</h6>
                           <span class="location"> <i class="fa fa-map-marker"></i> Manhattan, New york, USA </span> <!--<span class="text-success"> Start Date</span>: ${task.getStartDate().time?date?string.short} |  <span class="text-danger">End Date</span>: ${task.getEndDate().time?date?string.short}-->
-                          <p>${task.description?no_esc}</p>
+                          <div>
+                            <#assign dec = task.getTextDescription()>
+                            <#if (dec?length > 251)>
+                            <div class="p10">${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${progetto.key}">read more</a></div>
+                            <#else>
+                                <div class="p10">${dec} <a href="${request.getContextPath()}/projects/${progetto.key}"> read more</a></div>
+                            </#if>
+                          </div>
                           <h6 class="title-tags">Skills required:</h6>
                           <ul class="tags list-inline">
                             <#list skills[task?index] as key,value>

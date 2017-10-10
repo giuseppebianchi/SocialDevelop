@@ -87,11 +87,17 @@ public interface Task {
     void setDirty(boolean dirty);
 
     boolean isDirty();
+    
+    void setCompleted(boolean completed);
+
+    boolean isCompleted();
 
     void copyFrom(Task task) throws DataLayerException;
 
     void setKey(int key);
 
     void setCollaborators(Map<Developer, Integer> developers);
+    
+    String getTextDescription();
 
 }

@@ -125,13 +125,13 @@ public class UpdateTaskSave extends SocialDevelopBaseController {
                     datalayer.destroy();
                     String act_url = request.getRequestURI();
                     s.setAttribute("previous_url", act_url);
-                    response.sendRedirect("/socialdevelop/projects/tasks/settings/" + task_key + "?updated_task=1");
+                    response.sendRedirect("/SocialDevelop/projects/tasks/settings/" + task_key + "?updated_task=1");
                     
             } else {
-                response.sendRedirect("/socialdevelop");
+                response.sendRedirect("/SocialDevelop");
             }
         } else {
-            response.sendRedirect("/socialdevelop");
+            response.sendRedirect("/SocialDevelop");
         }
     }
 

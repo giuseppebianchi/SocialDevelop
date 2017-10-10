@@ -32,18 +32,7 @@ public class DeveloperSkills extends SocialDevelopBaseController {
         }
     }
 
-    private void getImg(HttpServletRequest request, HttpServletResponse response, Developer dev) throws IOException, SQLException, DataLayerException, NamingException {
-        StreamResult result = new StreamResult(getServletContext());
-
-        SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-        if (dev.getFoto() != 0) {
-            Files foto_profilo = datalayer.getFile(dev.getFoto());
-            request.setAttribute("foto_profilo", "uploaded-images/" + foto_profilo.getLocalFile());
-        } else {
-            request.setAttribute("foto_profilo", "uploaded-images/foto_profilo_default.png");
-        }
-
-    }
+    
 
     private void action_devskills(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
@@ -52,16 +41,11 @@ public class DeveloperSkills extends SocialDevelopBaseController {
         if (dev != null) {
             request.setAttribute("username", dev.getUsername());
             request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
-            long currentTime = System.currentTimeMillis();
-            Calendar now = Calendar.getInstance();
-            now.setTimeInMillis(currentTime);
-            //Get difference between years
-            request.setAttribute("age", now.get(Calendar.YEAR) - dev.getBirthDate().get(Calendar.YEAR));
+
             request.setAttribute("bio", dev.getBiography());
             request.setAttribute("mail", dev.getMail());
 
             request.setAttribute("id", dev_key);
-            getImg(request, response, dev);
 
             Map<Skill, Integer> skills_level = datalayer.getSkillsByDeveloper(dev_key);
             request.setAttribute("skills_level", skills_level);

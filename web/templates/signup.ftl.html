@@ -1,0 +1,54 @@
+<!-- HOME PRO-->
+  <div class="home-pro"> 
+    
+    <!-- PRO BANNER HEAD -->
+    <div class="banr-head">
+      <div class="container">
+        <div class="row"> 
+
+         
+          <!-- FORM SECTION -->
+          <div class="col-sm-5" style="margin: 0 auto; float: none">
+            <div class="login-sec"> 
+              
+              <!-- TABS -->
+              <div class="uou-tabs">
+                <ul class="tabs">
+
+                    <li class="active" style="width: 100%"><a href="#register">Sign Up Now</a></li>
+
+                </ul>
+                
+                <!-- REGISTER -->
+                <div class="content">
+                  <div id="register" class="active">
+                    <form id="signup-form" action="${request.getContextPath()}/signup/signup_submit" method="post">
+                      <label class="input-title">Username</label>
+                      <input type="text" name="username1" required="required" placeholder="Username">
+                      <label class="input-title">Email</label>
+                      <input type="email" name="mail" required="required" placeholder="Your Email Address">
+                      <label class="input-title">Password</label>
+                      <input type="password" id="pwd1" name="pwd1" required="required" placeholder="Create you password">
+                      <label class="input-title">Confirm Password</label>
+                      <input type="password" id="pwd2" name="pwd2" required="required" placeholder="Confirm password">
+                      <#if error_register??><p class="text-danger">${error_register}</p></#if>
+                      <button id="submit-sign" type="submit">Sign Up for SocialDevelop</button>
+                      <div class="forget">By clicking "Sign Up for SocialDevelop", you agree to our <a href="#">terms of service</a> and <a href="#">privacy policy</a>.</div>
+                      <!--<div class="login-with"> <span>Or login with <a href="#."><i class="fa fa-linkedin"></i></a> </div>-->
+
+                    </form>
+                  </div>
+                  
+                  <!-- LOGIN -->
+                  
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div> 
+
+  </div>

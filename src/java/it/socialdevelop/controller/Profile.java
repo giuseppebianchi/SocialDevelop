@@ -33,18 +33,7 @@ public class Profile extends SocialDevelopBaseController {
         }
     }
 
-    private void getImg(HttpServletRequest request, HttpServletResponse response, Developer dev) throws IOException, SQLException, DataLayerException, NamingException {
-        StreamResult result = new StreamResult(getServletContext());
-
-        SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-        if (dev.getFoto() != 0) {
-            Files foto_profilo = datalayer.getFile(dev.getFoto());
-            request.setAttribute("foto_profilo", "theme/images/uploaded-images/" + foto_profilo.getLocalFile());
-        } else {
-            request.setAttribute("foto_profilo", "theme/images/uploaded-images/foto_profilo_default.png");
-        }
-
-    }
+    
 
     private void action_profile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         HttpSession s = request.getSession(true);
@@ -58,16 +47,12 @@ public class Profile extends SocialDevelopBaseController {
             Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
             data.put("username", dev.getUsername());
             data.put("fullname", dev.getName() + " " + dev.getSurname());
-            SimpleDateFormat fmt = new SimpleDateFormat("dd-MMM-yyyy");
-            fmt.setCalendar(dev.getBirthDate());
-            String dateFormatted = fmt.format(dev.getBirthDate().getTime());
-            data.put("date", dateFormatted);
+
             data.put("bio", dev.getBiography());
             data.put("foto", dev.getPicture());
             data.put("resume", dev.getBiography());
             data.put("mail", dev.getMail());
-            data.put("curriculum", dev.getCurriculumString());
-            data.put("curriculum_pdf", dev.getCurriculumFile());
+
             datalayer.destroy();
             TemplateResult res = new TemplateResult(getServletContext());
             res.activate("profile.ftl.html", data, response);

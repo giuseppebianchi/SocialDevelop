@@ -9,6 +9,7 @@ import it.socialdevelop.data.model.Files;
 import it.socialdevelop.data.model.Skill;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
+import org.jsoup.Jsoup;
 
 /**
  *
@@ -22,14 +23,10 @@ public class DeveloperImpl implements Developer {
     private String username;
     private String picture;
     private String headline;
-    private String pwd;
+    private String password;
     private String mail;
-    private GregorianCalendar birthdate;
     private String biography;
-    private String curriculumString;
-    private int curriculumFile;
-    private int foto;
-    private Files fotoFile;
+    private String resume;
     private Map<Skill, Integer> skills;
     protected SocialDevelopDataLayer ownerdatalayer;
     protected boolean dirty;
@@ -42,14 +39,10 @@ public class DeveloperImpl implements Developer {
         username = "";
         picture = "blog-image-4.png";
         headline = "";
-        pwd = "";
+        password = "";
         mail = "";
-        foto = 0;
-        fotoFile = null;
-        birthdate = null;
         biography = "";
-        curriculumString = "";
-        curriculumFile = 0;
+        resume = "";
         skills = null;
         dirty = false;
     }
@@ -104,26 +97,17 @@ public class DeveloperImpl implements Developer {
     }
 
     @Override
-    public void setPwd(String pwd) {
-        this.pwd = pwd;
+    public void setPassword(String password) {
+        this.password = password;
         this.dirty = true;
     }
 
     @Override
-    public String getPwd() {
-        return pwd;
+    public String getPassword() {
+        return password;
     }
 
-    @Override
-    public void setBirthDate(GregorianCalendar birthdate) {
-        this.birthdate = birthdate;
-        this.dirty = true;
-    }
-
-    @Override
-    public GregorianCalendar getBirthDate() {
-        return birthdate;
-    }
+    
 
     @Override
     public void setBiography(String biography) {
@@ -136,27 +120,7 @@ public class DeveloperImpl implements Developer {
         return biography;
     }
 
-    @Override
-    public void setCurriculum(int curriculum) {
-        this.curriculumFile = curriculum;
-        this.dirty = true;
-    }
-
-    @Override
-    public void setCurriculum(String curriculum) {
-        this.curriculumString = curriculum;
-        this.dirty = true;
-    }
-
-    @Override
-    public int getCurriculumFile() {
-        return curriculumFile;
-    }
-
-    @Override
-    public String getCurriculumString() {
-        return curriculumString;
-    }
+    
 
     @Override
     public void setSkills(Map<Skill, Integer> skills) {
@@ -205,19 +169,12 @@ public class DeveloperImpl implements Developer {
         return dirty;
     }
 
-    protected void setKey(int key) {
+    @Override
+    public void setKey(int key) {
         this.key = key;
     }
 
-    @Override
-    public void setFoto(int foto) {
-        this.foto = foto;
-    }
-
-    @Override
-    public int getFoto() {
-        return foto;
-    }
+    
 
     @Override
     public void copyFrom(Developer developer) throws DataLayerException {
@@ -225,36 +182,15 @@ public class DeveloperImpl implements Developer {
         name = developer.getName();
         surname = developer.getSurname();
         username = developer.getUsername();
+        headline = developer.getHeadline();
         mail = developer.getMail();
-        pwd = developer.getPwd();
-        birthdate = developer.getBirthDate();
+        password = developer.getPassword();
         biography = developer.getBiography();
-        curriculumFile = developer.getCurriculumFile();
-        curriculumString = developer.getCurriculumString();
-        foto = developer.getFoto();
+        picture = developer.getPicture();
         this.dirty = true;
     }
 
-    /**
-     * @return the fotoFile
-     */
-    @Override
-    public Files getFotoFile() throws DataLayerException {
-        if (foto > 0 && fotoFile == null) {
-            this.fotoFile = ownerdatalayer.getFile(foto);
-        }
-        return fotoFile;
-    }
-
-    /**
-     * @param fotoFile the fotoFile to set
-     */
-    @Override
-    public void setFotoFile(Files fotoFile) {
-        this.fotoFile = fotoFile;
-        this.foto = fotoFile.getKey();
-        this.dirty = true;
-    }
+    
 
     @Override
     public boolean equals(Object o) {
@@ -269,9 +205,8 @@ public class DeveloperImpl implements Developer {
         Developer dev = (Developer) o;
 
         return dev.getKey() == key && dev.getName().equals(name)
-                && dev.getSurname().equals(surname) && dev.getUsername().equals(username) && dev.getPwd().equals(pwd)
-                && dev.getMail().equals(mail) && dev.getBirthDate().equals(birthdate) && dev.getBiography().equals(biography)
-                && dev.getCurriculumString().equals(curriculumString) && dev.getCurriculumFile() == curriculumFile && dev.getFoto() == foto;
+                && dev.getSurname().equals(surname) && dev.getUsername().equals(username) && dev.getPassword().equals(password)
+                && dev.getMail().equals(mail) && dev.getPicture().equals(picture) && dev.getBiography().equals(biography);
 
     }
 
@@ -282,13 +217,11 @@ public class DeveloperImpl implements Developer {
         hash = 67 * hash + Objects.hashCode(this.name);
         hash = 67 * hash + Objects.hashCode(this.surname);
         hash = 67 * hash + Objects.hashCode(this.username);
-        hash = 67 * hash + Objects.hashCode(this.pwd);
+        hash = 67 * hash + Objects.hashCode(this.password);
         hash = 67 * hash + Objects.hashCode(this.mail);
-        hash = 67 * hash + Objects.hashCode(this.birthdate);
+        hash = 67 * hash + Objects.hashCode(this.picture);
         hash = 67 * hash + Objects.hashCode(this.biography);
-        hash = 67 * hash + Objects.hashCode(this.curriculumString);
-        hash = 67 * hash + this.curriculumFile;
-        hash = 67 * hash + this.foto;
+        hash = 67 * hash + Objects.hashCode(this.headline);
         return hash;
     }
 
@@ -312,6 +245,27 @@ public class DeveloperImpl implements Developer {
     @Override
     public String getHeadline() {
         return headline;
+    }
+    
+    @Override
+    public void setResume(String resume) {
+        this.resume = resume;
+        this.dirty = true;
+    }
+
+    @Override
+    public String getResume() {
+        return resume;
+    }
+    
+    @Override
+    public String getTextBio() {
+        return Jsoup.parse(this.biography).text();
+    }
+    
+    @Override
+    public String getTextResume() {
+        return Jsoup.parse(this.resume).text();
     }
 
 }

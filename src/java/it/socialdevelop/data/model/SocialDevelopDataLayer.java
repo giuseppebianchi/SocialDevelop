@@ -58,6 +58,8 @@ public interface SocialDevelopDataLayer extends DataLayer {
     Type getTypeByTask(int task_key) throws DataLayerException;
 
     Developer getDeveloper(int developer_key) throws DataLayerException;
+    
+    List<Developer> getDevelopers() throws DataLayerException;
 
     Map<Developer, Integer> getDevelopersBySkill(int skill_key) throws DataLayerException;
 

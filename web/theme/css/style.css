@@ -3315,6 +3315,9 @@ mt0{
 .pb0{
     padding-bottom: 0;
 }
+#main-wrapper{
+    background: #fff;
+}
 .checkbox{
     padding-left: 0;
     font-weight: 400;
@@ -3866,6 +3869,13 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 .alert{
     color: #fff;
+}
+
+.title-developer-list{
+    color: #000;
+}
+.p10{
+    padding: 10px 0;
 }
 @media (max-width: 767px) {
 	.projects-section .css-table-cell.image.has-bg-image{

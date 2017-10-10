@@ -68,7 +68,6 @@ public class FindDeveloper extends SocialDevelopBaseController {
             int vote[] = new int[dev.size()];
             int count = 0;
             for (Developer developer : dev) {
-                int foto_key = (developer).getFoto();
                 projects[count] = datalayer.getProjectCollaborators(developer.getKey()).size() + datalayer.getProjectsByCoordinator(developer.getKey()).size();
                 List<Integer> votes = new ArrayList<Integer>(datalayer.getTasksByDeveloper(developer.getKey()).values());
                 if (votes.size() > 0) {
@@ -86,12 +85,7 @@ public class FindDeveloper extends SocialDevelopBaseController {
                 } else {
                     vote[count] = 0;
                 }
-                if (foto_key != 0) {
-                    foto = datalayer.getFile(foto_key);
-                    fotos[count] = "uploaded-images/" + foto.getLocalFile();
-                } else {
-                    fotos[count] = "uploaded-images/foto_profilo_default.png";
-                }
+                
                 count++;
             }
             request.setAttribute("foto", fotos);

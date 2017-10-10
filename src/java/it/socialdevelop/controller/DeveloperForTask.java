@@ -80,10 +80,7 @@ public class DeveloperForTask extends SocialDevelopBaseController {
                     for (Map.Entry<Skill, Integer> entry : skills.entrySet()) {
                         List<Developer> devSkill = datalayer.getDevelopersBySkillNoLevel(entry.getKey().getKey(), entry.getValue());
                         for (Developer dev : devSkill) {
-                            int photo_key = dev.getFoto();
-                            if (photo_key > 0) {
-                                dev.setFotoFile(datalayer.getFile(photo_key));
-                            }
+                            
                             int sprojects = datalayer.getProjectCollaborators(dev.getKey()).size() + datalayer.getProjectsByCoordinator(dev.getKey()).size();
                             projects.put(dev.getKey(), sprojects);
                             List<Integer> vote = new ArrayList<Integer>(datalayer.getTasksByDeveloper(dev.getKey()).values());

@@ -34,7 +34,7 @@ public class AddSkillBack extends SocialDevelopBaseController {
         HttpSession s = request.getSession(true);
         String u = (String) s.getAttribute("previous_url");
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
-            if (s.getAttribute("previous_url") != null && ((String) s.getAttribute("previous_url")).equals("/socialdevelop/BackEndSkill")) {
+            if (s.getAttribute("previous_url") != null && ((String) s.getAttribute("previous_url")).equals("/SocialDevelop/BackEndSkill")) {
 
                 SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
                 Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));

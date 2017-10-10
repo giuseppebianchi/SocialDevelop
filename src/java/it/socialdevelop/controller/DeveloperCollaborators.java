@@ -33,18 +33,7 @@ public class DeveloperCollaborators extends SocialDevelopBaseController {
         }
     }
 
-    private void getImg(HttpServletRequest request, HttpServletResponse response, Developer dev) throws IOException, SQLException, DataLayerException, NamingException {
-        StreamResult result = new StreamResult(getServletContext());
-
-        SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-        if (dev.getFoto() != 0) {
-            Files foto_profilo = datalayer.getFile(dev.getFoto());
-            request.setAttribute("foto_profilo", "uploaded-images/" + foto_profilo.getLocalFile());
-        } else {
-            request.setAttribute("foto_profilo", "uploaded-images/foto_profilo_default.png");
-        }
-
-    }
+    
 
     private void action_mycollaborators(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
@@ -57,11 +46,9 @@ public class DeveloperCollaborators extends SocialDevelopBaseController {
             Calendar now = Calendar.getInstance();
             now.setTimeInMillis(currentTime);
             //Get difference between years
-            request.setAttribute("age", now.get(Calendar.YEAR) - dev.getBirthDate().get(Calendar.YEAR));
             request.setAttribute("bio", dev.getBiography());
             request.setAttribute("mail", dev.getMail());
             request.setAttribute("id", dev_key);
-            getImg(request, response, dev);
             //recupero progetti gestiti dall'utente (progetti dei quali è il coordinatore)
 
             List<Task> tasks = new ArrayList<Task>(datalayer.getTasksByDeveloper(dev_key).keySet());

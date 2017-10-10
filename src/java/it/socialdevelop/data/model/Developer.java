@@ -14,7 +14,9 @@ import java.util.Map;
 public interface Developer {
 
     int getKey();
-
+    
+    void setKey(int key);
+    
     void setUsername(String username);
 
     String getUsername();
@@ -31,45 +33,20 @@ public interface Developer {
 
     String getMail();
 
-    void setPwd(String pwd);
+    void setPassword(String password);
 
-    String getPwd();
-
-    void setBirthDate(GregorianCalendar birthdate);
-
-    GregorianCalendar getBirthDate();
+    String getPassword();
 
     void setBiography(String biography);
 
     String getBiography();
-
-    void setCurriculum(int curriculum);
-
-    void setCurriculum(String curriculum);
-
-    int getCurriculumFile();
-
-    int getFoto();
-
-    void setFoto(int foto);
-
-    void setFotoFile(Files file);
-
-    Files getFotoFile() throws DataLayerException;
-
-    String getCurriculumString();
-
+    
     void setSkills(Map<Skill, Integer> skills);
 
     Map<Skill, Integer> getSkillsByDeveloper() throws DataLayerException;
 
-    //per recuperare i voti relativi ai task a cui 
-    //il developer ha partecipato, basta un array assoc
-    //con Task-Voto, perchè è possibile risalire alle info
-    //del coordinatore che ha lasciato la valutazione attraverso il task
-    //stesso che ha un unico coordinatore
+    
     Map<Task, Integer> getTasksByDeveloper() throws DataLayerException;
-    //"valutazione" va bene come Integer???
 
     void addSkill(Skill skill, int level);
 
@@ -91,5 +68,13 @@ public interface Developer {
     void setHeadline(String picture);
 
     String getHeadline();
+    
+    void setResume(String resume);
+    
+    String getResume();
+    
+    String getTextBio();
+    
+    String getTextResume();
 
 }

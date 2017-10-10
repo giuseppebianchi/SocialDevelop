@@ -36,7 +36,7 @@ import it.socialdevelop.data.model.Type;
 public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implements SocialDevelopDataLayer {
 
     //NB: sRequestByID --> ID è inteso come coppia collaborator_key-task_key)
-    private PreparedStatement sProjectByID, sTaskByID, sProjects, sDeveloperByID, sSkillByID, sRequestByID, sSkillsParentList;
+    private PreparedStatement sProjectByID, sTaskByID, sProjects, sDeveloperByID, sSkillByID, sRequestByID, sSkillsParentList, sDevelopers, sTypeByDeveloper;
     private PreparedStatement sProjectsByFilter, sSkillsByTask, sSkillsByDeveloper, sSkillsByType, sQuestionsByCoordinatorID;
     private PreparedStatement sCollaboratorsByTask, sVoteByTaskandDeveloper, sTypeByTask, sMessagesByProject, sDeveloperByMessage;
     private PreparedStatement sDeveloperBySkillWithLevel, sDeveloperBySkill, sTasksByProject, sTaskByRequest, scTaskByProjectID;
@@ -85,7 +85,9 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             sTypes = connection.prepareStatement("SELECT ID FROM type");
 
             sSkillsByType = connection.prepareStatement("SELECT ID FROM skill WHERE type_ID=?");
-
+            
+            sDevelopers = connection.prepareStatement("SELECT * FROM developer");
+            
             sDeveloperByID = connection.prepareStatement("SELECT * FROM developer WHERE ID=?");
 
             sDeveloperByUsername = connection.prepareStatement("SELECT developer.ID FROM developer WHERE username=?");
@@ -142,6 +144,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             sVoteByTaskandDeveloper = connection.prepareStatement("SELECT vote FROM task_has_developer WHERE task_ID=? "
                     + "AND developer_ID=?");
             sTypeByTask = connection.prepareStatement("SELECT type_ID FROM task WHERE ID=?");
+            sTypeByDeveloper = connection.prepareStatement("SELECT DISTINCT s.type_ID FROM hwsd.skill_has_developer AS dhs JOIN hwsd.skill AS s ON dhs.skill_ID = s.ID WHERE dhs.developer_ID =?");
             sDeveloperBySkillWithLevel = connection.prepareStatement("SELECT developer.*, skill_has_developer.level FROM developer INNER JOIN "
                     + "skill_has_developer ON (developer.ID = skill_has_developer.developer_ID)"
                     + "WHERE skill_has_developer.skill_ID=? AND skill_has_developer.level>=?");
@@ -199,8 +202,8 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             uSkill = connection.prepareStatement("UPDATE skill SET name=?,parent_ID=? WHERE ID=?");
             dSkill = connection.prepareStatement("DELETE FROM skill WHERE ID=?");
 
-            iDeveloper = connection.prepareStatement("INSERT INTO developer (name,surname,username,mail,pwd,birthdate,biography,curriculumString) VALUES(?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            uDeveloper = connection.prepareStatement("UPDATE developer SET username=?,mail=?,pwd=?,biography=?,curriculumString=?,curriculum_pdf_ID=?,photo_ID=? WHERE ID=?");
+            iDeveloper = connection.prepareStatement("INSERT INTO developer (name,surname,username,mail,password,biography, resume) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            uDeveloper = connection.prepareStatement("UPDATE developer SET username=?,mail=?,name=?, surname=?, biography=?, resume=?, headline=? WHERE ID=?");
             dDeveloper = connection.prepareStatement("DELETE FROM developer WHERE ID=?");
 
             iTask = connection.prepareStatement("INSERT INTO task (name,numCollaborators,start,end,description,open,project_ID, type_ID) VALUES(?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -296,9 +299,11 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             a.setEndDate(end);
 
             a.setOpen(rs.getBoolean("open"));
+            a.setCompleted(rs.getBoolean("completed"));
             a.setNumCollaborators(rs.getInt("numCollaborators"));
             a.setDescription(rs.getString("description"));
             a.setProjectKey(rs.getInt("project_ID"));
+            a.setProject(getProject(rs.getInt("project_ID")));
             a.setType_key(rs.getInt("type_ID"));
             return a;
         } catch (SQLException ex) {
@@ -317,7 +322,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             a.setKey(rs.getInt("ID"));
             a.setName(rs.getString("name"));
             a.setType_key(rs.getInt("type_ID"));
-
+            a.setType(getType(rs.getInt("type_ID")));
             return a;
         } catch (SQLException ex) {
             throw new DataLayerException("Unable to create skill object form ResultSet", ex);
@@ -336,28 +341,11 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             a.setName(rs.getString("name"));
             a.setSurname(rs.getString("surname"));
             a.setUsername(rs.getString("username"));
-            //a.setHeadline(rs.getString("headline"));
+            a.setHeadline(rs.getString("headline"));
             a.setMail(rs.getString("mail"));
-            a.setPwd(rs.getString("pwd"));
+            a.setPassword(rs.getString("password"));
             a.setBiography(rs.getString("biography"));
-            java.sql.Date date;
-            date = rs.getDate("birthdate");
-            if (date != null) {
-                GregorianCalendar birthdate = new GregorianCalendar();
-                birthdate.setTime(date);
-                a.setBirthDate(birthdate);
-
-            } else {
-                a.setBirthDate(null);
-            }
-            String curriculumStr = rs.getString("curriculumString");
-            int curriculumFile = rs.getInt("curriculum_pdf_ID");
-            if (curriculumStr != null && !curriculumStr.equals("")) {
-                a.setCurriculum(curriculumStr);
-            } else {
-                a.setCurriculum(curriculumFile);
-            }
-            a.setFoto(rs.getInt("photo_ID"));
+            a.setResume(rs.getString("resume"));
             return a;
         } catch (SQLException ex) {
             throw new DataLayerException("Unable to create developer object form ResultSet", ex);
@@ -587,7 +575,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
         }
         return null;
     }
-
+    
     @Override
     public Developer getDeveloperByMessage(int message_key) throws DataLayerException {
         try {
@@ -797,6 +785,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
         }
         return result;
     }
+    
 
     @Override
     public Developer getDeveloper(int developer_key) throws DataLayerException {
@@ -811,6 +800,21 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             throw new DataLayerException("Unable to load developer", ex);
         }
         return null;
+    }
+    
+    @Override
+    public List<Developer> getDevelopers() throws DataLayerException {
+        List<Developer> result = new ArrayList();
+
+        try (ResultSet rs = sDevelopers.executeQuery()) {
+            while (rs.next()) {
+                result.add( (Developer) getDeveloper(rs.getInt("ID")));
+
+            }
+        } catch (SQLException ex) {
+            throw new DataLayerException("Unable to load projects", ex);
+        }
+        return result; //restituisce in result tutti gli oggetti Project esistenti
     }
 
     @Override
@@ -1328,19 +1332,12 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
                 }
                 uDeveloper.setString(1, developer.getUsername());
                 uDeveloper.setString(2, developer.getMail());
-                uDeveloper.setString(3, developer.getPwd());
-                uDeveloper.setString(4, developer.getBiography());
-                uDeveloper.setString(5, developer.getCurriculumString());
-                if (developer.getCurriculumFile() != 0) {
-                    uDeveloper.setInt(6, developer.getCurriculumFile());
-                } else {
-                    uDeveloper.setNull(6, java.sql.Types.INTEGER);
-                }
-                if (developer.getFoto() != 0) {
-                    uDeveloper.setInt(7, developer.getFoto());
-                } else {
-                    uDeveloper.setNull(7, java.sql.Types.INTEGER);
-                }
+                uDeveloper.setString(3, developer.getName());
+                uDeveloper.setString(4, developer.getSurname());
+                //uDeveloper.setString(3, developer.getPassword());
+                uDeveloper.setString(5, developer.getBiography());
+                uDeveloper.setString(6, developer.getResume());
+                uDeveloper.setString(7, developer.getHeadline());
                 uDeveloper.setInt(8, developer.getKey());
                 uDeveloper.executeUpdate();
             } else { //insert
@@ -1348,15 +1345,9 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
                 iDeveloper.setString(2, developer.getSurname());
                 iDeveloper.setString(3, developer.getUsername());
                 iDeveloper.setString(4, developer.getMail());
-                iDeveloper.setString(5, developer.getPwd());
-                if (developer.getBirthDate() != null) {
-                    Date sqldate = new Date(developer.getBirthDate().getTimeInMillis());
-                    iDeveloper.setDate(6, sqldate);
-                } else {
-                    iDeveloper.setDate(6, null);
-                }
-                iDeveloper.setString(7, developer.getBiography());
-                iDeveloper.setString(8, developer.getCurriculumString());
+                iDeveloper.setString(5, developer.getPassword());
+                iDeveloper.setString(6, developer.getBiography());
+                iDeveloper.setString(7, developer.getResume());
 
                 if (iDeveloper.executeUpdate() == 1) {
                     //per leggere la chiave generata dal database

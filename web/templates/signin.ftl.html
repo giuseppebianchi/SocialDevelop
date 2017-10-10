@@ -1,0 +1,51 @@
+<!-- HOME PRO-->
+  <div class="home-pro"> 
+    
+    <!-- PRO BANNER HEAD -->
+    <div class="banr-head">
+      <div class="container">
+        <div class="row"> 
+
+         
+          <!-- FORM SECTION -->
+          <div class="col-sm-5" style="margin: 0 auto; float: none">
+            <div class="login-sec"> 
+              
+              <!-- TABS -->
+              <div class="uou-tabs">
+                <ul class="tabs">
+
+                    <li class="active" style="width: 100%"><a href="#register">Sign In</a></li>
+
+                </ul>
+                
+                <!-- REGISTER -->
+                <div class="content">
+                  <div id="log-in" class="active">
+                    <form id="signin-form" action="${request.getContextPath()}/login" method="post">
+                      <label class="input-title">Email or Username</label>
+                      <input type="text" name="username" required="required" id="mail-username" placeholder="Your Email  or Username..">
+                      <label class="input-title">Password</label>
+                      <input type="password" name="pwd" required="required" id="pwd" placeholder="Your Password">
+                      <#if error??><p class="text-danger">${error}</p></#if>
+                      <button type="submit">Sign In to SocialDevelop</button>
+                      <!--<div class="login-with"> <span>Or login with:</span> <a href="#."><i class="fa fa-facebook"></i></a> <a href="#."><i class="fa fa-google"></i></a> <a href="#."><i class="fa fa-linkedin"></i></a> </div>-->
+                      <div class="forget">Forgot your password? <a href="#.">Click Here</a></div>
+                    </form>
+                  </div>
+                  <div id="forget">
+                    <form>
+                      <input type="email" placeholder="Email Address">
+                      <button type="submit">Send</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div> 
+
+  </div>

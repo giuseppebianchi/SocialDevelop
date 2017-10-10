@@ -81,9 +81,9 @@
             <li id="avatar-menu" ><a href="${request.getContextPath()}/user"><div <#if foto??>style="background-image: url('${request.getContextPath()}/uploads/images/${foto}')"</#if>></div></a>
               <ul style="display: none;">
                 <li class="bordered">Signed in as<strong>${fullname}</strong></li>
-                <li><a href="user">Your profile</a></li>
-                <li><a href="user-dashboard(connections)(hotkeys-disabled).html">Your projects</a></li>
-                <li class="bordered"><a href="user-dashboard(connections)(hotkeys-enabled).html">Your tasks</a></li>
+                <li><a href="${request.getContextPath()}/developers/${auth_user}">Your profile</a></li>
+                <li><a href="${request.getContextPath()}/developers/${auth_user}?q=projects">Your projects</a></li>
+                <li class="bordered"><a href="${request.getContextPath()}/developers/${auth_user}?q=tasks">Your tasks</a></li>
                 <li><a href="${request.getContextPath()}/settings/profile">Settings</a></li>
                 <li><a href="${request.getContextPath()}/logout">Sign Out</a></li>                
               </ul>
@@ -91,7 +91,7 @@
             <#else>
             <li><form action="${request.getContextPath()}/search" id="search-menu-form-2" class="search-menu-form"><input type="text" value="" placeholder="Search SocialDevelop"><a href="#" id="search-button"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
             <li><a href="${request.getContextPath()}/signin">Sign In</a></li>
-            <li><a href="${request.getContextPath()}/signin">Sign Up</a></li>
+            <li><a href="${request.getContextPath()}/signup">Sign Up</a></li>
             </#if>
             <!--<li class="search-block">
               <div class="search" method="get"> <a href="#" class="toggle fa fa-search"></a>

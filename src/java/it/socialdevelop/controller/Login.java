@@ -30,10 +30,10 @@ public class Login extends SocialDevelopBaseController {
         HttpSession s = request.getSession(true);
         String u = (String) s.getAttribute("previous_url");
 
-        if (s.getAttribute("previous_url") != null && (u.equals("/socialdevelop") || u.equals("/socialdevelop/") || u.equals("/socialdevelop/home") || u.equals("/socialdevelop/MakeLoginReg"))) {
+        if (s.getAttribute("previous_url") != null && (u.equals("/SocialDevelop") || u.equals("/SocialDevelop/") || u.equals("/SocialDevelop/home") || u.equals("/SocialDevelop/login"))) {
             String mail_username = request.getParameter("username");
-            String pwd = request.getParameter("pwd");
-            if (mail_username != null && !mail_username.equals("") && pwd != null && !pwd.equals("")) {
+            String password = request.getParameter("pwd");
+            if (mail_username != null && !mail_username.equals("") && password != null && !password.equals("")) {
                 SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
                 int dev_key = 0;
                 if (mail_username.contains("@")) {
@@ -43,31 +43,35 @@ public class Login extends SocialDevelopBaseController {
                 }
                 Developer dev = datalayer.getDeveloper(dev_key);
                 datalayer.destroy();
-
+                
                 String act_url = request.getRequestURI();
                 s.setAttribute("previous_url", act_url);
 
                 if (dev != null) {
-                    if (dev.getPwd().equals(pwd)) {
-                        SecurityLayer.createSession(request, dev.getUsername(), dev.getName() + " " + dev.getSurname(), dev.getPicture(), dev_key);
-                        response.sendRedirect("home");
+                    if (dev.getPassword().equals(password)) {
+                        String fullname = dev.getUsername();
+                        if(!(dev.getName().equals("") && dev.getSurname().equals(""))){
+                            fullname = dev.getName() + " " + dev.getSurname();
+                        }
+                        SecurityLayer.createSession(request, dev.getUsername(), fullname, dev.getPicture(), dev_key);
+                        response.sendRedirect("/SocialDevelop");
                     } else {
                         //password errata
                         s.setAttribute("problem", "login_pwd");
-                        response.sendRedirect("home");
+                        response.sendRedirect("/SocialDevelop/signin");
                     }
                 } else {
                     //mail o username errato
                     s.setAttribute("problem", "login_user");
-                    response.sendRedirect("home");
+                    response.sendRedirect("/SocialDevelop/signin");
                 }
             } else {
                 s.setAttribute("problem", "login_all");
-                response.sendRedirect("home");
+                response.sendRedirect("/SocialDevelop/signin");
             }
 
         } else {
-            response.sendRedirect("home");
+            response.sendRedirect("/SocialDevelop/signin");
         }
 
     }

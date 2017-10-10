@@ -35,18 +35,7 @@ public class MyCollaborators extends SocialDevelopBaseController {
         }
     }
 
-    private void getImg(HttpServletRequest request, HttpServletResponse response, Developer dev) throws IOException, SQLException, DataLayerException, NamingException {
-        StreamResult result = new StreamResult(getServletContext());
-
-        SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-        if (dev.getFoto() != 0) {
-            Files foto_profilo = datalayer.getFile(dev.getFoto());
-            request.setAttribute("foto_profilo", "uploaded-images/" + foto_profilo.getLocalFile());
-        } else {
-            request.setAttribute("foto_profilo", "uploaded-images/foto_profilo_default.png");
-        }
-
-    }
+    
 
     private void action_mycollaborators(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         HttpSession s = request.getSession(true);
@@ -61,15 +50,10 @@ public class MyCollaborators extends SocialDevelopBaseController {
             Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
             request.setAttribute("username", dev.getUsername());
             request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
-            long currentTime = System.currentTimeMillis();
-            Calendar now = Calendar.getInstance();
-            now.setTimeInMillis(currentTime);
-            //Get difference between years
-            request.setAttribute("age", now.get(Calendar.YEAR) - dev.getBirthDate().get(Calendar.YEAR));
+
             request.setAttribute("bio", dev.getBiography());
             request.setAttribute("mail", dev.getMail());
             request.setAttribute("logout", "Logout");
-            getImg(request, response, dev);
 
             //recupero progetti gestiti dall'utente (progetti dei quali è il coordinatore)
             List<Project> projects = datalayer.getProjectsByCoordinator(dev.getKey());
@@ -83,12 +67,7 @@ public class MyCollaborators extends SocialDevelopBaseController {
                         for (Task task : project_tasks) {
                             Map<Developer, Integer> map = datalayer.getCollaboratorsByTask(task.getKey());
 
-                            for (Map.Entry<Developer, Integer> collaborator : map.entrySet()) {
-                                int foto_key = collaborator.getKey().getFoto();
-                                if (foto_key > 0) {
-                                    collaborator.getKey().setFotoFile(datalayer.getFile(foto_key));
-                                }
-                            }
+                           
 
                             task.setCollaborators(map);
                             tasks2.add(task);

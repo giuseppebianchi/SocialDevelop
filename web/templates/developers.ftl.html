@@ -16,21 +16,51 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12">
-            <div class="map-toggleButton"> <i class="fa fa-bars"></i> </div>
-            <div class="map-search-fields">
-              <div class="field">
-                <input type="text" placeholder="Name">
-              </div>
-              <div class="field">
-                <input type="text" placeholder="Location">
-              </div>
-              <div class="field custom-select-box">
-                <input type="text" placeholder="Profession">
-              </div>
+            <!--<div class="map-search-fields" style="padding-left: 0">
+                <div class="field" style="width: 90%;">
+                <input type="text" placeholder="Username">
+                </div>
             </div>
             <div class="search-button">
               <button>Search Developers</button>
-            </div>
+            </div>-->
+            
+                    <div class="row">
+                  <div class="col-sm-6">
+                      
+                      <select name="select_skill" id="select-skill" class="js-example-placeholder-single" style="width: 100%; display: inline;">
+                          
+                          <#list skills as skill>
+                            <option class="option-skills" value="${skill.key}" data-name="${skill.name}">${skill.name}</option>
+                          </#list>
+                      </select>
+                  </div>
+                  <div class="col-sm-2">
+                      <select id="level-skill">
+                          <option>Level</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
+                      </select>
+                  </div>
+                  <div class="col-sm-2">
+                      <a class="btn btn-primary btn-block" id="add-new-skill">Add Skill</a>
+                  </div>
+                  <div class="col-sm-2">
+                      <input class="btn btn-success btn-block" type="submit" value="filter">
+                  </div>
+                      
+              </div>
+          
+                    <ul id="skills-list"></ul>
+           
           </div>
         </div>
       </div>
@@ -85,27 +115,95 @@
     <div class="container pb30">
       <div class="similar developer-list">
           
+          <#list devs as dev>
           <!-- DEVELOPER -->
           <div class="media">
             <div class="media-left">
-                <div class="inn-simi"> <div class="media-object" alt=""></div> <a href="#">Profile </a> </div>
+                <div class="inn-simi"> <div class="media-object" alt=""></div><!-- <a href="#">Profile </a> --></div>
             </div>
             <div class="media-body">
-              <h4>Giuseppe Bianchi</h4>
-              <p>SEO Specialist</p>
-              <div class="com-rate"><span><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i></span></div>
-              <br>
-              <a href="#">New York, USA</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, 
-                voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum 
-                accusantium deleniti neque architecto vitae.</p>
+                <h4 class="pt30"><a class="title-developer-list" href="${request.getContextPath()}/developers/${dev.key}"><#if (dev.name == "" && dev.surname == "")>${dev.username}<#else>${dev.name} ${dev.surname}</#if></a></h4>
+              <p>${dev.headline}</p>
+              <div class="com-rate"><span>
+                    <#list 1..5 as i>
+                        <#if (i > votes[dev?index])>
+                        <i class="fa fa-star-o"></i>
+                        <#else>
+                        <i class="fa fa-star"></i>
+                        </#if>
+                    </#list>
+                    </span></div>
+              <!--<br>
+              <a href="#">New York, USA</a>-->
+              <div>
+                  <#assign dec = dev.getTextBio()>
+                    <#if (dec?length > 251)>
+                        ${dec?substring(0, 250)}... <a href="${request.getContextPath()}/developers/${dev.key}">read more</a>
+                    <#else>
+                       ${dec} <a href="${request.getContextPath()}/developers/${dev.key}"> read more</a>
+                    </#if>
+              </div>
               
-              <!-- Share -->
-              <div class="share-w"><a href="#."><i class="fa fa-bookmark-o"></i></a> <a href="#."><i class="fa fa-envelope-o"></i></a> <a href="#."><i class="fa fa-eye"></i></a></div>
+              <!--Share -->
+              <div class="share-w pt30"><a href="#."><i class="fa fa-envelope-o"></i></a> <a href="#."><i class="fa fa-envelope-o"></i></a></div>
             </div>
           </div>
+          
           <!-- END DEVELOPER -->
+          </#list>
+          
          </div>
     </div>
     
   </section>
+<script>
+    
+
+    $(document).ready(function(){
+        var ctx = "${request.getContextPath()}";
+        var select_skill = $('#select-skill');
+        var level_skill = $('#level-skill');
+        var skillSearchTemplate;
+        
+        select_skill.select2({
+            placeholder: "Select a skill",
+            allowClear: true
+        });
+        
+        //skills
+        var id_skill = 0;
+        var skills = {};
+        var options = {};
+        var skills_list = $("#skills-list");
+        $.get(ctx + "/templates/mustache/skillSearchTemplate.html", function(t){
+                skillSearchTemplate = t;
+        });
+        $('#add-new-skill').click(function(e){
+            e.preventDefault();
+            var key = select_skill.val();
+            options[key] = select_skill.find(":selected")[0];
+            skills[id_skill] = {
+                "name": $(options[key]).data("name"),
+                "key": key,
+                "level": level_skill.val(),
+                "id": id_skill
+            }
+            skills_list.append(Mustache.render(skillSearchTemplate, skills[id_skill]))
+            id_skill++;
+            $(options[key]).attr("disabled", "disabled");
+            select_skill.select2();
+            select_skill.select2("val", "");
+            level_skill.get(0).selectedIndex = 0;
+        })
+        $("body").on("click", '.remove-skill-button', function(e){
+            e.preventDefault();
+            var id = $(this).data("id");
+            var key = $(this).data("key");
+            delete skills[id];
+            $(options[key]).removeAttr("disabled");
+            select_skill.select2();
+            delete options[key];
+            $("#skill-" + id).remove();
+        });
+    })
+</script>

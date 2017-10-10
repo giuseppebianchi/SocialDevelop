@@ -2,8 +2,8 @@
   <div class="sub-bnr user-profile-bnr">
     <div class="position-center-center">
       <div class="container">
-          <#if auth_user??>
-        <a href="${request.getContextPath()}/projects/new" class="pull-right btn btn-success mt10"> Create new project</a>
+        <#if auth_user??>
+            <a href="${request.getContextPath()}/projects/new" class="pull-right btn btn-success mt10"> Create new project</a>
         </#if>
         <h2>Projects</h2>
         
@@ -19,7 +19,7 @@
         <div class="row">
           <div class="col-md-12">
             <form id="findByKeyWord" action="${request.getContextPath()}/projects/search" method="post">  
-            <div class="map-search-fields">
+                <div class="map-search-fields" style="padding-left: 15px">
                 <input type="text" name="keyWord" placeholder="Name">
             </div>
             <div class="search-button">

@@ -66,13 +66,7 @@ public class SearchProject extends SocialDevelopBaseController {
                     ncollaboratori[count] += task.getNumCollaborators();
                 }
                 progetto.setCoordinator(coordinatore);
-                int foto_key = coordinatore.getFoto();
-                if (foto_key != 0) {
-                    foto = datalayer.getFile(foto_key);
-                    fotos[count] = "uploaded-images/" + foto.getLocalFile();
-                } else {
-                    fotos[count] = "uploaded-images/foto_profilo_default.png";
-                }
+
                 count++;
                 c++;
             }

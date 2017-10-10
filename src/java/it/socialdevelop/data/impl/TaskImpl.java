@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import it.socialdevelop.data.model.Developer;
 import it.socialdevelop.data.model.Project;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
+import org.jsoup.Jsoup;
 
 /**
  *
@@ -26,6 +27,7 @@ public class TaskImpl implements Task {
     private GregorianCalendar start;
     private GregorianCalendar end;
     private boolean open;
+    private boolean completed;
     private int numCollaborators;
     private String description;
     private int type_key;
@@ -45,6 +47,7 @@ public class TaskImpl implements Task {
         start = null;
         end = null;
         open = true;
+        completed = false;
         numCollaborators = 0;
         description = "";
         type = null;
@@ -270,6 +273,16 @@ public class TaskImpl implements Task {
     public boolean isDirty() {
         return dirty;
     }
+    
+    @Override
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    @Override
+    public boolean isCompleted() {
+        return this.completed;
+    }
 
     @Override
     public void setKey(int key) {
@@ -285,6 +298,11 @@ public class TaskImpl implements Task {
     public void setName(String name) {
         this.name = name;
         this.dirty = true;
+    }
+    
+    @Override
+    public String getTextDescription() {
+        return Jsoup.parse(this.description).text();
     }
 
     @Override
