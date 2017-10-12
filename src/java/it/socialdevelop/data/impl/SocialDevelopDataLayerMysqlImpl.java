@@ -1922,9 +1922,9 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
     }
 
     @Override
-    public int deleteSkillHasDeveloper(int task_id, int developer_id) throws DataLayerException {
+    public int deleteSkillHasDeveloper(int skill_id, int developer_id) throws DataLayerException {
         try {
-            dSkillHasDeveloper.setInt(1, task_id);
+            dSkillHasDeveloper.setInt(1, skill_id);
             dSkillHasDeveloper.setInt(2, developer_id);
             if (dSkillHasDeveloper.executeUpdate() == 1) {
                 return 1;

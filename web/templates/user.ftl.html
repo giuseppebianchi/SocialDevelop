@@ -40,8 +40,8 @@
               <li><a data-toggle="tab" href="#jobs">Tasks</a></li>
               <li><a data-toggle="tab" href="#discussion">Contact</a></li>
               <#if isProfile??> 
-                <li class="pull-right"><a data-toggle="tab" href="${request.getContextPath()}/settings/profile"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>
-                <li class="pull-right"><a data-toggle="tab" href="${request.getContextPath()}/dashboard">Dashboard</a></li>
+                <li class="pull-right"><a id="settings-profile-button" href="${request.getContextPath()}/settings/profile"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>
+                <li class="pull-right"><a id="dashboard-profile-button" href="${request.getContextPath()}/dashboard">Dashboard</a></li>
               </#if>
             </ul>
               <hr>
@@ -339,6 +339,7 @@
     
 
     $(document).ready(function(){
+        
         $("#select-skill").select2({
             placeholder: "Select a Skill",
             allowClear: true

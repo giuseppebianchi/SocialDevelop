@@ -71,7 +71,6 @@ public class CompleteRegistration extends SocialDevelopBaseController {
                 request.setAttribute("page_subtitle", "Complete your profile!");
                 request.setAttribute("logout", "Logout");
                 request.setAttribute("auth_user", s.getAttribute("userid"));
-                request.setAttribute("foto", s.getAttribute("foto"));
                 request.setAttribute("fullname", dev.getUsername());
                 TemplateResult res = new TemplateResult(getServletContext());
                 res.activate("complete_registration.ftl.html", request, response);

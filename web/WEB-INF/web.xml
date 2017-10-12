@@ -117,8 +117,12 @@
         <servlet-class>it.socialdevelop.controller.CreateProject</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UpdateProfile</servlet-name>
-        <servlet-class>it.socialdevelop.controller.UpdateProfile</servlet-class>
+        <servlet-name>SettingsProfile</servlet-name>
+        <servlet-class>it.socialdevelop.controller.SettingsProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SettingsAccount</servlet-name>
+        <servlet-class>it.socialdevelop.controller.SettingsAccount</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateProfileSubmit</servlet-name>
@@ -386,12 +390,16 @@
         <url-pattern>/projects/settings/new_task/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UpdateProfile</servlet-name>
-        <url-pattern>/UpdateProfile</url-pattern>
+        <servlet-name>SettingsProfile</servlet-name>
+        <url-pattern>/settings/profile</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateProfileSubmit</servlet-name>
-        <url-pattern>/UpdateProfileSubmit</url-pattern>
+        <url-pattern>/settings/profile/profile_submit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SettingsAccount</servlet-name>
+        <url-pattern>/settings/account</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>InsertProject</servlet-name>

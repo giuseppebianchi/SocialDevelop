@@ -1,5 +1,7 @@
 package it.socialdevelop.controller;
 
+import it.socialdevelop.data.impl.DeveloperImpl;
+import it.socialdevelop.data.impl.TaskImpl;
 import it.univaq.f4i.iw.framework.data.DataLayerException;
 import it.univaq.f4i.iw.framework.result.FailureResult;
 import it.univaq.f4i.iw.framework.result.TemplateManagerException;
@@ -19,7 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import it.socialdevelop.data.model.Admin;
 import it.socialdevelop.data.model.Developer;
+import it.socialdevelop.data.model.Project;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -33,57 +41,83 @@ public class UpdateProfileSubmit extends SocialDevelopBaseController {
         }
     }
 
-    private String getDigest(Part file_to_upload, File uploaded_file) throws IOException, NoSuchAlgorithmException {
-        InputStream is = file_to_upload.getInputStream();
-        OutputStream os = new FileOutputStream(uploaded_file);
-        MessageDigest md = MessageDigest.getInstance("SHA-1");
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = is.read(buffer)) > 0) {
-            //durante la copia, aggreghiamo i byte del file nel digest sha-1
-            md.update(buffer, 0, read);
-            os.write(buffer, 0, read);
-        }
-        //covertiamo il digest in una stringa
-        byte[] digest = md.digest();
-        String sdigest = "";
-        for (byte b : digest) {
-            sdigest += String.valueOf(b);
-        }
-        return sdigest;
-    }
-
     private void conferma_upd(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, NamingException, NoSuchAlgorithmException, Exception {
         HttpSession s = request.getSession(true);
         String u = (String) s.getAttribute("previous_url");
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
-            if (s.getAttribute("previous_url") != null && u.equals("/socialdevelop/UpdateProfile")) {
+            if (s.getAttribute("previous_url") != null && (u.equals("/SocialDevelop/settings/profile") || u.equals("/SocialDevelop/settings/profile?updated_profile=1"))) {
 
                 SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-
-                String bio = request.getParameter("biography");
-
-                String curriculum = request.getParameter("curriculum");
-
-                Part foto_to_upload = request.getPart("foto-profilo");
-                Part curriculum_to_upload = request.getPart("curriculum-pdf");
-
                 Developer dev = datalayer.getDeveloper((Integer) s.getAttribute("userid"));
+                  //controllo se chi sta modificando il progetto è veramente il propretario
+                int userid = (int) s.getAttribute("userid");
+                // this parses the json
+                String JSONData = request.getParameter("data");
+                JSONObject o = new JSONObject(JSONData);
+                int profile_id = o.getInt("profile_id");
+                if(userid != profile_id){
+                    response.sendRedirect("/SocialDevelop");
+                }else{
+                        String profile_username = o.getString("profile_username");
+                        String profile_name = o.getString("profile_name");
+                        String profile_surname = o.getString("profile_surname");
+                        String profile_headline = o.getString("profile_headline");
+                        String profile_biography = o.getString("profile_biography");
+                        String profile_resume = o.getString("profile_resume");
+                        String profile_email = o.getString("profile_email");
+                        //memorizziamo il task
+                        DeveloperImpl d = new DeveloperImpl(datalayer);
+                        d.setKey(profile_id);
+                        d.setUsername(profile_username);
+                        d.setName(profile_name);
+                        d.setSurname(profile_surname);
+                        d.setHeadline(profile_headline);
+                        d.setBiography(profile_biography);
+                        d.setResume(profile_resume);
+                        d.setMail(profile_email);
+                        
 
-                File uploaded_foto;
-                File uploaded_curriculum;
-                int foto_key = 0;
-                int curriculum_key = 0;
-                dev.setBiography(bio);
-                datalayer.storeDeveloper(dev);
-                datalayer.destroy();
-                response.sendRedirect("MyProfile");
+                        datalayer.storeDeveloper(d);
+                        //ora recuperiamo le info suulle skill e le memorizziamo
+
+                        try {
+                            //JSONObject skills = o.getJSONObject("skills");
+
+                            JSONArray removed_skills = o.getJSONArray("removed_skills");
+
+                            for(int i = 0; i < removed_skills.length(); i++){
+                                int removed_skill_key = removed_skills.getInt(i);
+                                datalayer.deleteSkillHasDeveloper(removed_skill_key, profile_id);
+                            }
+
+                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try{
+                            JSONObject skills = o.getJSONObject("skills");
+                            Iterator<String> temp = skills.keys();
+                            while (temp.hasNext()) {
+                                String sk_key = temp.next();
+                                    JSONObject sk = skills.getJSONObject(sk_key);
+                                    int skill_key = sk.getInt("key");
+                                    int level = sk.getInt("level");
+                                    datalayer.storeSkillHasDeveloper(skill_key, profile_id, level);
+                                }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    datalayer.destroy();
+                    //response.sendRedirect("developers/" + dev.getKey());
+                    response.sendRedirect("/SocialDevelop/settings/profile?updated_profile=1");
+                }
             } else {
                 response.sendRedirect("UpdateProfile");
             }
             s.removeAttribute("previous_url");
         } else {
-            response.sendRedirect("index");
+            response.sendRedirect("/SocialDevelop");
         }
     }
 

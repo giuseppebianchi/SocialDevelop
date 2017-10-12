@@ -36,28 +36,32 @@ public class Signup extends SocialDevelopBaseController {
         HttpSession s = request.getSession(true);
         Map data = new HashMap();
         data.put("request", request);
-        String problem = (String) s.getAttribute("problem");
-        if (s.getAttribute("problem") != null) {
-            if (problem.equals("login_all")) {
-                data.put("error", "please, Compile the fields");
-            } else if (problem.equals("login_pwd")) {
-                data.put("error", "Password is not correct");
-            } else if (problem.equals("login_user")) {
-                data.put("error", "Username/mail is not correct");
-            } else if (problem.equals("reg_all")) {
-                data.put("error_register", "Please, compile the fields");
-            } else if (problem.equals("reg_pwd")) {
-                data.put("error_register", "Passwords do not match");
-            } else if (problem.equals("reg_username")) {
-                data.put("error_register", "Username already exists");
-            } else if (problem.equals("reg_email")) {
-                data.put("error_register", "Email already exists");
+        if(s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0){
+            response.sendRedirect("/SocialDevelop");
+        }else{
+            String problem = (String) s.getAttribute("problem");
+            if (s.getAttribute("problem") != null) {
+                if (problem.equals("login_all")) {
+                    data.put("error", "please, Compile the fields");
+                } else if (problem.equals("login_pwd")) {
+                    data.put("error", "Password is not correct");
+                } else if (problem.equals("login_user")) {
+                    data.put("error", "Username/mail is not correct");
+                } else if (problem.equals("reg_all")) {
+                    data.put("error_register", "Please, compile the fields");
+                } else if (problem.equals("reg_pwd")) {
+                    data.put("error_register", "Passwords do not match");
+                } else if (problem.equals("reg_username")) {
+                    data.put("error_register", "Username already exists");
+                } else if (problem.equals("reg_email")) {
+                    data.put("error_register", "Email already exists");
+                }
+                s.removeAttribute("problem");
             }
-            s.removeAttribute("problem");
+            String u = (String) s.getAttribute("previous_url");
+                TemplateResult res = new TemplateResult(getServletContext());
+                res.activate("signup.ftl.html", data, response);
         }
-        String u = (String) s.getAttribute("previous_url");
-            TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("signup.ftl.html", data, response);
 
     }
 

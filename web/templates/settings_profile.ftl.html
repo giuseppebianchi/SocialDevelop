@@ -14,6 +14,11 @@
     <!-- Profile Company Content -->
     <div class="profile-company-content" data-bg-color="fff">
       <div class="container">
+          <#if updated_profile??>
+            <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close">×</button>
+            <strong>Well done!</strong> Your profile has been updated successfully. </div>
+          </#if>
         <div class="row"> 
           
           <!-- SIDE BAR -->
@@ -28,7 +33,7 @@
                       <li class="active"> <a> <i class="fa fa-group"></i> Profile </a> </li>
                       <li> <a href="${request.getContextPath()}/settings/account"> <i class="fa fa-plus-circle"></i> Account </a> </li>
                       <!--<li> <a href="#."> <i class="fa fa-cog"></i> Settings </a> </li>-->
-                      <li> <a href="#."> <i class="fa fa-sign-out"></i> Sign out </a> </li>
+                      <li> <a href="${request.getContextPath()}/logout"> <i class="fa fa-sign-out"></i> Sign out </a> </li>
                     </ul>
                   </div>
                 </div>
@@ -42,21 +47,16 @@
             <div class="network pt50">
                 <h5 class="tab-title">Public Profile</h5>
                 <hr class="mt10">
-                <form id="form-profile" method="post" action="">
+                <form id="form-profile" method="post" action="${request.getContextPath()}/settings/profile/profile_submit">
                 <div class="row">
                     <div class="col-xs-8">
                         <h6 class="input-label">First Name</h6>
-                        <input type="text" name="name" value="" placeholder="">
+                        <input id="profile_name" type="text" name="profile_name" value="${name}" placeholder="">
+                        <input id="form-data" type="hidden" name="data">
                         <h6 class="input-label">Last Name</h6>
-                        <input type="text" name="lastname" value="" placeholder="">
+                        <input id="profile_surname" type="text" name="profile_surname" value="${surname}" placeholder="">
                         <h6 class="input-label">Email</h6>
-                        <input type="email" name="email" value="" placeholder="">
-                        <h6 class="input-label">Biography</h6>
-                        <textarea name="bio" value="" placeholder="Tell us a little bit about yourself"></textarea>
-                        <h6 class="input-label">Location</h6>
-                        <input type="text" name="location" value="" placeholder="Your Name">
-                        <h6 class="input-label">Company</h6>
-                        <input type="text" name="name" value="" placeholder="Your Name">
+                        <input id="profile_email" type="email" name="profile_email" value="${mail}" placeholder=""> 
                         </div>
                     <div class="col-xs-4">
                         <div class="img-block avatar-200"></div>
@@ -64,151 +64,55 @@
                         <label for="#upload-picture" class="btn-block"><a class="btn btn-primary btn-block">Upload New Picture</a></label>
                     </div>
                 </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h6 class="input-label">Biography</h6>
+                        <div id="profile-biography">${biography}</div>
+                        </div>
+                    </div>
                 
                 <br>
                 <h5 class="tab-title">Developer</h5>
                 <hr class="mt10">
                 <div class="row">
                     <div class="col-sm-12">
-                 <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id arcu sollicitudin, auctor mauris ac, semper elit. Suspendisse ultrices malesuada lorem, quis consequat turpis semper eget.</p>
-                <div class="checkbox">
+                 <p class="tab-subtitle">Your job or a short description about your work.</p>
+                <!--<div class="checkbox">
                   <input id="checkbox1" class="styled" type="checkbox">
                   <label for="checkbox1"> Developer Account</label>
-                </div>
+                </div>-->
                  <h6 class="input-label">Job</h6>
-                  <select name="select_job" id="select-job" class="js-example-placeholder-single" style="width: 100%; display: inline;">
-                          <option></option>
-                        <optgroup label="Alaskan/Hawaiian Time Zone">
-                            <option value="AK">Alaska</option>
-                            <option value="HI">Hawaii</option>
-                          </optgroup>
-                          <optgroup label="Pacific Time Zone">
-                            <option value="CA">California</option>
-                            <option value="NV">Nevada</option>
-                            <option value="OR">Oregon</option>
-                            <option value="WA">Washington</option>
-                          </optgroup>
-                          <optgroup label="Mountain Time Zone">
-                            <option value="AZ">Arizona</option>
-                            <option value="CO">Colorado</option>
-                            <option value="ID">Idaho</option>
-                            <option value="MT">Montana</option>
-                            <option value="NE">Nebraska</option>
-                            <option value="NM">New Mexico</option>
-                            <option value="ND">North Dakota</option>
-                            <option value="UT">Utah</option>
-                            <option value="WY">Wyoming</option>
-                          </optgroup>
-                          <optgroup label="Central Time Zone">
-                            <option value="AL">Alabama</option>
-                            <option value="AR">Arkansas</option>
-                            <option value="IL">Illinois</option>
-                            <option value="IA">Iowa</option>
-                            <option value="KS">Kansas</option>
-                            <option value="KY">Kentucky</option>
-                            <option value="LA">Louisiana</option>
-                            <option value="MN">Minnesota</option>
-                            <option value="MS">Mississippi</option>
-                            <option value="MO">Missouri</option>
-                            <option value="OK">Oklahoma</option>
-                            <option value="SD">South Dakota</option>
-                            <option value="TX">Texas</option>
-                            <option value="TN">Tennessee</option>
-                            <option value="WI">Wisconsin</option>
-                          </optgroup>
-                          <optgroup label="Eastern Time Zone">
-                            <option value="CT">Connecticut</option>
-                            <option value="DE">Delaware</option>
-                            <option value="FL">Florida</option>
-                            <option value="GA">Georgia</option>
-                            <option value="IN">Indiana</option>
-                            <option value="ME">Maine</option>
-                            <option value="MD">Maryland</option>
-                            <option value="MA">Massachusetts</option>
-                            <option value="MI">Michigan</option>
-                            <option value="NH">New Hampshire</option>
-                            <option value="NJ">New Jersey</option>
-                            <option value="NY">New York</option>
-                            <option value="NC">North Carolina</option>
-                            <option value="OH">Ohio</option>
-                            <option value="PA">Pennsylvania</option>
-                            <option value="RI">Rhode Island</option>
-                            <option value="SC">South Carolina</option>
-                            <option value="VT">Vermont</option>
-                            <option value="VA">Virginia</option>
-                            <option value="WV">West Virginia</option>
-                          </optgroup>
-                      </select>   
-                  <!--<h6 class="input-label">Skills</h6>
-                 <form id="add-skill-form" method="get" action="user/id/skill/add">
-              <div class="row">
+                     <input id="profile_headline" type="text" name="headline" value="${headline}" placeholder="Job or Headline">
+                   <h6 class="input-label">Resume</h6>
+                         <div id="profile-resume">${resume?no_esc}</div>
+                 </div>
+                </div>
+                <h6 class="input-label">Skills</h6>
+                <p>Your professional skills.</p>
+                    <div id="skills-list">
+                        <#list skillsList as key,value>
+                        <div class="row" id="existing-skill-${key.key}" style="margin: 15px 0 0">
+                            <div class="col-xs-6">
+                                <div class="uou-progressbar-single">
+                            <h6>${key.name}</h6>
+                            <span class="main-bar"> <span class="inner-bar" style="width: ${value}0%"></span> <a class="progress-percent">${value}</a> </span> 
+                            </div>
+                            </div>
+                                <div class="col-xs-1"><a href="#" data-id="${task.key}" data-key=${key.key} data-existing="true" class="remove-skill-button text-danger a-block mt10"><i class="fa fa-times"></i></a></div>
+                        </div>
+                        </#list>
+                    </div>
+                    <div class="row">
                   <div class="col-sm-8">
+                      
                       <select name="select_skill" id="select-skill" class="js-example-placeholder-single" style="width: 100%; display: inline;">
                           <option></option>
-                        <optgroup label="Alaskan/Hawaiian Time Zone">
-                            <option value="AK">Alaska</option>
-                            <option value="HI">Hawaii</option>
-                          </optgroup>
-                          <optgroup label="Pacific Time Zone">
-                            <option value="CA">California</option>
-                            <option value="NV">Nevada</option>
-                            <option value="OR">Oregon</option>
-                            <option value="WA">Washington</option>
-                          </optgroup>
-                          <optgroup label="Mountain Time Zone">
-                            <option value="AZ">Arizona</option>
-                            <option value="CO">Colorado</option>
-                            <option value="ID">Idaho</option>
-                            <option value="MT">Montana</option>
-                            <option value="NE">Nebraska</option>
-                            <option value="NM">New Mexico</option>
-                            <option value="ND">North Dakota</option>
-                            <option value="UT">Utah</option>
-                            <option value="WY">Wyoming</option>
-                          </optgroup>
-                          <optgroup label="Central Time Zone">
-                            <option value="AL">Alabama</option>
-                            <option value="AR">Arkansas</option>
-                            <option value="IL">Illinois</option>
-                            <option value="IA">Iowa</option>
-                            <option value="KS">Kansas</option>
-                            <option value="KY">Kentucky</option>
-                            <option value="LA">Louisiana</option>
-                            <option value="MN">Minnesota</option>
-                            <option value="MS">Mississippi</option>
-                            <option value="MO">Missouri</option>
-                            <option value="OK">Oklahoma</option>
-                            <option value="SD">South Dakota</option>
-                            <option value="TX">Texas</option>
-                            <option value="TN">Tennessee</option>
-                            <option value="WI">Wisconsin</option>
-                          </optgroup>
-                          <optgroup label="Eastern Time Zone">
-                            <option value="CT">Connecticut</option>
-                            <option value="DE">Delaware</option>
-                            <option value="FL">Florida</option>
-                            <option value="GA">Georgia</option>
-                            <option value="IN">Indiana</option>
-                            <option value="ME">Maine</option>
-                            <option value="MD">Maryland</option>
-                            <option value="MA">Massachusetts</option>
-                            <option value="MI">Michigan</option>
-                            <option value="NH">New Hampshire</option>
-                            <option value="NJ">New Jersey</option>
-                            <option value="NY">New York</option>
-                            <option value="NC">North Carolina</option>
-                            <option value="OH">Ohio</option>
-                            <option value="PA">Pennsylvania</option>
-                            <option value="RI">Rhode Island</option>
-                            <option value="SC">South Carolina</option>
-                            <option value="VT">Vermont</option>
-                            <option value="VA">Virginia</option>
-                            <option value="WV">West Virginia</option>
-                          </optgroup>
+                          <#list skills as skill>
+                            <option class="option-skills" value="${skill.key}" data-name="${skill.name}">${skill.name}</option>
+                          </#list>
                       </select>
                   </div>
                   <div class="col-sm-2">
-                      <h6 class="input-label">Level</h6>
                       <select id="level-skill">
                           <option>Level</option>
                           <option value="1">1</option>
@@ -224,14 +128,10 @@
                       </select>
                   </div>
                   <div class="col-sm-2">
-                      <input class="btn btn-success btn-block" id="add-new-skill" type="submit" value="Add Skill">
+                      <a class="btn btn-primary btn-block" id="add-new-skill">Add Skill</a>
                   </div>
                       
               </div>
-              </form>-->
-                 
-                </div>
-                </div>
                 <br>
                 <input type="submit" class="btn btn-success" value="Update Profile">
                 </form>
@@ -241,19 +141,112 @@
       </div>
     </div>
   </div>
+  <script src="${request.getContextPath()}/theme/plugins/summernote/summernote.min.js"></script> 
   <script>
   $(document).ready(function(){
+      var ctx = "${request.getContextPath()}";
+      
         $("#select-job").select2({
             placeholder: "Select a Job",
             allowClear: true
           });
-         $("#select-skill").select2({
+         var select_skill = $("#select-skill");
+         select_skill.select2({
             placeholder: "Select a skill",
             allowClear: true
           });
-        $('#form-profile').submit(function(e){
-            e.preventDefault()
-            return false;
+        $('#profile-biography').summernote({
+            minHeight: 300
+        });
+        $('#profile-resume').summernote({
+            minHeight: 300
+        });
+        
+        //skills
+        var id_skill = 0;
+        var existing_skills = {
+            <#list skillsList as key,value>
+               "${key.key}" : "${key.name}",
+            </#list>
+        };
+        var skills = {};
+        var options = {};
+        var removed_skills = [];
+        var skills_list = $("#skills-list");
+        var level_skill = $("#level-skill");
+        var skillTemplate;
+        $.get(ctx + "/templates/mustache/skillTemplate.html", function(t){
+                skillTemplate = t;
+        });
+        $('#add-new-skill').click(function(e){
+            e.preventDefault();
+            var key = select_skill.val();
+            options[key] = select_skill.find(":selected")[0];
+            if(existing_skills[key]){
+                $(options[key]).attr("disabled", "disabled");
+                select_skill.select2();
+                select_skill.select2("val", "");
+                level_skill.get(0).selectedIndex = 0;
+                return false;
+            }
+            
+            skills[id_skill] = {
+                "name": $(options[key]).data("name"),
+                "key": key,
+                "level": level_skill.val(),
+                "id": id_skill
+            }
+            skills_list.append(Mustache.render(skillTemplate, skills[id_skill]))
+            id_skill++;
+            $(options[key]).attr("disabled", "disabled");
+            select_skill.select2();
+            select_skill.select2("val", "");
+            level_skill.get(0).selectedIndex = 0;
         })
+        $("body").on("click", '.remove-skill-button', function(e){
+            e.preventDefault();
+            var id = $(this).data("id");
+            var key = $(this).data("key");
+            var existing = $(this).data("existing");
+            if(existing){
+                delete existing_skills[key];
+                removed_skills.push(key)
+                $("#existing-skill-" + key).remove();
+            }else{
+                delete skills[id];
+                $("#skill-" + id).remove();
+            }
+            
+            $(options[key]).removeAttr("disabled");
+            select_skill.select2();
+            delete options[key];
+            
+        });
+        
+        $("#form-profile").submit(function(e){
+        var validation = true;
+        var data = {
+                "profile_id": ${auth_user},
+                "profile_email": "${mail}",
+                "profile_username": "${username}",
+                "profile_name": $('#profile_name').val(),
+                "profile_surname": $('#profile_surname').val(),
+                "profile_headline": $('#profile_headline').val(),
+                "profile_biography": $("#profile-biography").summernote('code'),
+                "profile_resume": $("#profile-resume").summernote('code'),
+                "skills": skills  ,
+                "removed_skills": removed_skills
+            }
+            
+        //CONTROLLI
+        if(validation){
+            $("#form-data").val(JSON.stringify(data))
+            return true;
+        }else{
+            return false;
+        }
+            
+        })
+        
     })
   </script>

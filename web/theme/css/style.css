@@ -1006,6 +1006,7 @@ iframe {
 .job-content p {
 	margin-bottom: 0px;
 }
+
 .job-skills ul {
 	padding: 0px;
 	margin-bottom: 0px;
@@ -3876,6 +3877,9 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 .p10{
     padding: 10px 0;
+}
+#skills-list .row .col-xs-6{
+    padding-left: 0;
 }
 @media (max-width: 767px) {
 	.projects-section .css-table-cell.image.has-bg-image{

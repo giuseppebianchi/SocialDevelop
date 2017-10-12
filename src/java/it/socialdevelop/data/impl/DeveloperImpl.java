@@ -186,6 +186,7 @@ public class DeveloperImpl implements Developer {
         mail = developer.getMail();
         password = developer.getPassword();
         biography = developer.getBiography();
+        resume = developer.getResume();
         picture = developer.getPicture();
         this.dirty = true;
     }
@@ -222,6 +223,7 @@ public class DeveloperImpl implements Developer {
         hash = 67 * hash + Objects.hashCode(this.picture);
         hash = 67 * hash + Objects.hashCode(this.biography);
         hash = 67 * hash + Objects.hashCode(this.headline);
+        hash = 67 * hash + Objects.hashCode(this.resume);
         return hash;
     }
 
