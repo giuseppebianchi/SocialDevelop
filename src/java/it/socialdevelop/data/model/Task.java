@@ -20,7 +20,7 @@ public interface Task {
     
     String getName();
     
-    
+    Type getType();
 
     int getProjectKey();
 

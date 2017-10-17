@@ -40,9 +40,9 @@ public class removeCollaboratorFromTask extends SocialDevelopBaseController {
                 //il coordiantore del progetto quindi gli è permesso falo
                 int ret = datalayer.deleteTaskHasDeveloper(task_id, developer_key);
 
-                int n = task.getNumCollaborators() + 1;
-                task.setNumCollaborators(n);
-                datalayer.storeTask(task);
+                //int n = task.getNumCollaborators() + 1;
+                //task.setNumCollaborators(n);
+                //datalayer.storeTask(task);
 
                 datalayer.destroy();
                 response.setContentType("text/plain");

@@ -9,21 +9,47 @@
         <!-- User Iinfo -->
         <div class="user-info background-transparent">
           <h1>${task.name}</h1>
-          <h3><a href="project">${project.name}</a></h3>
+          <h3><a href="${request.getContextPath()}/projects/${project.key}">${project.name}</a></h3>
           <h6><span class="btn btn-primary">Task</span></h6>   
         </div>
         
         
         <!-- Top Riht Button -->
         <div class="right-top-bnr">
+            
              <#if auth_user??>
                 <#if isCoordinator??>
                  <a id="setting-project-button" href="${request.getContextPath()}/projects/tasks/settings/${task.key}" class="btn btn-default"><i class="fa fa-cog"></i> Edit</a>
                 <div class="bt-ns"> <a href="#."><i class="fa fa-bookmark-o"></i> </a> <a href="#."><i class="fa fa-thumbs-up"></i> </a>  </div>
-                </#if>
-             <#else>
+                <#else>
                 <#if task.open>
-                   <div class="connect"> <a href="#." data-toggle="modal" data-target="#myModal" class="btn btn-success"><i class="fa fa-user-plus"></i> Subscribe</a>
+                    <#if state??>
+                    <!-- è presente il developer nel task -->
+                        <#if (state == 0)> 
+                            <#if (sender==dev)>
+                            <!--richiesta già inviata-->
+                            <div class="connect"> <a href="#" class="btn btn-secondary"><i class="fa fa-paper-plane"></i> Request sent</a>
+                            
+                            <#else>
+                            <!--invito ricevuto-->
+                            <div class="connect"> <a href="#" class="btn btn-secondary"><i class="fa fa-mail-reply"></i> Reply to Invite</a>
+                            </#if>
+                         <#else>
+                            <#if (state > 0)>    
+                                <div class="connect"> <a href="#" class="btn btn-success"><i class="fa fa-check-circle"></i> Subscribed</a>
+                            <#else>
+                                <#if (sender==dev)>
+                                    <div class="connect"> <a href="#." data-toggle="modal" data-target="#myModal" class="btn btn-error"><i class="fa fa-times"></i> Request Declined</a>  
+                                <#else>
+                                    <div class="connect"> <a href="#." data-toggle="modal" data-target="#myModal" class="btn btn-primary"><i class="fa fa-user-plus"></i> Subscribe</a>
+                                </#if>
+                            </#if>
+                         </#if>  
+                    <#else>
+                        <!-- il developer non è iscritto al task-->
+                        <div class="connect"> <a href="#." data-toggle="modal" data-target="#myModal" class="btn btn-primary"><i class="fa fa-user-plus"></i> Subscribe</a>
+                    </#if>
+                </#if>
                 </#if>
                 <div class="bt-ns"> <a href="#."><i class="fa fa-bookmark-o"></i> </a> <a href="#."><i class="fa fa-thumbs-up"></i> </a>  </div>
              </#if>
@@ -65,9 +91,9 @@
               
               <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
               <#if task.open>
-                <a href="${request.getContextPath()}/projects/suggestions/13" class="btn btn-success btn-small ">Open</a>
+                <a href="#" class="btn btn-success btn-small ">Open</a>
               <#else>
-                  <a href="${request.getContextPath()}/projects/suggestions/13" class="btn btn-error btn-small ">Closed</a>
+                  <a href="#" class="btn btn-error btn-small ">Closed</a>
               </#if>
               <p></p>
               <h5 class="type-work text-black"><span class="text-primary">${task.numCollaborators} </span> Developers</h5>
@@ -79,8 +105,10 @@
                 <div class="col-md-12">
                   <div class="profile-main">
                       <h3 class="tab-title">Type</h3>
-                      <h5>Front End and Web Development</h5>
-                      <p class="tab-subtitle"></p>
+                      <h5>${taskType}</h5>
+                      <br>
+                      <h3 class="tab-title">Project</h3>
+                      <h5><a href="${request.getContextPath()}/projects/${project.key}">${project.name}</a></h5>
                       <hr>
                       <h3 class="tab-title">Required Skills</h3>
                       <br>
@@ -110,14 +138,25 @@
                 <div class="inn-simi"> <div class="media-object" alt=""></div></div>
             </div>
             <div class="media-body">
-              <h4>Giuseppe Bianchi</h4>
-              <p>SEO Specialist</p>
-              <div class="com-rate"><span><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i></span></div>
-              <br>
-              <a href="#">New York, USA</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, 
-                voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum 
-                accusantium deleniti neque architecto vitae.</p>
+              <h4>${coordinator.name} ${coordinator.surname}</h4>
+              <p>${coordinator.headline}</p>
+               <div class="com-rate"><span>
+                    <#list 1..5 as i>
+                        <#if (i > vote)>
+                        <i class="fa fa-star-o"></i>
+                        <#else>
+                        <i class="fa fa-star"></i>
+                        </#if>
+                    </#list>
+                    </span></div>
+              <div>
+                  <#assign dec = coordinator.getTextBio()>
+                    <#if (dec?length > 251)>
+                        ${dec?substring(0, 250)}... <a href="${request.getContextPath()}/developers/${coordinator.key}">read more</a>
+                    <#else>
+                       ${dec} <a href="${request.getContextPath()}/developers/${coordinator.key}"> read more</a>
+                    </#if>
+              </div>
               
               
               <!-- Share -->
@@ -153,13 +192,10 @@
               <!-- Jobs -->
               <div id="developers" class="tab-pane fade">
                   <#if auth_user??>
-                    <#if task.open>
                         <#if isCoordinator??>
-                            <a href="${request.getContextPath()}/projects/task/suggestions/13" class="btn btn-primary pull-right">Find Developers</a>
-                        <#else>
-                            <a id="" class="btn btn-success btn-block" href="projects/new">SubScribe</a>
+                            <a href="${request.getContextPath()}/projects/task/suggestions/13" class="btn btn-primary pull-right"><i class="fa fa-user-plus"></i> Find Developers</a>
+                        
                         </#if>
-                    </#if>
                   </#if>
                   <h3 class="tab-title">Developers</h3>
               <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
@@ -179,9 +215,9 @@
               <div class="row">
                       <div class="col-sm-9">
               <ul class="nav nav-tabs">
-                    <li><a>3 <span class="text-primary">Required</span></a></li>
-                    <li><a>20 <span class="text-success">Hired</span></a></li>
-                    <li><a>20 <span class="text-danger">Requests</span></a></li>
+                    <li><a>${task.numCollaborators} <span class="text-primary">Required</span></a></li>
+                    <li><a>${collaborators?size} <span class="text-success">Hired</span></a></li>
+                    <li><a>${nrequests} <span class="text-danger">Requests</span></a></li>
                 </ul>
                       </div>
                <div class="col-sm-3">
@@ -191,24 +227,48 @@
               <hr>
                 <div class="">
                   <div class="similar developer-list">
+                      <#if collaborators?has_content>
+                      <#list collaborators as key, value>
                       <!-- DEVELOPER -->
           <div class="media">
             <div class="media-left">
                 <div class="inn-simi"> <div class="media-object" alt=""></div></div>
             </div>
             <div class="media-body">
-              <h4>Giuseppe Bianchi</h4>
-              <p>SEO Specialist</p>
-              <div class="com-rate"><span><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i></span></div>
-              <a href="#">New York, USA</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, 
-                voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum 
-                accusantium deleniti neque architecto vitae.</p>
+              <#if key.name == "" && key.surname == "">
+                <h4>${key.username}</h4>
+              <#else>
+                <h4>${key.name} ${key.surname}</h4>
+              </#if>
+              <p>${key.headline}</p>
+               <#list 1..5 as i>
+                        <#if (i > votes[key?index])>
+                        <i class="fa fa-star-o"></i>
+                        <#else>
+                        <i class="fa fa-star"></i>
+                        </#if>
+                    </#list>
+                    <div>
+                        <#assign dec = key.getTextBio()>
+                    <#if (dec?length > 251)>
+                        ${dec?substring(0, 250)}... <a href="${request.getContextPath()}/developers/${key.key}">read more</a>
+                    <#else>
+                       ${dec} <a href="${request.getContextPath()}/developers/${key.key}"> read more</a>
+                    </#if>
+                    </div>
               <!-- Share -->
               <div class="share-w"><a href="#."><i class="fa fa-bookmark-o"></i></a> <a href="#."><i class="fa fa-envelope-o"></i></a> <a href="#."><i class="fa fa-eye"></i></a></div>
             </div>
           </div>
           <!-- END DEVELOPER -->
+          </#list>
+          <#else>
+                <#if isCoordinator??>
+                <h5>Find some developer for this task.</h5>
+                <#else>
+                <h5>No developer has been hired for this task.</h5>
+                </#if>
+          </#if>
                     </div>
 
                 </div>                

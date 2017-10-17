@@ -120,14 +120,15 @@ public class DeveloperProfile extends SocialDevelopBaseController {
                 Map<Skill, Integer> skillsList = datalayer.getSkillsByTask(task.getKey());
                 task_skills.add(skillsList);
 
-        }
+                }
         data.put("tasks", tasks);
         int votes = 0;
         if(length > 0){
             votes = sum/length;
         }
         data.put("votes", votes);
-        
+        data.put("ncompleted", length);
+        data.put("current_tasks", tasks.size() - length);
         List<Project> projects = datalayer.getProjectsByCoordinator(dev_key); //lista progetti
         data.put("projects", projects);
         int[] nProTasks = new int[projects.size()];

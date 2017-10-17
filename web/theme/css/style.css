@@ -3318,6 +3318,7 @@ mt0{
 }
 #main-wrapper{
     background: #fff;
+    z-index: 3;
 }
 .checkbox{
     padding-left: 0;
@@ -3881,6 +3882,26 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 #skills-list .row .col-xs-6{
     padding-left: 0;
 }
+.folow-persons .btn-table{
+    font-size: 10px;
+    padding: 0 5px;
+    margin: -5px 0 0;
+    width: auto;
+    float: none;
+}
+.modal button.close {
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+    -webkit-appearance: none;
+}
+.modal-title{
+    display: inline-block;
+}
+.modal-footer{
+    text-align: unset;
+}
 @media (max-width: 767px) {
 	.projects-section .css-table-cell.image.has-bg-image{
 	width: 100%;
@@ -3900,4 +3921,15 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 	}
 
 
+}
+@media (min-width: 576px){
+    .modal-sm {
+        max-width: 300px;
+    }
+}
+@media (min-width: 576px){
+    .modal-dialog {
+        max-width: 500px;
+        margin: 30px auto;
+    }
 }

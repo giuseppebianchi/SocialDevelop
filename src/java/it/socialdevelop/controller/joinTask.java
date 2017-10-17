@@ -69,7 +69,7 @@ public class joinTask extends SocialDevelopBaseController {
                 }
             }
         } else {
-            response.sendRedirect("index");
+            response.sendRedirect("/socialDevelop");
         }
     }
 

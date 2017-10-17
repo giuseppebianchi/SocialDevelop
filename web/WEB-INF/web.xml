@@ -258,8 +258,8 @@
         <servlet-class>it.socialdevelop.controller.sendRequest</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PannelloDelleProposte</servlet-name>
-        <servlet-class>it.socialdevelop.controller.PannelloDelleProposte</servlet-class>
+        <servlet-name>DashboardProposals</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DashboardProposals</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>acceptProposal</servlet-name>
@@ -274,8 +274,8 @@
         <servlet-class>it.socialdevelop.controller.PannelloDelleOfferte</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PannelloDegliInviti</servlet-name>
-        <servlet-class>it.socialdevelop.controller.PannelloDegliInviti</servlet-class>
+        <servlet-name>DashboardInvitations</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DashboardInvitations</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>PannelloDelleDomande</servlet-name>
@@ -467,7 +467,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>removeCollaboratorFromTask</servlet-name>
-        <url-pattern>/removeCollaboratorFromTask</url-pattern>
+        <url-pattern>/projects/remove_collaborator</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>releaseVote</servlet-name>
@@ -475,7 +475,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>joinTask</servlet-name>
-        <url-pattern>/joinTask</url-pattern>
+        <url-pattern>/projects/join_task</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addType</servlet-name>
@@ -515,11 +515,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>sendRequest</servlet-name>
-        <url-pattern>/sendRequest</url-pattern>
+        <url-pattern>/projects/send_request</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PannelloDelleProposte</servlet-name>
-        <url-pattern>/PannelloDelleProposte</url-pattern>
+        <servlet-name>DashboardProposals</servlet-name>
+        <url-pattern>/dashboard/proposals</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>acceptProposal</servlet-name>
@@ -534,8 +534,8 @@
         <url-pattern>/PannelloDelleOfferte</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PannelloDegliInviti</servlet-name>
-        <url-pattern>/PannelloDegliInviti</url-pattern>
+        <servlet-name>DashboardInvitations</servlet-name>
+        <url-pattern>/dashboard/invitations</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PannelloDelleDomande</servlet-name>

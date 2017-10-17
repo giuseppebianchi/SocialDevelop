@@ -41,7 +41,7 @@
               <li><a data-toggle="tab" href="#discussion">Contact</a></li>
               <#if isProfile??> 
                 <li class="pull-right"><a id="settings-profile-button" href="${request.getContextPath()}/settings/profile"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>
-                <li class="pull-right"><a id="dashboard-profile-button" href="${request.getContextPath()}/dashboard">Dashboard</a></li>
+                <li class="pull-right"><a id="dashboard-profile-button" href="${request.getContextPath()}/dashboard/invitations">Dashboard</a></li>
               </#if>
             </ul>
               <hr>
@@ -155,8 +155,8 @@
               <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
                 <#if tasks?has_content>
               <ul class="nav nav-tabs">
-                    <li><a>3 <span class="text-success">In production</span></a></li>
-                    <li><a>20 <span class="text-primary">Completed</span></a></li>
+                    <li><a>${current_tasks} <span class="text-success">In production</span></a></li>
+                    <li><a>${ncompleted} <span class="text-primary">Completed</span></a></li>
                 </ul>
                 </#if>
               <hr>

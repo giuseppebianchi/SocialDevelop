@@ -46,10 +46,10 @@ public class sendRequest extends SocialDevelopBaseController {
                     }
                 }
                 datalayer.storeTaskHasDeveloper(task_id, dev_key, 0, -1, user_key);
-                String obj = "Richiesta di Collaborazione";
-                String txt = "Hai ricevuto una richiesta di partecipazione al task " + datalayer.getTask(task_id).getName() + " da " + datalayer.getDeveloper(user_key).getUsername() + ".";
+                String obj = "Invite - Collaboration request";
+                String txt = "You got an invite to collaborate in " + datalayer.getTask(task_id).getName() + ". From: " + datalayer.getDeveloper(user_key).getUsername() + ".";
                 Mailer m1 = new Mailer(datalayer.getDeveloper(dev_key).getMail(), obj, txt);
-                m1.sendEmail();
+                //m1.sendEmail();
                 //sender=1 --> inviata da collaboratore
                 //stato=0 --> in attesa
                 //voto=-1 --> non rilasciato
@@ -61,7 +61,7 @@ public class sendRequest extends SocialDevelopBaseController {
                 response.setCharacterEncoding("UTF-8");
                 PrintWriter out = response.getWriter();
                 try {
-                    out.println("Your request has been sended!");
+                    out.write("{'data': 'Your request has been sended!'}");
                 } finally {
                     out.close();
                 }

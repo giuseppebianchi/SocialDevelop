@@ -27,6 +27,7 @@ import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
 import it.socialdevelop.data.model.Type;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  *
@@ -55,11 +56,13 @@ public class Task_Detail extends SocialDevelopBaseController {
         int key = Integer.parseInt(value);
         
         Task task = datalayer.getTask(key);
+        task.setType(datalayer.getType(task.getType_key()));
         
         Project project = datalayer.getProject(task.getProjectKey());
         
-        data.put("task", task);
         
+        data.put("task", task);
+        data.put("taskType", task.getType().getType());
         data.put("project", project);
         
         int coordinator_key = project.getCoordinatorKey();
@@ -68,8 +71,16 @@ public class Task_Detail extends SocialDevelopBaseController {
             data.put("auth_user", s.getAttribute("userid"));
             data.put("foto", s.getAttribute("foto"));
             data.put("fullname", s.getAttribute("fullname"));
-            if (coordinator_key == (int) s.getAttribute("userid")) {
+            int dev_key = (int) s.getAttribute("userid");
+            if (coordinator_key == (int) dev_key) {
                 data.put("userid", coordinator_key);
+                data.put("isCoordinator", 1);
+            }else{
+                Map<String, Integer> thd = datalayer.getTaskDeveloper(dev_key, task.getKey());
+                for (Entry<String, Integer> pair : thd.entrySet()){
+                    //iterate over the pairs
+                    data.put(pair.getKey(), pair.getValue());
+                }
             }
             Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));
             if (admin != null) {
@@ -80,24 +91,42 @@ public class Task_Detail extends SocialDevelopBaseController {
         
         boolean flag = false; //serve per controllare se l'utente loggato (se c'è) è tra i collaboratori del progetto
 
-        if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
+        
             //se l'utente è loggato controlliamo se è un collaboratore del progetto.
             //se lo è rendiamo visibili i messaggi privati e inoltre rendiamo visibile
             //il form di inserimento del messaggio
             
-            int dev_key = (int) s.getAttribute("userid");
+            
             Map<Developer, Integer> collaborators = datalayer.getCollaboratorsByTask(task.getKey());
+            int[] votes = new int[collaborators.size()];
+            int i = 0;
             for (Map.Entry<Developer, Integer> m : collaborators.entrySet()) {
-                if (m.getKey().getKey() == dev_key || dev_key == coordinator_key) {
-                    flag = true;
-                    data.put("userid", dev_key);
+                int j = 0;
+                Map<Task, Integer> tasks = datalayer.getTasksByDeveloper(m.getKey().getKey());
+
+                for (Entry<Task,Integer> t : tasks.entrySet()){
+                    Task tas = t.getKey();    
+                    if (tas.isCompleted()) {
+                        votes[i] += t.getValue();
+                        j++;
+                    }
                 }
+                if(j != 0){
+                   votes[i] = (int) votes[i]/j;   
+                }
+                i++;
 
             }
-            if (dev_key == coordinator_key) {
-                data.put("isCoordinator", 1);
-            }
-        }
+            data.put("collaborators", collaborators);
+            data.put("votes", votes);
+            
+            int nrequests = datalayer.getRequestsByTask(key);
+            data.put("nrequests", nrequests);
+            
+            data.put("datalayer", datalayer);
+            
+           
+        
         GregorianCalendar start = task.getStartDate();
         GregorianCalendar end = task.getEndDate();
         Date startDate = new Date();
@@ -137,8 +166,26 @@ public class Task_Detail extends SocialDevelopBaseController {
         }
         data.put("by", by);
         data.put("foto_msg", foto_msg);
+        
         Developer coordinator = datalayer.getDeveloper(project.getCoordinatorKey());
         data.put("coordinator", coordinator);
+        
+        int vote = 0, j=0;
+        Map<Task, Integer> tasks = datalayer.getTasksByDeveloper(coordinator.getKey());       
+        for (Entry<Task,Integer> t : tasks.entrySet()){
+            Task tas = t.getKey();    
+            if (tas.isCompleted()) {
+                vote += t.getValue();
+                j++;
+            }
+        }
+        if(j != 0){
+           vote = (int) vote/j;   
+        }
+        data.put("vote", vote);
+        
+        
+        
         datalayer.destroy();
         String act_url = request.getRequestURI();
         s.setAttribute("previous_url", act_url);

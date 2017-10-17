@@ -85,11 +85,11 @@
       <div class="row">
           <div class="col-sm-12">
               <h5>Developers for task:</h5>
-            <h2 class="text-primary"><i class="fa fa-circle"></i> ${task.name}</h2>
+              <a href="${request.getContextPath()}/projects/tasks/${task.key}"><h2 class="text-primary"><i class="fa fa-circle"></i> ${task.name}</h2></a>
             <div>
-                <#assign dec = progetto.getTextDescription()>
+                <#assign dec = task.getTextDescription()>
                 <#if (dec?length > 251)>
-                    <div>${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${progetto.key}" target="_blank">read more</a></div>
+                    <div>${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/tasks/${task.key}" target="_blank">read more</a></div>
                 <#else>
                     <div>${dec}</div>
                 </#if>
@@ -97,13 +97,14 @@
             <hr>
           </div>
       </div>
+            <#list devs[task?index]?chunk(4) as row>
                 <div class="row">
-                <#list devs[task?index] as sviluppatore>
+                <#list row as sviluppatore>
                <div class="col-sm-3">
 
                    <div class="uou-block-6a"><a href="${request.getContextPath()}/developers/${sviluppatore.key}"><div class="img-block img-3 rounded"></div></a>
-                       <h6>${sviluppatore.name?cap_first} ${sviluppatore.surname?cap_first} <span>${sviluppatore.headline?cap_first}</span> <span><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></span></h6>
-                   <a href="developers/${sviluppatore.key}" class="btn btn-transparent-primary">Hire</a>
+                       <h6>${sviluppatore.name?cap_first} ${sviluppatore.surname?cap_first} <span>${sviluppatore.headline?cap_first}</span> <!--<span id="dev-vote-${task.getKey()}-${sviluppatore.key}"><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i></span>--></h6>
+                   <a href="#" class="btn btn-transparent-primary invite-button" data-dev-name="${sviluppatore.name?cap_first} ${sviluppatore.surname?cap_first}" data-dev-headline="${sviluppatore.headline?cap_first}" data-dev-id="${sviluppatore.key}" data-task-id="${task.getKey()}" data-task-name="${task.name}">Invite</a>
 
                  </div>
 
@@ -111,6 +112,7 @@
                </div>
                 </#list>
              </div> 
+            </#list>
         <#else>
         <div class="dev-for-task">
             <h5>Developers for task:</h5>
@@ -125,3 +127,106 @@
           </div>
         </div>
       </div>
+
+<div id="modal-suggestions" class="modal fade">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Invitation Details</h5>
+        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fa fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div id="modal-alert"></div>
+          <div class="folow-persons">
+              <div id="modal-invite-state" class="pull-right"></div>
+          <div class="fol-name">
+            <div class="img-block avatar-table"></div>
+            <h6 id="modal-developer-name">Ronnie Wood</h6>
+            <span id="modal-developer-headline">iOS Developer</span> 
+          </div>
+          </div>
+          <div class="clearfix"></div>
+          <hr>
+          <div class="row" style="padding:0 10px;">
+              <div class="col-sm-6">
+                 <h6 class="input-label">Project</h6>
+                    <span id="modal-project-name">${progetto.name}</span> 
+              </div>
+              <div class="col-sm-6">
+                  <h6 class="input-label text-right">Task</h6>
+                  <span id="modal-task-name" class="pull-right">Task Name</span>
+              </div>
+          </div>   
+      </div>
+        <br>
+      <div class="modal-footer">
+        <button id="send-invitation" data-dev-id="" data-task-id="" type="button" class="btn btn-transparent-primary" >Send Invite</button>
+        <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<script>
+$(document).ready(function(){
+    var ctx = "${request.getContextPath()}";
+    var modal_invite_state = $('#modal-invite-state');
+    var modal_dev_name= $("#modal-developer-name");
+    var modal_dev_headline = $("#modal-developer-headline");
+    var modal_project_name = $('#modal-project-name');
+    var modal_task_name = $('#modal-task-name');
+    var modal_delete_button = $("#delete-invitation");
+    var send_invitation = $("#send-invitation");
+    var modal = $('#modal-suggestions');
+    var modal_alert = $('#modal-alert');
+
+    $(".invite-button").click(function(e){
+        e.preventDefault();
+        current_button = $(this);
+        modal_alert.html("");
+        modal_dev_key = current_button.data("dev-id");
+        modal_task_key = current_button.data("task-id");
+        modal_dev_name.text(current_button.data("dev-name"));
+        //modal_dev_vote.html($("#dev-vote-" + modal_task_key + "-" + modal_dev_key).html());
+        modal_dev_headline.text(current_button.data("dev-headline"));
+        modal_task_name.text(current_button.data("task-name"));
+        send_invitation.data("task-id", modal_task_key);
+        send_invitation.data("dev-id", modal_dev_key);
+        send_invitation.removeClass("hidden");
+        modal.modal();
+    });
+    
+    $("body").on("click", "#send-invitation", function(){
+        var button = $(this);
+        button.addClass("hidden");
+        var task_key = button.data("task-id");
+        var dev_key = button.data("dev-id");
+        $.ajax({
+            datatype: 'text/plain',
+            type: 'post',
+            url: ctx + '/projects/send_request',
+            data: {
+                task_key: task_key,
+                dev_key: dev_key
+                
+            },
+            success: function (response) {
+                modal_alert.html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Well done!</strong> Your invitation has been sent successfully.</div>');
+                current_button.attr("disabled", "disabled").text("Invite Sent").removeClass("invite-button");
+                //modal.modal("toggle");
+            },
+            error: function (data){
+                console.log(data)
+                modal_alert.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> There is already a waiting request.</div>');
+                button.removeClass("hidden");
+                debugger;
+            }
+        });
+        
+    });
+    
+})
+
+</script>

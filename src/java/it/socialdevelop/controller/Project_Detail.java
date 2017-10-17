@@ -27,6 +27,7 @@ import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
 import it.socialdevelop.data.model.Type;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  *
@@ -62,6 +63,7 @@ public class Project_Detail extends SocialDevelopBaseController {
             data.put("fullname", s.getAttribute("fullname"));
             if (coordinator_key == (int) s.getAttribute("userid")) {
                 data.put("userid", coordinator_key);
+                data.put("isCoordinator", 1);
             }
             Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));
             if (admin != null) {
@@ -78,36 +80,54 @@ public class Project_Detail extends SocialDevelopBaseController {
         data.put("projectdescr", project.getDescription());
         data.put("projectkey", key);
         List<Task> tasks = datalayer.getTasks(project.getKey()); //lista task del progetto
-        List<Task> tasksEnded = new ArrayList();  //lista di quelli terminati
+        List<Task> tasksClosed = new ArrayList();  //lista di quelli terminati
+        List<Task> tasksCompleted = new ArrayList();  //lista di quelli terminati
         List<Type> tasks_types = new ArrayList<>(); //lista dei tipi di ogni task
         int nProjectCollaborators = 0; //numero collaboratori totali task
         ArrayList skills = new ArrayList();
+        Map<Integer, Developer> collaborators = new HashMap<Integer, Developer>();
+        ArrayList tasks_developer = new ArrayList();
         data.put("tasks", tasks);
         boolean flag = false; //serve per controllare se l'utente loggato (se c'è) è tra i collaboratori del progetto
+        int dev_requests = 0;
+        Map<Integer, Integer> dev_votes = new HashMap<Integer, Integer>();
         for (Task task : tasks) {
             if (!task.isOpen()) {
-                tasksEnded.add(task);
+                tasksClosed.add(task);
             }
+            if (task.isCompleted()) {
+                tasksCompleted.add(task);
+            }
+            int nrequests = datalayer.getRequestsByTask(task.getKey());
+            dev_requests += nrequests;
             Type type = datalayer.getType(task.getType_key());
             tasks_types.add(type);
-            if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
-                //se l'utente è loggato controlliamo se è un collaboratore del progetto.
-                //se lo è rendiamo visibili i messaggi privati e inoltre rendiamo visibile
-                //il form di inserimento del messaggio
-                
-                int dev_key = (int) s.getAttribute("userid");
-                Map<Developer, Integer> collaborators = datalayer.getCollaboratorsByTask(task.getKey());
-                for (Map.Entry<Developer, Integer> m : collaborators.entrySet()) {
-                    if (m.getKey().getKey() == dev_key || dev_key == coordinator_key) {
-                        flag = true;
-                        data.put("userid", dev_key);
-                    }
+            int i = 0;
+            int[] votes = new int[task.getNumCollaborators()];
+            Map<Developer, Integer> developers = datalayer.getCollaboratorsByTask(task.getKey());
+            for (Entry<Developer,Integer> pair : developers.entrySet()){
+                int j = 0;
+                Developer dev = pair.getKey();
+                //int vote = pair.getValue();
+                //iterate over the pairs
+                Map<Task, Integer> tasks0 = datalayer.getTasksByDeveloper(dev.getKey());
 
+                for (Entry<Task,Integer> t : tasks0.entrySet()){
+                    Task tas = t.getKey();    
+                    if (tas.isCompleted()) {
+                        votes[i] += t.getValue();
+                        j++;
+                    }
                 }
-                if (dev_key == coordinator_key) {
-                    data.put("isCoordinator", 1);
+                if(j != 0){
+                    votes[i] = (int) votes[i]/j;   
                 }
+                dev_votes.put(dev.getKey(), votes[i]);
+                collaborators.put(dev.getKey(), dev);
+                i++;
+                
             }
+
             nProjectCollaborators += task.getNumCollaborators();
             GregorianCalendar start = task.getStartDate();
             GregorianCalendar end = task.getEndDate();
@@ -130,11 +150,25 @@ public class Project_Detail extends SocialDevelopBaseController {
             skills.add(skillsList);
 
         }
+        data.put("nrequests", dev_requests);
+        data.put("hired", collaborators.size());
+        data.put("tasks_completed", tasksCompleted.size());
+        data.put("collaborators", collaborators);
+        data.put("tasks_developers", tasks_developer);
+        int[] v = new int[dev_votes.size()];
+        int i = 0;
+        for (Entry<Integer,Integer> pair : dev_votes.entrySet()){
+            //iterate over the pairs
+            v[i] = pair.getValue();
+        }
+        data.put("votes", v);
+        data.put("tasks_closed", tasksClosed.size());
+        data.put("tasks_open", tasks.size() - tasksClosed.size());
         data.put("nProjectCollaborators", nProjectCollaborators);
         data.put("nTask", tasks.size());
         data.put("skills", skills);
         data.put("tasks_types", tasks_types);
-        double percProg = Math.round(((double) tasksEnded.size() / (double) tasks.size()) * 100);
+        double percProg = Math.round(((double) tasksCompleted.size() / (double) tasks.size()) * 100);
         data.put("percProg", percProg);
         List<Message> messages = new ArrayList();
         if (flag) {
@@ -155,6 +189,19 @@ public class Project_Detail extends SocialDevelopBaseController {
         data.put("foto_msg", foto_msg);
         Developer coordinator = datalayer.getDeveloper(project.getCoordinatorKey());
         data.put("coordinator", coordinator);
+        int vote = 0, j=0;
+        Map<Task, Integer> ts = datalayer.getTasksByDeveloper(coordinator.getKey());       
+        for (Map.Entry<Task,Integer> t : ts.entrySet()){
+            Task tas = t.getKey();    
+            if (tas.isCompleted()) {
+                vote += t.getValue();
+                j++;
+            }
+        }
+        if(j != 0){
+           vote = (int) vote/j;   
+        }
+        data.put("vote", vote);
         datalayer.destroy();
         String act_url = request.getRequestURI();
         s.setAttribute("previous_url", act_url);

@@ -63,6 +63,11 @@ public class TaskImpl implements Task {
     public int getKey() {
         return key;
     }
+    
+    @Override
+    public Type getType() {
+        return type;
+    }
 
     @Override
     public void setNumCollaborators(int num) {
@@ -154,6 +159,7 @@ public class TaskImpl implements Task {
 
     @Override
     public Type getTypeByTask() throws DataLayerException {
+        
         if (type == null) {
             type = ownerdatalayer.getTypeByTask(this.type_key);
         }

@@ -46,6 +46,8 @@ public interface SocialDevelopDataLayer extends DataLayer {
     Map<Skill, Integer> getSkillsByDeveloper(int developer_key) throws DataLayerException;
 
     Map<Task, Integer> getTasksByDeveloper(int developer_key) throws DataLayerException;
+    
+    Map<String, Integer> getTaskDeveloper(int developer_key, int task_key) throws DataLayerException;
 
     Map<Developer, Integer> getCollaboratorsByTask(int task_key) throws DataLayerException;
 
@@ -183,6 +185,8 @@ public interface SocialDevelopDataLayer extends DataLayer {
     List<Integer> getDeveloperByUsernameLike(String username) throws DataLayerException;
 
     List<Developer> getCollaboratorRequestsByTask(int task_key) throws DataLayerException;
+    
+    int getRequestsByTask(int task_key) throws DataLayerException;
 
     List<Developer> getDevelopersBySkillNoLevel(int skill_key, int level) throws DataLayerException;
 

@@ -11,7 +11,9 @@
           <h1>${projectname?cap_first}</h1>
           <!--<h6 id="${coordinator.key}">${coordinator.name?cap_first} ${coordinator.surname?cap_first}</h6>-->
           <h6>${projectcategory?cap_first}</h6>
-           <span>${percProg} %</span>
+           <span><div class="uou-progressbar-single">
+                                        <a class="progress-percent">${percProg} %</a><span class="main-bar"> <span class="inner-bar" style="width: ${percProg}%"></span>  </span> 
+                                        </div></span>
           <hr>
           <h6><a href="#">(${nTask})</a> Tasks  | <a href="#">${nProjectCollaborators}</a> Developers required</h6>
           <!-- Stars 
@@ -148,13 +150,24 @@
             </div>
             <div class="media-body">
               <h4>${coordinator.name} ${coordinator.surname}</h4>
-              <p>SEO Specialist</p>
-              <div class="com-rate"><span><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i></span></div>
-              <br>
-              <a href="#">New York, USA</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, 
-                voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum 
-                accusantium deleniti neque architecto vitae.</p>
+              <p>${coordinator.headline}</p>
+              <div class="com-rate"><span>
+                    <#list 1..5 as i>
+                        <#if (i > vote)>
+                        <i class="fa fa-star-o"></i>
+                        <#else>
+                        <i class="fa fa-star"></i>
+                        </#if>
+                    </#list></span></div>
+              
+              <div>
+                  <#assign dec = coordinator.getTextBio()>
+                    <#if (dec?length > 251)>
+                        ${dec?substring(0, 250)}... <a href="${request.getContextPath()}/developers/${coordinator.key}">read more</a>
+                    <#else>
+                       ${dec} <a href="${request.getContextPath()}/developers/${coordinator.key}"> read more</a>
+                    </#if>
+              </div>
               
               
               <!-- Share 
@@ -193,9 +206,9 @@
                   <h3 class="tab-title">Tasks (<span class="text-primary">${nTask}</span>)</h3>
               <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
                 <ul class="nav nav-tabs">
-                    <li><a>20 <span class="text-primary">Completed</span></a></li>
-                    <li><a>3 <span class="text-success">Open</span></a></li>
-                    <li><a>2 <span class="text-danger">Closed</span></a></li>
+                    <li><a>${tasks_completed} <span class="text-primary">Completed</span></a></li>
+                    <li><a>${tasks_open} <span class="text-success">Open</span></a></li>
+                    <li><a>${tasks_closed} <span class="text-danger">Closed</span></a></li>
                     
                 </ul>
               <hr>
@@ -205,7 +218,7 @@
                    <#list tasks as task>
                     <div class="listing-ver-3 task-item">
                       <div class="listing-heading">
-                        <a href="${request.getContextPath()}/projects/tasks/${task.key}"><h5><#if task.open><i class="fa fa-check-circle text-success"></i><#else><i class="fa fa-dot-circle-o text-danger"></i></#if> ${task.name}</h5></a>
+                          <a href="${request.getContextPath()}/projects/tasks/${task.key}"><h5><#if task.isCompleted()><i class="fa fa-check-circle text-primary"></i><#else><#if task.open><i class="fa fa-folder-open text-success"></i><#else><i class="fa fa-dot-circle-o text-danger"></i></#if></#if> ${task.name}</h5></a>
                         <#if auth_user??>
                             <#if isCoordinator??>
                                 <ul class="bookmark list-inline">
@@ -236,9 +249,9 @@
                       </div>
                       <div class="listing-tabs">
                         <ul>
-                          <li class="hidden-xs"><#if task.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></li>
+                          <li class="hidden-xs"><#if task.isCompleted()><span class="text-primary">Completed</span><#else><#if task.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></#if></li>
                           <li><span><i class="fa fa-group text-primary"></i> <strong>${task.numCollaborators}</strong> Developers</span></li>
-                          <li><span><i class="fa fa-clock-o text-primary"></i> ${task.getStartDate().time?date?string.short} <strong class="text-primary">|</strong> ${task.getStartDate().time?date?string.short}</span></li>
+                          <li><span><i class="fa fa-clock-o text-primary"></i> ${task.getStartDate().time?date?string.short} <strong class="text-primary">|</strong> ${task.getEndDate().time?date?string.short}</span></li>
                           <li class="visible-xs"><#if task.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></li>
                           <li><a href="${request.getContextPath()}/projects/tasks/${task.key}"><span class="text-primary">Show Task <i class="fa fa-chevron-right"></i></span></a></li>
                         </ul>
@@ -259,34 +272,56 @@
               
               <ul class="nav nav-tabs">
                     <li><a>${nProjectCollaborators} <span class="text-primary">Required</span></a></li>
-                    <li><a>20 <span class="text-success">Hired</span></a></li>
-                    <li><a>20 <span class="text-danger">Requests</span></a></li>
+                    <li><a>${hired} <span class="text-success">Hired</span></a></li>
+                    <li><a>${nrequests} <span class="text-danger">Requests</span></a></li>
                 </ul>
               <hr>
                 <div class="">
                   <div class="similar developer-list">
+                      <#if collaborators?has_content>
+                      <#list collaborators as key, value>
                       <!-- DEVELOPER -->
           <div class="media">
             <div class="media-left">
                 <div class="inn-simi"> <div class="media-object" alt=""></div></div>
             </div>
             <div class="media-body">
-              <h4>Giuseppe Bianchi</h4>
-              <p>SEO Specialist</p>
-              <div class="com-rate"><span><i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-half-o"></i> <i class="fa fa-star-o"></i></span></div>
-              <a href="#">New York, USA</a>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, 
-                voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum 
-                accusantium deleniti neque architecto vitae.</p>
-              <span class="title-tags">Tasks:</span>
+              <h4><a class="title-developer-list" href="${request.getContextPath()}/developers/${key}"><#if (value.name == "" && value.surname == "")>${value.username}<#else>${value.name} ${value.surname}</#if></a></h4>
+              <p>${value.headline}</p>
+              <div class="com-rate"><span>
+                    <#list 1..5 as i>
+                        <#if (i > votes[key?index])>
+                        <i class="fa fa-star-o"></i>
+                        <#else>
+                        <i class="fa fa-star"></i>
+                        </#if>
+                    </#list>
+              </span></div>
+              <div>
+                  <#assign dec = value.getTextBio()>
+                    <#if (dec?length > 251)>
+                        ${dec?substring(0, 250)}... <a href="${request.getContextPath()}/developers/${key}">read more</a>
+                    <#else>
+                       ${dec} <a href="${request.getContextPath()}/developers/${key}"> read more</a>
+                    </#if>
+              </div>
+              <!--<span class="title-tags">Tasks:</span>
                           <ul class="tags list-inline">
                             
                           </ul>
-              <!-- Share -->
-              <div class="share-w"><a href="#."><i class="fa fa-bookmark-o"></i></a> <a href="#."><i class="fa fa-envelope-o"></i></a> <a href="#."><i class="fa fa-eye"></i></a></div>
+              <!-- Share 
+              <div class="share-w"><a href="#."><i class="fa fa-bookmark-o"></i></a> <a href="#."><i class="fa fa-envelope-o"></i></a> <a href="#."><i class="fa fa-eye"></i></a></div>-->
             </div>
           </div>
           <!-- END DEVELOPER -->
+          </#list>
+          <#else>
+                <#if isCoordinator??>
+                <a href="${request.getContextPath()}/projects/suggestions/${projectkey}"><h5>Find some developers for your project</h5>.</a>
+                <#else>
+                <h5>No developer has been hired for this project.</h5>
+                </#if>
+          </#if>
                     </div>
 
                 </div>                

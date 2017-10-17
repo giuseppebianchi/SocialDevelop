@@ -30,7 +30,7 @@ public class Login extends SocialDevelopBaseController {
         HttpSession s = request.getSession(true);
         String u = (String) s.getAttribute("previous_url");
 
-        if (s.getAttribute("previous_url") != null && (u.equals("/SocialDevelop") || u.equals("/SocialDevelop/") || u.equals("/SocialDevelop/home") || u.equals("/SocialDevelop/login"))) {
+        if (/*s.getAttribute("previous_url") != null && (u.equals("/SocialDevelop") || u.equals("/SocialDevelop/") || u.equals("/SocialDevelop/home") || u.equals("/SocialDevelop/login") || u.equals("/SocialDevelop/signin"))*/true) {
             String mail_username = request.getParameter("username");
             String password = request.getParameter("pwd");
             if (mail_username != null && !mail_username.equals("") && password != null && !password.equals("")) {

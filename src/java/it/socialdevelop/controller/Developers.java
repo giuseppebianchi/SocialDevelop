@@ -42,6 +42,9 @@ public class Developers extends SocialDevelopBaseController {
         SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
             request.setAttribute("logout", "Logout");
+            request.setAttribute("auth_user", s.getAttribute("userid"));
+            request.setAttribute("foto", s.getAttribute("foto"));
+            request.setAttribute("fullname", s.getAttribute("fullname"));
             Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));
             if (admin != null) {
                 request.setAttribute("admin", "admin");

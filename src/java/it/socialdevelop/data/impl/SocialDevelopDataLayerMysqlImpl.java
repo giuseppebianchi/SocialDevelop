@@ -42,7 +42,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
     private PreparedStatement sDeveloperBySkillWithLevel, sDeveloperBySkill, sTasksByProject, sTaskByRequest, scTaskByProjectID;
     private PreparedStatement sParentBySkill, sMessageByID, sCollaboratorsByProjectID, sProjectsByDeveloperID;
     private PreparedStatement sProjectsByDeveloperIDandDate, sInvitesByCoordinatorID, sProposalsByCollaboratorID;
-    private PreparedStatement sOffertsByDeveloperID, sCoordinatorByTask, sTasksByDeveloper, sChildBySkill, sPublicMessagesByProject;
+    private PreparedStatement sOffertsByDeveloperID, sCoordinatorByTask, sTasksByDeveloper, sTaskDeveloper, sChildBySkill, sPublicMessagesByProject;
     private PreparedStatement sTypeByID, iProject, uProject, dProject, sSkillByName, sTypes, sTypeByName;
     private PreparedStatement iDeveloper, uDeveloper, dDeveloper, sDeveloperByUsername, sDeveloperByMail;
     private PreparedStatement iSkill, uSkill, dSkill, sSkills;
@@ -54,7 +54,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
     private PreparedStatement iTaskHasDeveloper, dTaskHasDeveloper, uTaskHasDeveloper, sTaskHasDeveloper, dTasksFromProject;
     private PreparedStatement iSkillHasDeveloper, dSkillHasDeveloper, uSkillHasDeveloper, sSkillHasDeveloper;
     private PreparedStatement sProjectByTask, sCurrentTasksByDeveloper, sEndedTasksByDeveloper, sProjectsByCoordinator;
-    private PreparedStatement sDateOfTaskByProject, sEndDateOfTaskByProject, sTypeBySkill, dSkillsFromTask, sDeveloperByUsernameLike, sProjectsLimit, sDeveloperBySkillWithLevelLimit;
+    private PreparedStatement sDateOfTaskByProject, sEndDateOfTaskByProject, sTypeBySkill, dSkillsFromTask, sDeveloperByUsernameLike, sProjectsLimit, sDeveloperBySkillWithLevelLimit, sRequestsByTask;
 
     public SocialDevelopDataLayerMysqlImpl(DataSource datasource) throws SQLException, NamingException {
         super(datasource);
@@ -129,7 +129,9 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             sTypeByName = connection.prepareStatement("SELECT ID FROM type WHERE type=?");
 
             sTasksByDeveloper = connection.prepareStatement("SELECT task_ID,vote FROM task_has_developer WHERE developer_ID=? AND state>0");
-
+            
+            sTaskDeveloper = connection.prepareStatement("SELECT state, developer_ID, sender FROM task_has_developer WHERE developer_ID=? AND task_ID=?");
+            
             sTasksBySkill = connection.prepareStatement("SELECT task_ID FROM task_has_skill WHERE skill_ID=?");
 
             sCurrentTasksByDeveloper = connection.prepareStatement("SELECT task_ID,vote FROM task_has_developer WHERE developer_ID=? AND state=1");
@@ -138,6 +140,8 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
 
             //sRequestByTask = connection.prepareStatement("SELECT * FROM task_has_developer WHERE task_ID=?");
             sCollaboratorsByTask = connection.prepareStatement("SELECT * FROM task_has_developer WHERE task_ID=? AND state>=1");
+            
+            sRequestsByTask = connection.prepareStatement("SELECT * FROM task_has_developer WHERE task_ID=? AND state<=0 AND developer_ID<>sender");
 
             sCollaboratorRequestsByTask = connection.prepareStatement("SELECT developer_ID FROM task_has_developer WHERE task_ID=? AND state=0");
 
@@ -161,7 +165,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
 
             sTaskByRequest = connection.prepareStatement("SELECT task.ID FROM ((SELECT task_has_skill.* FROM task_has_skill WHERE task_has_skill.collaborator_ID=?) AS ths"
                     + "INNER JOIN task AS t ON (ths.task_ID = t.ID) INNER JOIN project AS p ON (t.project_ID = p.ID)) WHERE p.coordinator_ID=?)");
-
+            
             sParentBySkill = connection.prepareStatement("SELECT parent_ID FROM skill WHERE ID=?");
             sChildBySkill = connection.prepareStatement("SELECT ID FROM skill WHERE parent_ID=?");
             sCollaboratorsByProjectID = connection.prepareStatement("SELECT thd.developer_ID FROM (SELECT * FROM task WHERE project_ID=?) "
@@ -746,6 +750,41 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             try (ResultSet rs = sTasksByDeveloper.executeQuery()) {
                 while (rs.next()) {
                     result.put((Task) getTask(rs.getInt("task_ID")), rs.getInt("vote"));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataLayerException("Unable to load taskByDev", ex);
+        }
+        return result;
+    }
+    
+    @Override
+    public Map<String, Integer> getTaskDeveloper(int developer_key, int task_key) throws DataLayerException {
+        Map<String, Integer> result = new HashMap<String,Integer>();
+        try {
+            sTaskDeveloper.setInt(1, developer_key);
+            sTaskDeveloper.setInt(2, task_key);
+            try (ResultSet rs = sTaskDeveloper.executeQuery()) {
+                while (rs.next()) {
+                    result.put("state", rs.getInt("state"));
+                    result.put("dev", rs.getInt("developer_ID"));
+                    result.put("sender", rs.getInt("sender"));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataLayerException("Unable to load taskByDev", ex);
+        }
+        return result;
+    }
+    
+    @Override
+    public int getRequestsByTask(int task_key) throws DataLayerException {
+        int result = 0;
+        try {
+            sRequestsByTask.setInt(1, task_key);
+            try (ResultSet rs = sRequestsByTask.executeQuery()) {
+                while (rs.next()) {
+                    result ++;
                 }
             }
         } catch (SQLException ex) {
