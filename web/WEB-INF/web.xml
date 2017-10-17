@@ -523,7 +523,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>acceptProposal</servlet-name>
-        <url-pattern>/acceptProposal</url-pattern>
+        <url-pattern>/dashboard/proposals/accept_proposal</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>declineProposal</servlet-name>

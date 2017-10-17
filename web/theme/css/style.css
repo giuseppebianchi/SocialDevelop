@@ -3902,6 +3902,9 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .modal-footer{
     text-align: unset;
 }
+.entry-dashboard{
+    cursor: pointer;
+}
 @media (max-width: 767px) {
 	.projects-section .css-table-cell.image.has-bg-image{
 	width: 100%;

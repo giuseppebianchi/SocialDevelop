@@ -22,6 +22,7 @@ import it.socialdevelop.data.model.Files;
 import it.socialdevelop.data.model.Project;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
+import java.util.Map;
 
 /**
  *
@@ -39,20 +40,23 @@ public class DashboardProposals extends SocialDevelopBaseController {
 
     private void action_proposte(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         HttpSession s = request.getSession(true);
-        request.setAttribute("page_title", "Panel of proposals");
-        request.setAttribute("page_subtitle", "manage your proposals");
+        request.setAttribute("request", request);
+        request.setAttribute("page_title", "Dashboard - Proposals");
+        request.setAttribute("page_subtitle", "manage your invites");
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
             SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
             Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));
             if (admin != null) {
                 request.setAttribute("admin", "admin");
             }
-
             //recuperiamo sviluppatore a cui appartiene il pannello
             Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
+            int dev_key = dev.getKey();
             request.setAttribute("username", dev.getUsername());
-            request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
-
+            //request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
+            request.setAttribute("auth_user", s.getAttribute("userid"));
+            request.setAttribute("foto", s.getAttribute("foto"));
+            request.setAttribute("fullname", s.getAttribute("fullname"));
             request.setAttribute("bio", dev.getBiography());
             request.setAttribute("mail", dev.getMail());
             request.setAttribute("logout", "Logout");
@@ -75,11 +79,32 @@ public class DashboardProposals extends SocialDevelopBaseController {
                 proposalsToSet.add(p);
             }
             request.setAttribute("proposals", proposalsToSet);
+            
+            //developer data
+            Map<Task, Integer> tasks = datalayer.getTasksByDeveloper(dev_key); //lista task 
+            
+            int sum = 0;
+            int length = 0;
+            for (Map.Entry<Task, Integer> key : tasks.entrySet()){
+                Task task = key.getKey();
+                
+                if (task.isCompleted()) {
+                    sum+= (int) key.getValue();
+                    length ++;
+                }
+            }
+
+            int votes = 0;
+            if(length > 0){
+                votes = sum/length;
+            }
+            request.setAttribute("votes", votes);
+            request.setAttribute("dev", dev);
             TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("pannello_delle_proposte.html", request, response);
+            res.activate("dashboard_proposals.ftl.html", request, response);
 
         } else {
-            response.sendRedirect("index");
+            response.sendRedirect("/SocialDevelop");
         }
 
     }

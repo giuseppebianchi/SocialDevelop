@@ -182,7 +182,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
 
             //seleziona proposte che un collaboratore riceve da un coordinatore(pannello delle proposte)
             sProposalsByCollaboratorID = connection.prepareStatement("SELECT thd.* FROM task_has_developer AS thd WHERE "
-                    + "thd.developer_ID=? AND thd.sender<>? AND state=0");
+                    + "thd.developer_ID=? AND thd.sender<>?");
 
             //seleziona proposte che un coordinatore riceve da un collaboratore(pannello delle domande)
             /*SELECT thd.task_ID, thd.developer_ID FROM task_has_developer AS thd WHERE "

@@ -45,7 +45,7 @@ public class DashboardInvitations extends SocialDevelopBaseController {
     private void action_inviti(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         HttpSession s = request.getSession(true);
         request.setAttribute("request", request);
-        request.setAttribute("page_title", "Panel of Invites");
+        request.setAttribute("page_title", "Dashboard - Invitations");
         request.setAttribute("page_subtitle", "manage your invites");
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
             SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");

@@ -18,7 +18,7 @@ import it.socialdevelop.mailer.Mailer;
  *
  * @author Hello World Group
  */
-public class acceptProposal extends SocialDevelopBaseController {
+public class acceptProposal1 extends SocialDevelopBaseController {
 
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -42,7 +42,7 @@ public class acceptProposal extends SocialDevelopBaseController {
             if (developer_key == 0) {
                 //riposta a proposta
                 int sender_key = Integer.parseInt(request.getParameter("sender"));
-                datalayer.storeTaskHasDeveloper(task_key, user_key, state, 0, sender_key);
+                datalayer.storeTaskHasDeveloper(task_key, user_key, state, -1, sender_key);
 
                 //invio mail
                 String obj = "Stato dell'invito aggiornato";
@@ -51,17 +51,17 @@ public class acceptProposal extends SocialDevelopBaseController {
                     String txt = datalayer.getDeveloper(user_key).getUsername() + " ha accettato la tua proposta di collaborazione"
                             + " al task " + datalayer.getTask(task_key).getName() + "!";
                     Mailer m1 = new Mailer(datalayer.getDeveloper(sender_key).getMail(), obj, txt);
-                    //m1.sendEmail();
+                    m1.sendEmail();
                 } else {
                     //proposta rifiutata
                     String txt = datalayer.getDeveloper(user_key).getUsername() + " ha rifiutato la tua proposta di collaborazione"
                             + " al task " + datalayer.getTask(task_key).getName() + ".";
                     Mailer m1 = new Mailer(datalayer.getDeveloper(sender_key).getMail(), obj, txt);
-                    //m1.sendEmail();
+                    m1.sendEmail();
                 }
             } else {
                 //risposta a domanda
-                datalayer.storeTaskHasDeveloper(task_key, developer_key, state, 0, developer_key);
+                datalayer.storeTaskHasDeveloper(task_key, developer_key, state, -1, developer_key);
                 //invio mail
                 String obj = "Stato della domanda aggiornato";
                 if (state == 1) {
@@ -78,14 +78,14 @@ public class acceptProposal extends SocialDevelopBaseController {
 
             }
 
-            /*if (state == 1) {
+            if (state == 1) {
                 Task task = datalayer.getTask(task_key);
                 if (task.getNumCollaborators() != 0) {
                     int n = task.getNumCollaborators() - 1;
                     task.setNumCollaborators(n);
                     datalayer.storeTask(task);
                 }
-            }*/
+            }
 
             datalayer.destroy();
             response.setContentType("text/plain");
