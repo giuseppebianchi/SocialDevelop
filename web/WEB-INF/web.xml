@@ -270,16 +270,20 @@
         <servlet-class>socialdevelop.controller.declineProposal</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PannelloDelleOfferte</servlet-name>
-        <servlet-class>it.socialdevelop.controller.PannelloDelleOfferte</servlet-class>
+        <servlet-name>DashboardJobApplications</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DashboardJobApplications</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DashboardInvitations</servlet-name>
         <servlet-class>it.socialdevelop.controller.DashboardInvitations</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>PannelloDelleDomande</servlet-name>
-        <servlet-class>it.socialdevelop.controller.PannelloDelleDomande</servlet-class>
+        <servlet-name>DashboardRequests</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DashboardRequests</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DashboardJobOffers</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DashboardJobOffers</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeveloperCollaborators</servlet-name>
@@ -530,16 +534,20 @@
         <url-pattern>/declineProposal</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PannelloDelleOfferte</servlet-name>
-        <url-pattern>/PannelloDelleOfferte</url-pattern>
+        <servlet-name>DashboardJobApplications</servlet-name>
+        <url-pattern>/dashboard/job_applications</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DashboardInvitations</servlet-name>
         <url-pattern>/dashboard/invitations</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PannelloDelleDomande</servlet-name>
-        <url-pattern>/PannelloDelleDomande</url-pattern>
+        <servlet-name>DashboardRequests</servlet-name>
+        <url-pattern>/dashboard/requests</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DashboardJobOffers</servlet-name>
+        <url-pattern>/dashboard/job_offers</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeveloperCollaborators</servlet-name>

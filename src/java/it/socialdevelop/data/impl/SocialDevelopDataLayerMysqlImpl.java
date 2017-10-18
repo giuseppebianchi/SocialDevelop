@@ -37,7 +37,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
 
     //NB: sRequestByID --> ID è inteso come coppia collaborator_key-task_key)
     private PreparedStatement sProjectByID, sTaskByID, sProjects, sDeveloperByID, sSkillByID, sRequestByID, sSkillsParentList, sDevelopers, sTypeByDeveloper;
-    private PreparedStatement sProjectsByFilter, sSkillsByTask, sSkillsByDeveloper, sSkillsByType, sQuestionsByCoordinatorID;
+    private PreparedStatement sProjectsByFilter, sSkillsByTask, sSkillsByDeveloper, sSkillsByType, sQuestionsByCoordinatorID, sQuestionsByDeveloperID;
     private PreparedStatement sCollaboratorsByTask, sVoteByTaskandDeveloper, sTypeByTask, sMessagesByProject, sDeveloperByMessage;
     private PreparedStatement sDeveloperBySkillWithLevel, sDeveloperBySkill, sTasksByProject, sTaskByRequest, scTaskByProjectID;
     private PreparedStatement sParentBySkill, sMessageByID, sCollaboratorsByProjectID, sProjectsByDeveloperID;
@@ -188,9 +188,16 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             /*SELECT thd.task_ID, thd.developer_ID FROM task_has_developer AS thd WHERE "
                                         + "thd.sender=1 INNER JOIN task AS t ON (thd.task_ID = t.ID) INNER JOIN project AS p ON (t.project_ID = p.ID) WHERE p.coordinator_ID=?");  
              */
+            
+            
+            /*sQuestionsByCoordinatorID = connection.prepareStatement("SELECT thd.task_ID,thd.developer_ID FROM(((SELECT project.ID FROM project WHERE project.coordinator_ID=?) AS p "
+                    + "INNER JOIN task AS t ON (p.ID=t.project_ID))INNER JOIN task_has_developer AS thd ON (thd.task_ID=t.ID)) WHERE thd.sender<>?");*/
+            
             sQuestionsByCoordinatorID = connection.prepareStatement("SELECT thd.task_ID,thd.developer_ID FROM(((SELECT project.ID FROM project WHERE project.coordinator_ID=?) AS p "
-                    + "INNER JOIN task AS t ON (p.ID=t.project_ID))INNER JOIN task_has_developer AS thd ON (thd.task_ID=t.ID)) WHERE thd.sender<>? AND thd.state=0");
-
+                    + "INNER JOIN task AS t ON (p.ID=t.project_ID))INNER JOIN task_has_developer AS thd ON (thd.task_ID=t.ID)) WHERE thd.sender=thd.developer_ID");
+            
+            sQuestionsByDeveloperID = connection.prepareStatement("SELECT * FROM task_has_developer WHERE sender=developer_ID AND sender=?");
+            
             //seleziona le skill per le quali il developer risulta idoneo a partecipare(pannello delle offerte)
             /*sOffertsByDeveloperID = connection.prepareStatement("SELECT thd.*,p.coordinator_ID FROM (SELECT task_has_developer.* FROM task_has_developer WHERE\n" +
                             "task_has_developer.developer_ID=? AND task_has_developer.sender=0) AS thd INNER JOIN task AS t ON (thd.task_ID = t.ID) INNER JOIN project AS p\n" +
@@ -1237,8 +1244,25 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
         List<CollaborationRequest> result = new ArrayList();
         try {
             sQuestionsByCoordinatorID.setInt(1, coordinator_key);
-            sQuestionsByCoordinatorID.setInt(2, coordinator_key);
+            //sQuestionsByCoordinatorID.setInt(2, coordinator_key);
             try (ResultSet rs = sQuestionsByCoordinatorID.executeQuery()) {
+                while (rs.next()) {
+                    result.add((CollaborationRequest) getCollaborationRequest(rs.getInt("developer_ID"), rs.getInt("task_ID")));
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DataLayerException("Unable to load questions by coordinator key ", ex);
+        }
+        return result;
+    }
+    
+    @Override
+    public List<CollaborationRequest> getQuestionsByDeveloper(int developer_key) throws DataLayerException {
+        List<CollaborationRequest> result = new ArrayList();
+        try {
+            sQuestionsByDeveloperID.setInt(1, developer_key);
+            //sQuestionsByCoordinatorID.setInt(2, coordinator_key);
+            try (ResultSet rs = sQuestionsByDeveloperID.executeQuery()) {
                 while (rs.next()) {
                     result.add((CollaborationRequest) getCollaborationRequest(rs.getInt("developer_ID"), rs.getInt("task_ID")));
                 }

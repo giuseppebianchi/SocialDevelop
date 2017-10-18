@@ -1,5 +1,6 @@
 package it.socialdevelop.controller;
 
+import it.socialdevelop.data.model.Developer;
 import it.univaq.f4i.iw.framework.result.FailureResult;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
+import java.util.Map;
 
 /**
  *
@@ -30,16 +32,25 @@ public class removeCollaboratorFromTask extends SocialDevelopBaseController {
         HttpSession s = request.getSession(true);
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
             SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-
+            int userid = (int) s.getAttribute("userid");
             int task_id = Integer.parseInt(request.getParameter("task_key"));
             int developer_key = Integer.parseInt(request.getParameter("dev_key"));
             Task task = datalayer.getTask(task_id);
             int coord_key = datalayer.getProject(task.getProjectKey()).getCoordinatorKey();
-            if (coord_key == (int) s.getAttribute("userid")) {
+            if ((coord_key == (int) s.getAttribute("userid")) || (developer_key == userid)) {
                 //l'utente che sta cercando di rimuovere il collaboratore è effettivamente
                 //il coordiantore del progetto quindi gli è permesso falo
                 int ret = datalayer.deleteTaskHasDeveloper(task_id, developer_key);
-
+                
+                //aggiorno lo stato del task
+                Map<Developer, Integer> collaborators = datalayer.getCollaboratorsByTask(task_id);
+                int num = collaborators.size();
+                if(task.getNumCollaborators() == num){
+                    task.setOpen(false);
+                }else{
+                    task.setOpen(true);
+                }
+                datalayer.storeTask(task);
                 //int n = task.getNumCollaborators() + 1;
                 //task.setNumCollaborators(n);
                 //datalayer.storeTask(task);

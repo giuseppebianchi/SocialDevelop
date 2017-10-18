@@ -20,19 +20,15 @@ import it.socialdevelop.data.model.CollaborationRequest;
 import it.socialdevelop.data.model.Developer;
 import it.socialdevelop.data.model.Files;
 import it.socialdevelop.data.model.Project;
-import it.socialdevelop.data.model.Skill;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
-import it.socialdevelop.data.model.Type;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Map;
 
 /**
  *
  * @author Hello World Group
  */
-public class DashboardInvitations extends SocialDevelopBaseController {
+public class DashboardRequests extends SocialDevelopBaseController {
 
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -42,10 +38,10 @@ public class DashboardInvitations extends SocialDevelopBaseController {
 
     
 
-    private void action_inviti(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
+    private void action_requests(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         HttpSession s = request.getSession(true);
         request.setAttribute("request", request);
-        request.setAttribute("page_title", "Dashboard - Invitations");
+        request.setAttribute("page_title", "Dashboard - Proposals");
         request.setAttribute("page_subtitle", "manage your invites");
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
             SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
@@ -66,33 +62,37 @@ public class DashboardInvitations extends SocialDevelopBaseController {
             request.setAttribute("logout", "Logout");
 
 
-            //recuperiamo gli inviti 
-            List<CollaborationRequest> invites = datalayer.getInvitesByCoordinator(dev.getKey());
-            List<CollaborationRequest> invitesToSend = new ArrayList();
-            for (CollaborationRequest i : invites) {
-                Task task = datalayer.getTask(i.getTaskKey());
-                Project project = datalayer.getProjectByTask(task.getKey());
-                Developer invitato = datalayer.getDeveloper(i.getCollaboratorKey());
-                
-                task.setProject(project);
-                i.setTaskRequest(task);
-                i.setCollaboratorRequest(invitato);
-                invitesToSend.add(i);
-            }
+            //recuperiamo le domande
+            List<CollaborationRequest> demends = datalayer.getQuestionsByCoordinator(dev.getKey());
 
-            request.setAttribute("invites", invitesToSend);
+            //recuperiamo il task relativo alla domanda e il progetto a cui appartiene
+            List<CollaborationRequest> demendsToSet = new ArrayList();
+
+            for (CollaborationRequest q : demends) {
+                Task t = datalayer.getTask(q.getTaskKey());
+                Project pr = datalayer.getProject(t.getProjectKey());
+                Developer d = datalayer.getDeveloper(q.getSender_key());
+                
+                t.setProject(pr);
+                q.setTaskRequest(t);
+                q.setSender(d);
+
+                demendsToSet.add(q);
+            }
+            request.setAttribute("requests", demendsToSet);
             
             //recuperiamo le proposte
             List<CollaborationRequest> proposals = datalayer.getProposalsByCollaborator(dev.getKey());
             request.setAttribute("nProposals", proposals.size());
             
-            //recuperiamo le domande
-            List<CollaborationRequest> demends = datalayer.getQuestionsByCoordinator(dev.getKey());
-            request.setAttribute("nRequests", demends.size());
+            //recuperiamo gli inviti
+            List<CollaborationRequest> invites = datalayer.getInvitesByCoordinator(dev.getKey());
+            request.setAttribute("nInvitations", invites.size());
             
             //recuperiamo le job applications
             List<CollaborationRequest> jobapps = datalayer.getQuestionsByDeveloper(dev.getKey());
             request.setAttribute("nJobApplications", jobapps.size());
+            
             
             //developer data
             Map<Task, Integer> tasks = datalayer.getTasksByDeveloper(dev_key); //lista task 
@@ -115,7 +115,7 @@ public class DashboardInvitations extends SocialDevelopBaseController {
             request.setAttribute("votes", votes);
             request.setAttribute("dev", dev);
             TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("dashboard_invitations.ftl.html", request, response);
+            res.activate("dashboard_requests.ftl.html", request, response);
 
         } else {
             response.sendRedirect("/SocialDevelop");
@@ -127,7 +127,7 @@ public class DashboardInvitations extends SocialDevelopBaseController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
         try {
-            action_inviti(request, response);
+            action_requests(request, response);
         } catch (IOException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);

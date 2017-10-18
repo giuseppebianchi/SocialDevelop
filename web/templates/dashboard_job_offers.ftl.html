@@ -62,17 +62,18 @@
               <!-- Nav Tabs -->
               <ul class="nav nav-tabs">
                   <li><a href="${request.getContextPath()}/dashboard/invitations#invitations">Invitations (<span id="nInvitations">${nInvitations}</span>)</a></li>
-                <li><a href="${request.getContextPath()}/dashboard/requests#requests">Requests (<span id="nRequests">${nRequests}</span>)</a></li>
-                <li class="active"><a href="#">Collaboration Proposals (<span id="nProposals">${proposals?size}</span>)</a></li>
+                <li><a  href="${request.getContextPath()}/dashboard/requests#requests">Requests (<span id="nRequests">${nRequests}</span>)</a></li>
+                <li><a href="${request.getContextPath()}/dashboard/proposals#proposals">Collaboration Proposals (<span id="nProposals">${nProposals}</span>)</a></li>
                 <li><a href="${request.getContextPath()}/dashboard/job_applications#job_applications">Your Job Applications (<span id="nJobApplications">${nJobApplications}</span>)</a></li>
-                <li><a href="${request.getContextPath()}/dashboard/job_offers#job_offers">Job Offers</a></li>
+                <li class="active"><a href="#">Job Offers</a></li>
+                
               </ul>
               <hr>
               <!-- Tab Content -->
               <div class="tab-content"> 
                 
                 <!-- Connections -->
-                <div id="proposals" class="tab-pane fade in active">
+                <div id="job_offers" class="tab-pane fade in active">
                   <div class=""> 
                       
                     <!-- Filter -->
@@ -80,11 +81,11 @@
                         <!--<p>Lorem ipsu umanu est</p>-->
                       <div class="row">
                         <div class="col-sm-7">
-                            <p>Collaborations proposals that coordinators sent to you to collaborate in their projects. Click on a proposal for more details.</p>
+                            <p>Job Offers we have found for you by your skills. Click on a job offer for more details.</p>
                           <!--<a href="#." class="active btn btn-error"><i class="fa fa-trash"></i></a>-->
                         </div>
                         
-                        <!-- Short -->
+                        <!-- Short 
                         <div class="col-sm-5">
                           <select>
                             <option>Sort</option>
@@ -92,107 +93,60 @@
                             <option>Sort</option>
                             <option>Sort</option>
                           </select>
-                        </div>
+                        </div>-->
                       </div>
                     </div>
-                    <div id="alert-proposals"></div>
+                    <div id="alert-jobapps"></div>
                     <!-- Members -->
-                    <div class="main-mem table-blue"> 
-                      
-                      <!-- Head -->
-                      
-                      
-                      <!-- Tittle -->
-                      <div class="tittle">
-                        <ul class="row">
-                          <li class="col-xs-3"> <span>Coordinator</span> </li>
-                          <li class="col-xs-3"> <span>Project</span> </li>
-                          <li class="col-xs-4"> <span>Task</span> </li>
-                          <li class="col-xs-1 n-p-r n-p-l text-center"> <span>Date</span> </li>
-                          <li class="col-xs-1 text-center"> <span>State</span> </li>
-                        </ul>
+                    <div class="listing listing-1">
+                  <div class="listing-section">
+                      <#if joboffers?has_content>
+                    <#list joboffers as task>
+                    <div class="listing-ver-3 task-item">
+                      <div class="listing-heading">
+                          <h5><#if task.isCompleted()><i class="fa fa-check-circle text-primary"></i><#else><#if task.open><i class="fa fa-folder-open text-success"></i><#else><i class="fa fa-dot-circle-o text-danger"></i></#if></#if> <a class="text-black" href="${request.getContextPath()}/projects/${task.getProject().key}">${task.getProject().name}</a> / <a href="${request.getContextPath()}/projects/tasks/${task.key}">${task.name}</a></h5>
+                        
                       </div>
-                      
-                      <!-- Tittle -->
-                      <div class="folow-persons">
+                      <div class="listing-inner">
+                        <div class="listing-content">
+                          <h6 class="title-company">${tasks_types[task?index].type}</h6>
+                          <span class="location"> <i class="fa fa-map-marker"></i> Manhattan, New york, USA </span> <!--<span class="text-success"> Start Date</span>: ${task.getStartDate().time?date?string.short} |  <span class="text-danger">End Date</span>: ${task.getEndDate().time?date?string.short}-->
+                          <div>
+                            <#assign dec = task.getTextDescription()>
+                            <#if (dec?length > 251)>
+                            <div class="p10">${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${progetto.key}">read more</a></div>
+                            <#else>
+                                <div class="p10">${dec} <a href="${request.getContextPath()}/projects/${progetto.key}"> read more</a></div>
+                            </#if>
+                          </div>
+                          <h6 class="title-tags">Skills required:</h6>
+                          <ul class="tags list-inline">
+                            <#list skills[task?index] as key,value>
+                            <li><a href="">${key.name} <span>${value}</span> </a></li>
+                        </#list>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="listing-tabs">
                         <ul>
-                         <#if proposals?has_content>
-                         <#list proposals as proposal>
-                          <!-- MEMBER -->
-                           <li id="entry-${proposal.getTaskKey()}-${proposal.getSender_key()}">
-                            <!-- Check Box 
-                            <div class="checkbox">
-                              <input id="checkbox7" class="styled" type="checkbox">
-                              <label for="checkbox7"></label>
-                            </div>-->
-                            <span class="<#if (proposal.state == 0)>entry-dashboard</#if>" 
-                               <#assign name=proposal.getSender().name>
-                               <#assign surname=proposal.getSender().surname>
-                               <#if (name != "") && (surname!="")>
-                                        data-dev-name="${name} ${surname}"
-                                   <#else>
-                                        data-dev-name="${proposal.getSender().username}"
-                                   </#if>
-                                data-dev-headline="${proposal.getSender().headline}" data-project-name="${proposal.getTaskByRequest().getProject().name}" data-task-name="${proposal.getTaskByRequest().name}" data-proposal-state="${proposal.state}" data-task-id="${proposal.getTaskKey()}" data-dev-id="${proposal.getSender_key()}" data-project-id="${proposal.getTaskByRequest().getProject().key}">
-                            <div class="row"> 
-                              <!-- Title -->
-                              <div class="col-xs-3"> 
-                                
-                                <!-- Name -->
-                                <div class="fol-name">
-                                    <div class="img-block avatar-table"></div>
-                                   <#if (proposal.getSender().name != "") && (proposal.getSender().surname!="")>
-                                    <h6>${proposal.getSender().name} ${proposal.getSender().surname}</h6>
-                                   <#else>
-                                   <h6>${proposal.getSender().username}</h6>
-                                   </#if>
-                                  <span>${proposal.getSender().headline}</span> </div>
-                              </div>
-                              <!-- Location -->
-                              <div class="col-xs-3 n-p-r n-p-l"> <span>${proposal.getTaskByRequest().getProject().name}</span> </div>
-                              <!-- Network -->
-                              <div class="col-xs-4 n-p-r"> <span><a href="${request.getContextPath()}/projects/tasks/${proposal.getTaskByRequest().key}">${proposal.getTaskByRequest().name}</a></span> </div>
-                              <!-- Connections -->
-                              <div class="col-xs-1 n-p-r n-p-l text-center"> <span>${proposal.getDate().time?date?string("dd/MM/yyyy")}</span> </div>
-                              <#if (proposal.state == 0)>
-                              <div class="col-xs-1 n-p-r n-p-l text-center"> <span class="btn btn-primary btn-small btn-table">Pending</span> </div>
-                              <#else>
-                                <#if (proposal.state  > 0)>
-                                    <div class="col-xs-1 n-p-r n-p-l text-center"> <span class="btn btn-success btn-small btn-table">Accepted</span> </div>
-                                <#else>
-                                    <div class="col-xs-1 n-p-r n-p-l text-center"> <span class="btn btn-error btn-small btn-table">Declined</span> </div>
-                                </#if>
-                              </#if>
-                            </div>
-                            </span>
-                          </li>
-                          <!-- END MEMBER -->
-                          </#list>
-                          <#else>
-                            <li style="padding-left: 35px">
-                            <!-- Check Box 
-                            <div class="checkbox">
-                              <input id="checkbox7" class="styled" type="checkbox">
-                              <label for="checkbox7"></label>
-                            </div>-->
-                            
-                            <div class="row"> 
-                              <!-- Title -->
-                              <div class="col-xs-3"> 
-                                
-                                <!-- Name -->
-                                
-                                    <h5>No Proposals</h5>
-                               
-                              </div>
-                              
-                              
-                            </div>
-                          </li>
-                          </#if>
+                          <li class="hidden-xs"><#if task.isCompleted()><span class="text-primary">Completed</span><#else><#if task.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></#if></li>
+                          <li><span><i class="fa fa-group text-primary"></i> <strong>${task.numCollaborators}</strong> Developers</span></li>
+                          <li><span><i class="fa fa-clock-o text-primary"></i> ${task.getStartDate().time?date?string.short} <strong class="text-primary">|</strong> ${task.getEndDate().time?date?string.short}</span></li>
+                          <li class="visible-xs"><#if task.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></li>
+                          <li><a href="${request.getContextPath()}/projects/tasks/${task.key}"><span class="text-primary">Show Task <i class="fa fa-chevron-right"></i></span></a></li>
                         </ul>
                       </div>
-                     <!-- END TAB-->
+                    </div>
+                   </#list> 
+                   <#else>
+                   <div class="listing-ver-3 task-item">
+                      <div class="listing-heading">
+                       
+                   <h5>No Job Offers</h5>
+                      </div>
+                   </div>
+                   </#if>
+                  </div>
                     </div>
                   </div>
                 </div>
@@ -209,14 +163,14 @@
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Proposal Details</h5>
+        <h5 class="modal-title">Job Application Details</h5>
         <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true"><i class="fa fa-times"></i></span>
         </button>
       </div>
       <div class="modal-body">
           <div class="folow-persons">
-              <div id="modal-proposal-state" class="pull-right"></div>
+              <div id="modal-joboffer-state" class="pull-right"></div>
           <div class="fol-name">
             <div class="img-block avatar-table"></div>
             <a id="modal-developer-name" href="#" target="_blank">Ronnie Wood</a>
@@ -249,26 +203,26 @@
 <script>
 $(document).ready(function(){
     var ctx = "${request.getContextPath()}";
-    var modal_proposal_state = $('#modal-proposal-state');
+    var modal_joboffer_state = $('#modal-joboffer-state');
     var modal_dev_name= $("#modal-developer-name");
     var modal_dev_headline = $("#modal-developer-headline");
     var modal_project_name = $('#modal-project-name');
     var modal_task_name = $('#modal-task-name');
-    var alert_proposals = $("#alert-proposals");
+    var alert_joboffers = $("#alert-joboffers");
     var modal = $("#modal-dashboard");
-    var n_proposals = $("#nProposals");
+    var n_joboffers = $("#nJobApplications");
     var modal_buttons = $(".modal-button");
     
     var class_state, name_state;
     $(".entry-dashboard").click(function(e){
         e.preventDefault();
-        if($(this).data("proposal-state") == 0){
+        if($(this).data("joboffer-state") == 0){
             class_state = "primary";
             name_state = "Pending";
             modal_buttons.data("dev-id", $(this).data("dev-id"));
             modal_buttons.data("task-id", $(this).data("task-id"));
         }else{
-            if($(this).data("proposal-state") > 0){
+            if($(this).data("joboffer-state") > 0){
                 class_state = "success";
                 name_state = "Accepted";
             }else{
@@ -276,7 +230,7 @@ $(document).ready(function(){
                 name_state = "Declined";
             }
         }
-        modal_proposal_state.html('<span class="btn btn-' + class_state + ' btn-small btn-table">' + name_state + '</span>');
+        modal_joboffer_state.html('<span class="btn btn-' + class_state + ' btn-small btn-table">' + name_state + '</span>');
         //modal_dev_name.text($(this).data("dev-name"));
         modal_dev_name.text($(this).data("dev-name")).attr("href", "${request.getContextPath()}/developers/" + $(this).data("dev-id"));
         modal_dev_headline.text($(this).data("dev-headline"));
@@ -296,7 +250,8 @@ $(document).ready(function(){
             data: {
                 task_key: task_key,
                 state: 1,
-                sender: dev_key
+                sender: dev_key,
+                developer_key: dev_key
                 
             },
             success: function (response) {
@@ -304,12 +259,12 @@ $(document).ready(function(){
                 modal.modal("toggle");
                 
                 $("#entry-" + task_key + "-" + dev_key + " .entry-dashboard .btn-table").removeClass("btn-primary").addClass("btn-success").text("Accepted");
-                $("#entry-" + task_key + "-" + dev_key + " .entry-dashboard").data("proposal-state", 1).removeClass("entry-dashboard").unbind("click");
+                $("#entry-" + task_key + "-" + dev_key + " .entry-dashboard").data("joboffer-state", 1).removeClass("entry-dashboard").unbind("click");
                 //$("#entry-" + task_key + "-" + dev_key).remove();
-                //var x = n_proposals.text();
-                //n_proposals.text(x-1);
-                //alert_proposals.html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Well done!</strong> Your proposal has been removed.</div>');
-                //current_button.attr("disabled", "disabled").text("Invite Sent").removeClass("proposal-button");
+                //var x = n_joboffers.text();
+                //n_joboffers.text(x-1);
+                //alert_joboffers.html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Well done!</strong> Your joboffer has been removed.</div>');
+                //current_button.attr("disabled", "disabled").text("Invite Sent").removeClass("joboffer-button");
                 //modal.modal("toggle");
             },
             error: function (data){
@@ -317,7 +272,7 @@ $(document).ready(function(){
                 modal.modal("toggle");
                 
                 debugger;
-                //modal_alert.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> There is already a waiting request.</div>');
+                //modal_alert.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> There is already a waiting joboffer.</div>');
                 //button.removeClass("hidden");
             }
         });
@@ -334,7 +289,8 @@ $(document).ready(function(){
             data: {
                 task_key: task_key,
                 state: -1,
-                sender: dev_key
+                sender: dev_key,
+                developer_key: dev_key
                 
             },
             success: function (response) {
@@ -342,12 +298,12 @@ $(document).ready(function(){
                 modal.modal("toggle");
                 
                 $("#entry-" + task_key + "-" + dev_key + " .entry-dashboard .btn-table").removeClass("btn-primary").addClass("btn-error").text("Declined");
-                $("#entry-" + task_key + "-" + dev_key + " .entry-dashboard").data("proposal-state", -1).removeClass("entry-dashboard").unbind("click");
+                $("#entry-" + task_key + "-" + dev_key + " .entry-dashboard").data("joboffer-state", -1).removeClass("entry-dashboard").unbind("click");
                 //$("#entry-" + task_key + "-" + dev_key).remove();
-                //var x = n_proposals.text();
-                //n_proposals.text(x-1);
-                //alert_proposals.html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Well done!</strong> Your proposal has been removed.</div>');
-                //current_button.attr("disabled", "disabled").text("Invite Sent").removeClass("proposal-button");
+                //var x = n_joboffers.text();
+                //n_joboffers.text(x-1);
+                //alert_joboffers.html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Well done!</strong> Your joboffer has been removed.</div>');
+                //current_button.attr("disabled", "disabled").text("Invite Sent").removeClass("joboffer-button");
                 //modal.modal("toggle");
             },
             error: function (data){
@@ -355,7 +311,7 @@ $(document).ready(function(){
                 modal.modal("toggle");
                 
                 debugger;
-                //modal_alert.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> There is already a waiting request.</div>');
+                //modal_alert.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> There is already a waiting joboffer.</div>');
                 //button.removeClass("hidden");
             }
         });

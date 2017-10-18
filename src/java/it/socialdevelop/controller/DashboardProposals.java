@@ -80,6 +80,18 @@ public class DashboardProposals extends SocialDevelopBaseController {
             }
             request.setAttribute("proposals", proposalsToSet);
             
+            //recuperiamo gli inviti
+            List<CollaborationRequest> invites = datalayer.getInvitesByCoordinator(dev.getKey());
+            request.setAttribute("nInvitations", invites.size());
+            
+            //recuperiamo le domande
+            List<CollaborationRequest> demends = datalayer.getQuestionsByCoordinator(dev.getKey());
+            request.setAttribute("nRequests", demends.size());
+            
+            //recuperiamo le job applications
+            List<CollaborationRequest> jobapps = datalayer.getQuestionsByDeveloper(dev.getKey());
+            request.setAttribute("nJobApplications", jobapps.size());
+            
             //developer data
             Map<Task, Integer> tasks = datalayer.getTasksByDeveloper(dev_key); //lista task 
             

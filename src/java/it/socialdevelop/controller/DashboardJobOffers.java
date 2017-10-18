@@ -20,19 +20,16 @@ import it.socialdevelop.data.model.CollaborationRequest;
 import it.socialdevelop.data.model.Developer;
 import it.socialdevelop.data.model.Files;
 import it.socialdevelop.data.model.Project;
-import it.socialdevelop.data.model.Skill;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
 import it.socialdevelop.data.model.Type;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Map;
 
 /**
  *
  * @author Hello World Group
  */
-public class DashboardInvitations extends SocialDevelopBaseController {
+public class DashboardJobOffers extends SocialDevelopBaseController {
 
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -42,11 +39,11 @@ public class DashboardInvitations extends SocialDevelopBaseController {
 
     
 
-    private void action_inviti(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
+    private void action_offerte(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         HttpSession s = request.getSession(true);
+        request.setAttribute("page_title", "Panel of Offers");
+        request.setAttribute("page_subtitle", "manage your offers!");
         request.setAttribute("request", request);
-        request.setAttribute("page_title", "Dashboard - Invitations");
-        request.setAttribute("page_subtitle", "manage your invites");
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
             SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
             Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));
@@ -55,32 +52,14 @@ public class DashboardInvitations extends SocialDevelopBaseController {
             }
             //recuperiamo sviluppatore a cui appartiene il pannello
             Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
-            int dev_key = dev.getKey();
             request.setAttribute("username", dev.getUsername());
-            //request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
-            request.setAttribute("auth_user", s.getAttribute("userid"));
-            request.setAttribute("foto", s.getAttribute("foto"));
-            request.setAttribute("fullname", s.getAttribute("fullname"));
+            request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
+
             request.setAttribute("bio", dev.getBiography());
             request.setAttribute("mail", dev.getMail());
             request.setAttribute("logout", "Logout");
-
-
-            //recuperiamo gli inviti 
-            List<CollaborationRequest> invites = datalayer.getInvitesByCoordinator(dev.getKey());
-            List<CollaborationRequest> invitesToSend = new ArrayList();
-            for (CollaborationRequest i : invites) {
-                Task task = datalayer.getTask(i.getTaskKey());
-                Project project = datalayer.getProjectByTask(task.getKey());
-                Developer invitato = datalayer.getDeveloper(i.getCollaboratorKey());
-                
-                task.setProject(project);
-                i.setTaskRequest(task);
-                i.setCollaboratorRequest(invitato);
-                invitesToSend.add(i);
-            }
-
-            request.setAttribute("invites", invitesToSend);
+            request.setAttribute("userid", dev.getKey());
+            
             
             //recuperiamo le proposte
             List<CollaborationRequest> proposals = datalayer.getProposalsByCollaborator(dev.getKey());
@@ -94,12 +73,34 @@ public class DashboardInvitations extends SocialDevelopBaseController {
             List<CollaborationRequest> jobapps = datalayer.getQuestionsByDeveloper(dev.getKey());
             request.setAttribute("nJobApplications", jobapps.size());
             
+            //recuperiamo gli inviti
+            List<CollaborationRequest> invites = datalayer.getInvitesByCoordinator(dev.getKey());
+            request.setAttribute("nInvitations", invites.size());
+
+            //recuperiamo le proposte
+            List<Task> tasks = datalayer.getOffertsByDeveloper(dev.getKey());
+
+            //recuperiamo il task relativo alla proposta e il progetto a cui appartiene
+            List<Task> taskToSet = new ArrayList();
+            List<Type> tasks_types = new ArrayList<>(); //lista dei tipi di ogni task
+            for (Task task : tasks) {
+
+                Project pr = datalayer.getProject(task.getProjectKey());
+                Developer coordinator = datalayer.getDeveloper(pr.getCoordinatorKey());
+                pr.setCoordinator(coordinator);
+                task.setProject(pr);
+                Type type = datalayer.getType(task.getType_key());
+                tasks_types.add(type);
+
+                taskToSet.add(task);
+            }
+            
             //developer data
-            Map<Task, Integer> tasks = datalayer.getTasksByDeveloper(dev_key); //lista task 
+            Map<Task, Integer> tas = datalayer.getTasksByDeveloper(dev.getKey()); //lista task 
             
             int sum = 0;
             int length = 0;
-            for (Map.Entry<Task, Integer> key : tasks.entrySet()){
+            for (Map.Entry<Task, Integer> key : tas.entrySet()){
                 Task task = key.getKey();
                 
                 if (task.isCompleted()) {
@@ -114,11 +115,13 @@ public class DashboardInvitations extends SocialDevelopBaseController {
             }
             request.setAttribute("votes", votes);
             request.setAttribute("dev", dev);
+            request.setAttribute("tasks_types", tasks_types);
+            request.setAttribute("joboffers", taskToSet);
             TemplateResult res = new TemplateResult(getServletContext());
-            res.activate("dashboard_invitations.ftl.html", request, response);
+            res.activate("dashboard_job_offers.ftl.html", request, response);
 
         } else {
-            response.sendRedirect("/SocialDevelop");
+            response.sendRedirect("index");
         }
 
     }
@@ -127,7 +130,7 @@ public class DashboardInvitations extends SocialDevelopBaseController {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 
         try {
-            action_inviti(request, response);
+            action_offerte(request, response);
         } catch (IOException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);

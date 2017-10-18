@@ -103,6 +103,8 @@ public interface SocialDevelopDataLayer extends DataLayer {
     Task getTaskByRequest(int collaborator_key, int coordinator_key) throws DataLayerException;
 
     List<CollaborationRequest> getQuestionsByCoordinator(int coordinator_key) throws DataLayerException;
+    
+    List<CollaborationRequest> getQuestionsByDeveloper(int coordinator_key) throws DataLayerException;
 
     Developer getCoordinatorByTask(int task_key) throws DataLayerException;
 

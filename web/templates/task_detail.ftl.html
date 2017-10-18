@@ -22,36 +22,43 @@
                  <a id="setting-project-button" href="${request.getContextPath()}/projects/tasks/settings/${task.key}" class="btn btn-default"><i class="fa fa-cog"></i> Edit</a>
                 <div class="bt-ns"> <a href="#."><i class="fa fa-bookmark-o"></i> </a> <a href="#."><i class="fa fa-thumbs-up"></i> </a>  </div>
                 <#else>
-                <#if task.open>
+                <#if task.open && !task.isCompleted()>
                     <#if state??>
                     <!-- è presente il developer nel task -->
                         <#if (state == 0)> 
                             <#if (sender==dev)>
                             <!--richiesta già inviata-->
-                            <div class="connect"> <a href="#" class="btn btn-secondary"><i class="fa fa-paper-plane"></i> Request sent</a>
+                            <div class="connect"> <a href="#" id="unsubscribe-button" class="btn btn-secondary"><i class="fa fa-paper-plane"></i> Request sent</a>
                             
                             <#else>
                             <!--invito ricevuto-->
-                            <div class="connect"> <a href="#" class="btn btn-secondary"><i class="fa fa-mail-reply"></i> Reply to Invite</a>
+                            <div class="connect"> <a href="${request.getContextPath()}/dashboard/proposals" class="btn btn-secondary"><i class="fa fa-mail-reply"></i> Reply to Invite</a>
                             </#if>
                          <#else>
                             <#if (state > 0)>    
                                 <div class="connect"> <a href="#" class="btn btn-success"><i class="fa fa-check-circle"></i> Subscribed</a>
                             <#else>
                                 <#if (sender==dev)>
-                                    <div class="connect"> <a href="#." data-toggle="modal" data-target="#myModal" class="btn btn-error"><i class="fa fa-times"></i> Request Declined</a>  
+                                    <div class="connect"> <a href="#." class="btn btn-error"><i class="fa fa-times"></i> Request Declined</a>  
                                 <#else>
-                                    <div class="connect"> <a href="#." data-toggle="modal" data-target="#myModal" class="btn btn-primary"><i class="fa fa-user-plus"></i> Subscribe</a>
+                                    <div class="connect"> <a href="#." id="subscribe-button" class="btn btn-primary"><i class="fa fa-user-plus"></i> Subscribe</a>
                                 </#if>
                             </#if>
                          </#if>  
                     <#else>
                         <!-- il developer non è iscritto al task-->
-                        <div class="connect"> <a href="#." data-toggle="modal" data-target="#myModal" class="btn btn-primary"><i class="fa fa-user-plus"></i> Subscribe</a>
+                        <div class="connect"> <a href="#." id="subscribe-button" class="btn btn-primary"><i class="fa fa-user-plus"></i> Subscribe</a>
+                    </#if>
+                <#else>
+                    <#if task.completed>
+                    <div class="connect"> <a href="#." class="btn btn-primary"><i class="fa fa-check-circle"></i> Completed</a>
+                        <#else>
+                      <div class="connect"> <a href="#." class="btn btn-error"><i class="fa fa-times"></i> Closed</a>  
                     </#if>
                 </#if>
-                </#if>
                 <div class="bt-ns"> <a href="#."><i class="fa fa-bookmark-o"></i> </a> <a href="#."><i class="fa fa-thumbs-up"></i> </a>  </div>
+                </#if>
+                
              </#if>
           
           </div>
@@ -90,10 +97,14 @@
               <h3 class="tab-title">Task</h3>
               
               <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
+              <#if task.completed>
+              <a href="#" class="btn btn-primary btn-small ">Completed</a>
+              <#else>
               <#if task.open>
                 <a href="#" class="btn btn-success btn-small ">Open</a>
               <#else>
                   <a href="#" class="btn btn-error btn-small ">Closed</a>
+              </#if>
               </#if>
               <p></p>
               <h5 class="type-work text-black"><span class="text-primary">${task.numCollaborators} </span> Developers</h5>
@@ -347,3 +358,54 @@
     </div>
   </div>
 
+<script>
+$(document).ready(function(){
+    
+  ctx = "${request.getContextPath()}";
+  
+  $("body").on("click", "#subscribe-button", function(e){
+      e.preventDefault();
+      var button = $(this);
+        $.ajax({
+            datatype: 'text/plain',
+            type: 'post',
+            url: ctx + '/projects/join_task',
+            data: {
+                task_key: ${task.key}     
+            },
+            success: function (response) {
+                debugger;
+                button.attr("id", "unsubscribe-button").removeClass("btn-primary").addClass("btn-secondary").html('<i class="fa fa-paper-plane"></i> Request sent');
+                
+            },
+            error: function (data){
+                console.log(data)      
+                debugger;
+            }
+        });
+      
+  })
+  $("body").on("click", "#unsubscribe-button", function(e){
+      e.preventDefault();
+      var button = $(this);
+      $.ajax({
+            datatype: 'text/plain',
+            type: 'post',
+            url: ctx + '/projects/remove_collaborator',
+            data: {
+                task_key: ${task.key},
+                dev_key: ${auth_user}
+            },
+            success: function (response) {
+                debugger;
+                button.attr("id", "subscribe-button").removeClass("btn-secondary").addClass("btn-primary").html('<i class="fa fa-user-plus"></i> Subscribe');
+            },
+            error: function (data){
+                console.log(data)      
+                debugger;
+            }
+        });
+  })
+  
+})
+</script>

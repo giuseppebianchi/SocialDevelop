@@ -1,5 +1,6 @@
 package it.socialdevelop.controller;
 
+import it.socialdevelop.data.model.Developer;
 import it.univaq.f4i.iw.framework.result.FailureResult;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
 import it.socialdevelop.mailer.Mailer;
+import java.util.Map;
 
 /**
  *
@@ -68,12 +70,12 @@ public class acceptProposal extends SocialDevelopBaseController {
                     //domanda accettata
                     String txt = "La tua domanda di partecipazione al task " + datalayer.getTask(task_key).getName() + " è stata accettata.";
                     Mailer m1 = new Mailer(datalayer.getDeveloper(developer_key).getMail(), obj, txt);
-                    m1.sendEmail();
+                    //m1.sendEmail();
                 } else {
                     //domanda rifiutata
                     String txt = "La tua domanda di partecipazione al task " + datalayer.getTask(task_key).getName() + " è stata rifiutata.";
                     Mailer m1 = new Mailer(datalayer.getDeveloper(developer_key).getMail(), obj, txt);
-                    m1.sendEmail();
+                    //m1.sendEmail();
                 }
 
             }
@@ -86,6 +88,18 @@ public class acceptProposal extends SocialDevelopBaseController {
                     datalayer.storeTask(task);
                 }
             }*/
+            if(state == 1){
+                //aggiorno lo stato del task
+                Task task = datalayer.getTask(task_key);
+                Map<Developer, Integer> collaborators = datalayer.getCollaboratorsByTask(task_key);
+                int num = collaborators.size();
+                if(task.getNumCollaborators() == num){
+                    task.setOpen(false);
+                }else{
+                    task.setOpen(true);
+                }
+                datalayer.storeTask(task);
+            }
 
             datalayer.destroy();
             response.setContentType("text/plain");
