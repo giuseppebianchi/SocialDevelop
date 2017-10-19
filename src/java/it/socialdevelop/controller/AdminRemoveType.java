@@ -17,12 +17,13 @@ import it.socialdevelop.data.model.Developer;
 import it.socialdevelop.data.model.Skill;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Type;
+import static java.lang.Integer.parseInt;
 
 /**
  *
  * @author Hello World Group
  */
-public class rmType extends SocialDevelopBaseController {
+public class AdminRemoveType extends SocialDevelopBaseController {
 
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -31,28 +32,25 @@ public class rmType extends SocialDevelopBaseController {
     }
 
     private void rm_type(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, NamingException, NoSuchAlgorithmException, Exception {
-        HttpSession s = request.getSession(true);
+        HttpSession s = request.getSession(true); 
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
-
+ 
             SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
             Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
             Admin admin = datalayer.getAdmin(dev.getKey());
             if (admin != null && admin.getDevelperKey() > 0) {
-
-                Type type = datalayer.getType(datalayer.getTypeByName(request.getParameter("type")));
+                int validation = 0;
+                int type_id = parseInt(request.getParameter("type_id"));
+                Type type = datalayer.getType(type_id);
 
                 List<Skill> skills = datalayer.getSkillsByType(type.getKey());
 
-                if (!(skills.isEmpty())) {
-
-                    for (Skill skill : skills) {
-
-                        skill.setType_key(NULL);
-                        datalayer.storeSkill(skill);
-                    }
+                if (skills.isEmpty()) {
+                    datalayer.deleteType(type);
+                    validation = 1;
                 }
 
-                int ret = datalayer.deleteType(type);
+                
 
                 datalayer.destroy();
                 response.setContentType("text/plain");
@@ -60,17 +58,17 @@ public class rmType extends SocialDevelopBaseController {
                 PrintWriter out = response.getWriter();
 
                 try {
-                    out.println(ret);
+                    out.println(validation);
                 } finally {
                     out.close();
                 }
             } else {
                 s.removeAttribute("previous_url");
-                response.sendRedirect("index");
+                response.sendRedirect("/SocialDevelop");
             }
         } else {
             s.removeAttribute("previous_url");
-            response.sendRedirect("index");
+            response.sendRedirect("/SocialDevelop");
         }
 
     }

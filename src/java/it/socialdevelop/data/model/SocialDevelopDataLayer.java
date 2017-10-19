@@ -123,6 +123,8 @@ public interface SocialDevelopDataLayer extends DataLayer {
     void deleteTask(Task task) throws DataLayerException;
 
     void storeSkill(Skill skill) throws DataLayerException;
+    
+    int storeSkillAndGetKey(Skill skill) throws DataLayerException;
 
     void deleteSkill(Skill skill) throws DataLayerException;
 

@@ -1,0 +1,209 @@
+<!-- SUB Banner -->
+  <div class="sub-bnr user-profile-bnr">
+    <div class="position-center-center">
+      <div class="container">
+        <h2>Admin Area</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compny Profile -->
+  <div class="compny-profile"> 
+    
+    <!-- Profile Company Content -->
+    <div class="profile-company-content" data-bg-color="fff">
+      <div class="container">
+          
+        <div class="row"> 
+          <!-- Tab Content -->
+          <div class="col-md-12">
+            <div class="network ">
+              
+              <!-- Nav Tabs -->
+              <ul class="nav nav-tabs">
+                <li><a href="${request.getContextPath()}/admin/skills">Skills</a></li>
+                <li class="active"><a href="#">Types</a></li>    
+              </ul>
+              <hr>
+              <!-- Tab Content -->
+              <div class="tab-content"> 
+                
+                <!-- Connections -->
+                <div id="types" class="tab-pane fade in active">
+                  <div class=""> 
+                      <h6 class="input-label">Create new Type</h6>
+                      <div class="row">
+                          <div class="col-sm-9">
+                              <input id="new-type-name" type="text" placeholder="Type's name">
+                          </div>
+                          <div class="col-sm-3">
+                              <button id="new-type-button" type='button' class='btn btn-primary btn-block'>Create</button>
+                          </div>
+                      </div>
+                    
+                    </div>
+                    <div id="alert-admin"></div>
+                    <!-- Members -->
+                    <div class="main-mem table-blue"> 
+                      
+                      <!-- Head -->
+                      
+                      
+                      <!-- Tittle -->
+                      <div class="tittle">
+                        <ul class="row">
+                          <li class="col-xs-11"> <span>Type</span> </li>
+                          <li class="col-xs-1"> <span></span> </li>
+                        </ul>
+                      </div>
+                      
+                      <!-- Tittle -->
+                      <div class="folow-persons">
+                        <ul id="admin-types-list">
+                         <#list types as type>
+                          <!-- MEMBER -->
+                           <li id="type-${type.key}">
+                            <!-- Check Box 
+                            <div class="checkbox">
+                              <input id="checkbox7" class="styled" type="checkbox">
+                              <label for="checkbox7"></label>
+                            </div>-->
+                            
+                            <div class="row"> 
+                              <!-- Title -->
+                              <div class="col-xs-11"> 
+                                  <span>${type.type}</span> 
+                              </div>
+                              <div class="col-xs-1 n-p-r n-p-l"> <#if (typesD[type?index] == 1)><span class="text-danger remove-type" data-type-id="${type.key}" data-type-name="${type.type}"><i class="fa fa-times"></i></span> </#if></div>
+                            </div>
+                            
+                          </li>
+                          <!-- END MEMBER -->
+                          </#list>
+                          
+                        </ul>
+                      </div>
+                     <!-- END TAB-->
+                    </div>
+                  </div>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="modal-dashboard" class="modal fade">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Remove Type</h5>
+        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fa fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <h2>Are you sure to delete <span id="modal-skill-name" class="text-primary"></span>?</h2>  
+      </div>
+        <br>
+      <div class="modal-footer">
+        <button id="remove-type-button" type="button" class="btn btn-error" data-dismiss="modal">Remove</button>
+        <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<script>
+$(document).ready(function(){
+    var ctx = "${request.getContextPath()}";
+    var alert_admin = $("#alert-admin");
+    var modal = $("#modal-dashboard");
+    var modal_type_name = $("#modal-type-name");
+    var modal_remove_button = $("#remove-type-button");
+    var types_list = $("#admin-types-list");
+    
+    $(".remove-type").click(function(e){
+        e.preventDefault();
+        modal_type_name.text($(this).data("type-name"));
+        modal_remove_button.data("type-id", $(this).data("type-id"));
+        modal.modal();
+    });
+    
+    $("body").on("click", "#remove-type-button", function(e){
+        debugger;
+        var button = $(this);
+        var type_id = button.data("type-id");
+        $.ajax({
+            datatype: 'text/plain',
+            type: 'post',
+            url: ctx + '/admin/types/remove_type',
+            data: {
+                type_id: type_id
+                
+            },
+            success: function (response) {
+                debugger;
+                if(response == 1){ //il tipo è stato cancellato correttamente
+                    $("#type-" + type_id).remove();
+                    alert_admin.html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Well done!</strong> The type has been removed succesfully.</div>');
+                }else{
+                    alert_admin.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> ' + "Selected type can't be removed.</div>");
+                }
+                
+                //current_button.attr("disabled", "disabled").text("Invite Sent").removeClass("invite-button");
+                //modal.modal("toggle");
+            },
+            error: function (data){
+                console.log(data)
+                modal.modal("toggle");
+                
+                debugger;
+                //modal_alert.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> There is already a waiting request.</div>');
+                //button.removeClass("hidden");
+            }
+        });
+    });
+    
+    $("#new-type-button").click(function(){
+        var type_name = $("#new-type-name");
+        debugger;
+        $.ajax({
+            datatype: 'text/plain',
+            type: 'post',
+            url: ctx + '/admin/types/add_type',
+            data: {
+                type_name: type_name.val()
+                
+            },
+            success: function (response) {
+                debugger;
+                if(response != ""){ //il type è stato aggiunto correttamente
+                    type_name.val("");
+                    types_list.append('<li><div class="row"><div class="col-xs-11"><span>' + response.name + '</span></div><div class="col-xs-1 n-p-r n-p-l"> </div></div></li>')
+                    alert_admin.html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Well done!</strong> The skill <strong>' + response.name + '</strong> has been created succesfully.</div>');
+                }else{
+                    alert_admin.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> ' + "Something went wrong.</div>");
+                }
+                
+                //current_button.attr("disabled", "disabled").text("Invite Sent").removeClass("invite-button");
+                //modal.modal("toggle");
+            },
+            error: function (data){
+                console.log(data)
+                alert_admin.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> ' + "Something went wrong.</div>");
+                
+                debugger;
+                //modal_alert.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> There is already a waiting request.</div>');
+                //button.removeClass("hidden");
+            }
+        });
+    })
+    
+})
+
+</script>

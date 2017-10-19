@@ -218,36 +218,36 @@
         <servlet-class>it.socialdevelop.controller.joinTask</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BackEndType</servlet-name>
-        <servlet-class>it.socialdevelop.controller.BackEndType</servlet-class>
+        <servlet-name>AdminTypes</servlet-name>
+        <servlet-class>it.socialdevelop.controller.AdminTypes</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BackEndSkill</servlet-name>
-        <servlet-class>it.socialdevelop.controller.BackEndSkill</servlet-class>
+        <servlet-name>AdminSkills</servlet-name>
+        <servlet-class>it.socialdevelop.controller.AdminSkills</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddSkillBack</servlet-name>
-        <servlet-class>it.socialdevelop.controller.AddSkillBack</servlet-class>
+        <servlet-name>AdminAddSkill</servlet-name>
+        <servlet-class>it.socialdevelop.controller.AdminAddSkill</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateSkillBack</servlet-name>
         <servlet-class>it.socialdevelop.controller.UpdateSkillBack</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>rmSkillBack</servlet-name>
-        <servlet-class>it.socialdevelop.controller.rmSkillBack</servlet-class>
+        <servlet-name>AdminRemoveSkill</servlet-name>
+        <servlet-class>it.socialdevelop.controller.AdminRemoveSkill</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>rmType</servlet-name>
-        <servlet-class>it.socialdevelop.controller.rmType</servlet-class>
+        <servlet-name>AdminRemoveType</servlet-name>
+        <servlet-class>it.socialdevelop.controller.AdminRemoveType</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateType</servlet-name>
         <servlet-class>it.socialdevelop.controller.UpdateType</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>addType</servlet-name>
-        <servlet-class>it.socialdevelop.controller.addType</servlet-class>
+        <servlet-name>AdminAddType</servlet-name>
+        <servlet-class>it.socialdevelop.controller.AdminAddType</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeveloperForTask</servlet-name>
@@ -482,32 +482,32 @@
         <url-pattern>/projects/join_task</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>addType</servlet-name>
-        <url-pattern>/addType</url-pattern>
+        <servlet-name>AdminAddType</servlet-name>
+        <url-pattern>/admin/types/add_type</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BackEndType</servlet-name>
-        <url-pattern>/BackEndType</url-pattern>
+        <servlet-name>AdminTypes</servlet-name>
+        <url-pattern>/admin/types</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BackEndSkill</servlet-name>
-        <url-pattern>/BackEndSkill</url-pattern>
+        <servlet-name>AdminSkills</servlet-name>
+        <url-pattern>/admin/skills</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddSkillBack</servlet-name>
-        <url-pattern>/AddSkillBack</url-pattern>
+        <servlet-name>AdminAddSkill</servlet-name>
+        <url-pattern>/admin/skills/add_skill</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>rmSkillBack</servlet-name>
-        <url-pattern>/rmSkillBack</url-pattern>
+        <servlet-name>AdminRemoveSkill</servlet-name>
+        <url-pattern>/admin/skills/remove_skill</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateSkillBack</servlet-name>
         <url-pattern>/UpdateSkillBack</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>rmType</servlet-name>
-        <url-pattern>/rmType</url-pattern>
+        <servlet-name>AdminRemoveType</servlet-name>
+        <url-pattern>/admin/types/remove_type</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateType</servlet-name>

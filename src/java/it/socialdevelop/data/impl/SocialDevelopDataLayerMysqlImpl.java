@@ -209,7 +209,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             uProject = connection.prepareStatement("UPDATE project SET name=?, category=?, location=?, company=?, description=?, coordinator_ID=? WHERE ID=?");
             dProject = connection.prepareStatement("DELETE FROM project WHERE ID=?");
 
-            iSkill = connection.prepareStatement("INSERT INTO skill (name,parent_ID,type_ID) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            iSkill = connection.prepareStatement("INSERT INTO skill (name,type_ID) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS);
             uSkill = connection.prepareStatement("UPDATE skill SET name=?,parent_ID=? WHERE ID=?");
             dSkill = connection.prepareStatement("DELETE FROM skill WHERE ID=?");
 
@@ -1574,6 +1574,35 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
         } catch (SQLException ex) {
             throw new DataLayerException("Unable to store article", ex);
         }
+    }
+    
+    @Override
+    public int storeSkillAndGetKey(Skill skill) throws DataLayerException {
+        int key = 0;
+        try {
+            //insert
+                iSkill.setString(1, skill.getName());
+                iSkill.setInt(2, skill.getType_key());
+                if (iSkill.executeUpdate() == 1) {
+                   //per leggere la chiave generata dal database
+                    //per il record appena inserito, usiamo il metodo
+                    //getGeneratedKeys sullo statement.
+                    try (ResultSet keys = iSkill.getGeneratedKeys()) {
+                        //il valore restituito è un ResultSet con un record
+                        //per ciascuna chiave generata (uno solo nel nostro caso)
+
+                        if (keys.next()) {
+                            //i campi del record sono le componenti della chiave
+                            //(nel nostro caso, un solo intero)
+                            key = keys.getInt(1);
+                        }
+                    }
+                }
+
+        } catch (SQLException ex) {
+            throw new DataLayerException("Unable to store article", ex);
+        }
+        return key;
     }
 
     @Override

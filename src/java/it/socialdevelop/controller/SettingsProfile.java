@@ -45,7 +45,7 @@ public class SettingsProfile extends SocialDevelopBaseController {
             SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
             Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));
             if (admin != null) {
-                request.setAttribute("admin", "admin");
+                request.setAttribute("isAdmin", 1);
             }
             Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
             Map<Skill, Integer> skillsList = datalayer.getSkillsByDeveloper(dev.getKey());

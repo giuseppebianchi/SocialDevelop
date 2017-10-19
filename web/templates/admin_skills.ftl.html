@@ -1,0 +1,228 @@
+<!-- SUB Banner -->
+  <div class="sub-bnr user-profile-bnr">
+    <div class="position-center-center">
+      <div class="container">
+        <h2>Admin Area</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compny Profile -->
+  <div class="compny-profile"> 
+    
+    <!-- Profile Company Content -->
+    <div class="profile-company-content" data-bg-color="fff">
+      <div class="container">
+          
+        <div class="row"> 
+          <!-- Tab Content -->
+          <div class="col-md-12">
+            <div class="network ">
+              
+              <!-- Nav Tabs -->
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#">Skills</a></li>
+                <li><a href="${request.getContextPath()}/admin/types">Types</a></li>    
+              </ul>
+              <hr>
+              <!-- Tab Content -->
+              <div class="tab-content"> 
+                
+                <!-- Connections -->
+                <div id="skills" class="tab-pane fade in active">
+                  <div class=""> 
+                      <h6 class="input-label">Create new Skill</h6>
+                      <div class="row">
+                          <div class="col-sm-5">
+                              <input id="new-skill-name" type="text" placeholder="Skill's name">
+                          </div>
+                          <div class="col-sm-4">
+                              <select name="task_type" id="new-skill-type" class="js-example-placeholder-single" style="width: 100%; display: inline;">
+                                    <option></option>
+                                      <#list types as type>
+                                          <option value="${type.key}" data-name="${type.type}">${type.type}</option>
+                                      </#list>
+                                </select>
+                          </div>
+                          <div class="col-sm-3">
+                              <button id="new-skill-button" type='button' class='btn btn-primary btn-block'>Create</button>
+                          </div>
+                      </div>
+                    
+                    </div>
+                    <div id="alert-admin"></div>
+                    <!-- Members -->
+                    <div class="main-mem table-blue"> 
+                      
+                      <!-- Head -->
+                      
+                      
+                      <!-- Tittle -->
+                      <div class="tittle">
+                        <ul class="row">
+                          <li class="col-xs-6"> <span>Skill</span> </li>
+                          <li class="col-xs-5"> <span>Type</span> </li>
+                          <li class="col-xs-1"> <span></span> </li>
+                        </ul>
+                      </div>
+                      
+                      <!-- Tittle -->
+                      <div class="folow-persons">
+                        <ul id="admin-skills-list">
+                         <#list skills as skill>
+                          <!-- MEMBER -->
+                           <li id="skill-${skill.key}">
+                            <!-- Check Box 
+                            <div class="checkbox">
+                              <input id="checkbox7" class="styled" type="checkbox">
+                              <label for="checkbox7"></label>
+                            </div>-->
+                            
+                            <div class="row"> 
+                              <!-- Title -->
+                              <div class="col-xs-6"> 
+                                  <span>${skill.name}</span> 
+                              </div>
+                              <!-- type -->
+                              <div class="col-xs-5 n-p-r n-p-l"> <span>${skill.type.type}</span> </div>
+                              <div class="col-xs-1 n-p-r n-p-l"> <#if (skillsD[skill?index] == 1)><span class="text-danger remove-skill" data-skill-id="${skill.key}" data-skill-name="${skill.name}"><i class="fa fa-times"></i></span> </#if></div>
+                            </div>
+                            
+                          </li>
+                          <!-- END MEMBER -->
+                          </#list>
+                          
+                        </ul>
+                      </div>
+                     <!-- END TAB-->
+                    </div>
+                  </div>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="modal-dashboard" class="modal fade">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Remove Skill</h5>
+        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fa fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <h2>Are you sure to delete <span id="modal-skill-name" class="text-primary"></span>?</h2>  
+      </div>
+        <br>
+      <div class="modal-footer">
+        <button id="remove-skill-button" type="button" class="btn btn-error" data-dismiss="modal">Remove</button>
+        <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
+<script>
+$(document).ready(function(){
+    var ctx = "${request.getContextPath()}";
+    var alert_admin = $("#alert-admin");
+    var modal = $("#modal-dashboard");
+    var modal_skill_name = $("#modal-skill-name");
+    var modal_remove_button = $("#remove-skill-button");
+    var skills_list = $("#admin-skills-list");
+    
+    $("#new-skill-type").select2({
+            placeholder: "Select a type",
+            allowClear: true
+          });
+    
+    $(".remove-skill").click(function(e){
+        e.preventDefault();
+        modal_skill_name.text($(this).data("skill-name"));
+        modal_remove_button.data("skill-id", $(this).data("skill-id"));
+        modal.modal();
+    });
+    
+    $("body").on("click", "#remove-skill-button", function(e){
+        debugger;
+        var button = $(this);
+        var skill_id = button.data("skill-id");
+        $.ajax({
+            datatype: 'text/plain',
+            type: 'post',
+            url: ctx + '/admin/skills/remove_skill',
+            data: {
+                skill_id: skill_id,
+                
+            },
+            success: function (response) {
+                debugger;
+                if(response == 1){ //la skill è stata cancellata correttamente
+                    $("#skill-" + skill_id).remove();
+                    alert_admin.html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Well done!</strong> The skill has been removed succesfully.</div>');
+                }else{
+                    alert_admin.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> ' + "Selected skill can't be removed.</div>");
+                }
+                
+                //current_button.attr("disabled", "disabled").text("Invite Sent").removeClass("invite-button");
+                //modal.modal("toggle");
+            },
+            error: function (data){
+                console.log(data)
+                modal.modal("toggle");
+                
+                debugger;
+                //modal_alert.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> There is already a waiting request.</div>');
+                //button.removeClass("hidden");
+            }
+        });
+    });
+    
+    $("#new-skill-button").click(function(){
+        var skill_name = $("#new-skill-name");
+        var skill_type = $("#new-skill-type");
+        debugger;
+        $.ajax({
+            datatype: 'text/plain',
+            type: 'post',
+            url: ctx + '/admin/skills/add_skill',
+            data: {
+                skill_name: skill_name.val(),
+                skill_type: skill_type.val()
+                
+            },
+            success: function (response) {
+                debugger;
+                if(response != ""){ //la skill è stata aggiunta correttamente
+                    skill_name.val("");
+                    skill_type.select2("val", "");
+                    skills_list.append('<li id="skill-' + response.id +'"><div class="row"><div class="col-xs-6"><span>' + response.name + '</span></div><div class="col-xs-5 n-p-r n-p-l"> <span>' + response.type + '</span> </div><div class="col-xs-1 n-p-r n-p-l"> </div></div></li>')
+                    alert_admin.html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Well done!</strong> The skill <strong>' + response.name + '</strong> has been created succesfully.</div>');
+                }else{
+                    alert_admin.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> ' + "Something went wrong.</div>");
+                }
+                
+                //current_button.attr("disabled", "disabled").text("Invite Sent").removeClass("invite-button");
+                //modal.modal("toggle");
+            },
+            error: function (data){
+                console.log(data)
+                alert_admin.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> ' + "Something went wrong.</div>");
+                
+                debugger;
+                //modal_alert.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> There is already a waiting request.</div>');
+                //button.removeClass("hidden");
+            }
+        });
+    })
+    
+})
+
+</script>

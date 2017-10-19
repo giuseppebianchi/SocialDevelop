@@ -52,13 +52,16 @@ public class DashboardJobOffers extends SocialDevelopBaseController {
             }
             //recuperiamo sviluppatore a cui appartiene il pannello
             Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
+            int dev_key = dev.getKey();
             request.setAttribute("username", dev.getUsername());
-            request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
-
+            //request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
+            request.setAttribute("auth_user", s.getAttribute("userid"));
+            request.setAttribute("foto", s.getAttribute("foto"));
+            request.setAttribute("fullname", s.getAttribute("fullname"));
             request.setAttribute("bio", dev.getBiography());
             request.setAttribute("mail", dev.getMail());
             request.setAttribute("logout", "Logout");
-            request.setAttribute("userid", dev.getKey());
+
             
             
             //recuperiamo le proposte

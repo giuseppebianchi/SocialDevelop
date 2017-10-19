@@ -3,25 +3,28 @@ package it.socialdevelop.controller;
 import it.univaq.f4i.iw.framework.data.DataLayerException;
 import it.univaq.f4i.iw.framework.result.FailureResult;
 import it.univaq.f4i.iw.framework.result.TemplateManagerException;
-import it.univaq.f4i.iw.framework.result.TemplateResult;
 import java.io.IOException;
+import static java.lang.Integer.parseInt;
 import java.sql.SQLException;
-import java.util.List;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import it.socialdevelop.data.impl.SkillImpl;
 import it.socialdevelop.data.model.Admin;
 import it.socialdevelop.data.model.Developer;
+import it.socialdevelop.data.model.Skill;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Type;
+import java.io.PrintWriter;
+import org.json.JSONObject;
 
 /**
  *
  * @author Hello World Group
  */
-public class BackEndType extends SocialDevelopBaseController {
+public class AdminAddSkill extends SocialDevelopBaseController {
 
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -29,32 +32,49 @@ public class BackEndType extends SocialDevelopBaseController {
         }
     }
 
-    private void action_backendt(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
+    private void action_addSkillB(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
 
         HttpSession s = request.getSession(true);
+        String u = (String) s.getAttribute("previous_url");
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
-            SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
-            Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
-            Admin admin = datalayer.getAdmin(dev.getKey());
-            if (admin != null) {
-                request.setAttribute("admin", "admin");
-                request.setAttribute("page_title", "TYPE BACKEND");
-                request.setAttribute("page_subtitle", "Manage the Types");
+            if (/*s.getAttribute("previous_url") != null && ((String) s.getAttribute("previous_url")).equals("/SocialDevelop/BackEndSkill")*/ true) {
 
-                List<Type> types = datalayer.getTypes();
-                if (types != null) {
-                    request.setAttribute("types", types);
+                SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
+                Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
+                Admin admin = datalayer.getAdmin(dev.getKey());
+                if (admin != null) {
+
+                    Skill skill = new SkillImpl(datalayer);
+                    String skill_name = request.getParameter("skill_name");
+                    skill.setName(skill_name);
+                    int type_id = parseInt(request.getParameter("skill_type"));
+                    skill.setType_key(type_id);
+                    Type ty = datalayer.getType(type_id); 
+                    int skill_id = datalayer.storeSkillAndGetKey(skill);
+                    datalayer.destroy();
+                    s.removeAttribute("previous_url");
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    JSONObject o = new JSONObject();
+                    o.put("id", skill_id);
+                    o.put("name", skill_name);
+                    
+                    o.put("type", ty.getType());
+                    PrintWriter out = response.getWriter();
+                    try {
+                        out.println(o.toString());
+                    } finally {
+                        out.close();
+                    }
+                } else {
+                    s.removeAttribute("previous_url");
+                    response.sendRedirect("index");
                 }
-                request.setAttribute("logout", "Logout");
 
-                datalayer.destroy();
-                String act_url = request.getRequestURI();
-                s.setAttribute("previous_url", act_url);
-                TemplateResult res = new TemplateResult(getServletContext());
-                res.activate("backend_type.html", request, response);
             } else {
                 s.removeAttribute("previous_url");
                 response.sendRedirect("index");
+
             }
         } else {
             s.removeAttribute("previous_url");
@@ -71,7 +91,7 @@ public class BackEndType extends SocialDevelopBaseController {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
-            action_backendt(request, response);
+            action_addSkillB(request, response);
         } catch (IOException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
