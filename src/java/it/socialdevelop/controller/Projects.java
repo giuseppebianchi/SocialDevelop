@@ -51,17 +51,27 @@ public class Projects extends SocialDevelopBaseController {
             data.put("menu_active", "projects");
         }
         int npage = 1;
+        int limit = 10;
         if (request.getParameter("n") == null) {
             npage = 1;
         } else {
             npage = Integer.parseInt(request.getParameter("n"));
         }
-        int n = ((npage) - 1) * 6;
-
-        double pagesize = ceil((double) (datalayer.getProjects().size()) / 6);
+        int n = ((npage) - 1) * limit;
+        
+        
+        double pagesize = ceil((double) (datalayer.getProjects().size()) / limit);
         data.put("page", pagesize);
         data.put("selected", request.getParameter("n"));
-        List<Project> pro = datalayer.getProjectsLimit(n);
+        List<Project> pro;
+        if(request.getParameter("q") != null){
+          String q = request.getParameter("q");
+          pro = datalayer.getProjects(q);
+          data.put("q", q);
+        }else{
+          pro = datalayer.getProjectsLimit(n);  
+        }
+        
         if (pro.size() != 0) {
             data.put("listaprogetti", pro);
             Date startdate[] = new Date[pro.size()];

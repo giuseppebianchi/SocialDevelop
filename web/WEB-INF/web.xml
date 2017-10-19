@@ -82,7 +82,7 @@
     </servlet>
     <servlet>
         <servlet-name>SearchProject</servlet-name>
-        <servlet-class>it.socialdevelop.controller.SearchProject</servlet-class>
+        <servlet-class>it.socialdevelop.controller.Projects</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>CompleteRegistration</servlet-name>
