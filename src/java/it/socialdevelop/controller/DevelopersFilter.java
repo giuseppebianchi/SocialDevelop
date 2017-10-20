@@ -58,7 +58,6 @@ public class DevelopersFilter extends SocialDevelopBaseController {
         String JSONData = request.getParameter("data");
         JSONObject o = new JSONObject(JSONData);
         Map<Integer, Developer> dev_list = new HashMap<Integer, Developer>(); 
-        Map<Integer, Developer> dev_temp = new HashMap<Integer, Developer>(); 
         List<Map<String, Integer>> query = new ArrayList<Map<String, Integer>>();
         try {
             Iterator<String> temp = o.keys();
@@ -73,7 +72,7 @@ public class DevelopersFilter extends SocialDevelopBaseController {
                 Map<String, Integer> sk = new HashMap<String, Integer>();
                 sk.put(skill_name, level);
                 query.add(sk);
-                
+                Map<Integer, Developer> dev_temp = new HashMap<Integer, Developer>(); 
                 List<Developer> ds = datalayer.getDevelopersBySkillNoLevel(skill_id, level);
                 if(key.equals("0")){
                     //aggiungo tutti i risultati in dev_list

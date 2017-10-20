@@ -135,7 +135,7 @@
     <hr> 
     <div class="container pb30">
       <div class="similar developer-list">
-          
+        <#if devs?has_content>  
           <#list devs as dev>
           <!-- DEVELOPER -->
           <div class="media">
@@ -172,7 +172,9 @@
           
           <!-- END DEVELOPER -->
           </#list>
-          
+        <#else>
+        <h2>No developer found</h2>
+        </#if>
          </div>
     </div>
     
