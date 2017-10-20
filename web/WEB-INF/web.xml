@@ -150,6 +150,10 @@
         <servlet-class>it.socialdevelop.controller.FindDeveloper</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>DevelopersFilter</servlet-name>
+        <servlet-class>it.socialdevelop.controller.DevelopersFilter</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SearchDeveloper</servlet-name>
         <servlet-class>it.socialdevelop.controller.SearchDeveloper</servlet-class>
     </servlet>
@@ -416,6 +420,10 @@
     <servlet-mapping>
         <servlet-name>FindDeveloper</servlet-name>
         <url-pattern>/FindDevelopers</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DevelopersFilter</servlet-name>
+        <url-pattern>/developers/filter</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateProject</servlet-name>

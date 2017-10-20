@@ -11,10 +11,12 @@
   </div>
   
   <!-- search -->
-  <div class="search-pro">
-    <div class="map-search">
+  <div class="search-proo ">
+    <div class="map-search pb0">
       <div class="container">
         <div class="row">
+            <form id="form-filter" action="${request.getContextPath()}/developers/filter" method="post">
+                <input type="hidden" id="form-data" name="data">
           <div class="col-md-12">
             <!--<div class="map-search-fields" style="padding-left: 0">
                 <div class="field" style="width: 90%;">
@@ -54,7 +56,7 @@
                       <a class="btn btn-primary btn-block" id="add-new-skill">Add Skill</a>
                   </div>
                   <div class="col-sm-2">
-                      <input class="btn btn-success btn-block" type="submit" value="filter">
+                      <input id="filter-button" class="btn btn-success btn-block" type="submit" value="filter">
                   </div>
                       
               </div>
@@ -62,6 +64,25 @@
                     <ul id="skills-list"></ul>
            
           </div>
+            </form>
+            <#if query??>
+                <div class="col-md-12">
+                <h2>Results for: <span class="text-primary"></span></h2>
+                <#list query as q>
+                    <div class="row" style="margin: 15px 0 0">
+                        <div class="col-xs-6" style="padding-left: 0;">
+                            <div class="uou-progressbar-single">
+                        <#list q as key, value>
+                        <h6>${key}</h6>
+                        <span class="main-bar"> <span class="inner-bar" style="width: ${value}0%"></span> <a class="progress-percent">${value}</a> </span> 
+                        </#list>
+                            </div>
+                        </div>
+                    </div>
+                </#list>
+                <a href="${request.getContextPath()}/developers" class="btn btn-primary">remove filter</a>
+                 </div>
+            </#if>
         </div>
       </div>
     </div>
@@ -111,7 +132,7 @@
     </div>
     <hr>
     -->
-    
+    <hr> 
     <div class="container pb30">
       <div class="similar developer-list">
           
@@ -205,5 +226,11 @@
             delete options[key];
             $("#skill-" + id).remove();
         });
+        $("#form-filter").submit(function(e){
+            //CONTROLLI
+            debugger;
+            $("#form-data").val(JSON.stringify(skills))
+            return true;
+        })
     })
 </script>
