@@ -5,6 +5,7 @@ import it.socialdevelop.data.model.Developer;
 import it.socialdevelop.data.model.Message;
 import it.socialdevelop.data.model.Project;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -16,6 +17,7 @@ public class MessageImpl implements Message {
     private String text;
     private boolean isPrivate;
     private String type;
+    private GregorianCalendar date;
     private Project project;
     private int project_key;
     private int developer_key;
@@ -31,6 +33,7 @@ public class MessageImpl implements Message {
         project_key = 0;
         isPrivate = false;
         type = "";
+        date = null;
         developer = null;
         developer_key = 0;
         dirty = false;
@@ -83,6 +86,17 @@ public class MessageImpl implements Message {
     @Override
     public int getProjectKey() {
         return project_key;
+    }
+    
+    @Override
+    public GregorianCalendar getDate() {
+        return date;
+    }
+
+    @Override
+    public void setDate(GregorianCalendar data) {
+        this.date = data;
+        this.dirty = true;
     }
 
     @Override
@@ -154,6 +168,7 @@ public class MessageImpl implements Message {
         isPrivate = message.isPrivate();
         text = message.getText();
         type = message.getType();
+        date = message.getDate();
         project_key = message.getProjectKey();
         developer_key = message.getDeveloperKey();
         this.dirty = true;

@@ -3905,6 +3905,15 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 .entry-dashboard{
     cursor: pointer;
 }
+#signup-button{
+    color: #0099ff;
+}
+#signup-button:hover{
+    color: #fff;
+}
+time-ago{
+    color: #cdcdcd;
+}
 @media (max-width: 767px) {
 	.projects-section .css-table-cell.image.has-bg-image{
 	width: 100%;

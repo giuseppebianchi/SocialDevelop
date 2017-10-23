@@ -222,7 +222,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             dTask = connection.prepareStatement("DELETE FROM task WHERE ID=?");
             dTasksFromProject = connection.prepareStatement("DELETE FROM task WHERE project_ID=?");
 
-            iMessage = connection.prepareStatement("INSERT INTO message (private,text,type,project_ID, developer_ID) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            iMessage = connection.prepareStatement("INSERT INTO message (private,text,type,project_ID, developer_ID, date) VALUES(?,?,?,?,?, ?)", Statement.RETURN_GENERATED_KEYS);
             uMessage = connection.prepareStatement("UPDATE message SET private=?,text=?,type=?,project_ID=? WHERE ID=?");
             dMessage = connection.prepareStatement("DELETE FROM message WHERE ID=?");
 
@@ -421,6 +421,11 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             a.setText(rs.getString("text"));
             a.setPrivate(rs.getBoolean("private"));
             a.setType(rs.getString("type"));
+            GregorianCalendar requestDate = new GregorianCalendar();
+            java.sql.Date date;
+            date = rs.getDate("date");
+            requestDate.setTime(date);
+            a.setDate(requestDate);
             a.setProjectKey(rs.getInt("project_ID"));
             a.setDeveloperKey(rs.getInt("developer_ID"));
             return a;
@@ -1619,6 +1624,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
     @Override
     public void storeMessage(Message message) throws DataLayerException {
         int key = message.getKey();
+        java.sql.Date date1 = new Date(Calendar.getInstance().getTimeInMillis());
         try {
             if (key > 0) { //update
                 //non facciamo nulla se l'oggetto non ha subito modifiche
@@ -1635,12 +1641,13 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
                     uMessage.setNull(4, java.sql.Types.INTEGER);
                 }
                 uMessage.setInt(5, message.getKey());
-
+                
                 uMessage.executeUpdate();
             } else { //insert
                 iMessage.setBoolean(1, message.isPrivate());
                 iMessage.setString(2, message.getText());
                 iMessage.setString(3, message.getType());
+                iMessage.setDate(6, date1);
                 if (message.getProject() != null) {
                     iMessage.setInt(4, message.getProject().getKey());
                 } else {

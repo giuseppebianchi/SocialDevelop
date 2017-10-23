@@ -234,9 +234,9 @@
                           <div>
                             <#assign dec = task.getTextDescription()>
                             <#if (dec?length > 251)>
-                            <div class="p10">${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${progetto.key}">read more</a></div>
+                            <div class="p10">${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${task.key}">read more</a></div>
                             <#else>
-                                <div class="p10">${dec} <a href="${request.getContextPath()}/projects/${progetto.key}"> read more</a></div>
+                                <div class="p10">${dec} <a href="${request.getContextPath()}/projects/${task.key}"> read more</a></div>
                             </#if>
                           </div>
                           <h6 class="title-tags">Skills required:</h6>
@@ -334,61 +334,78 @@
                   <div class="profile-in">
                     <div class="uou-post-comment">
                       <aside class="uou-block-14a">
-                        <h5 class="sidebar-title">Comments(<span>2</span>)</h5>
+                        <h5 class="sidebar-title">Comments (<span id="count-messages">${messages?size}</span>)</h5>
                         <br>
-                        <ul>
-                          <li>
-                            <article class="comment">
-                              <img src="theme/images/p-post-1.png" alt="">
-
-                              <div>
-                                <header>
-                                  <a href="#" class="user">Jessica Walsh -</a>
-
-                                  <span class="time-ago">May 13, 2015(11.25)</span>
-                                  <a href="#" class="reply">Reply</a>
-                                </header>
-
-                                <p>Veniam minus obcaecati, quos facere et quibusdam debitis iure voluptate libero voluptas dolorem praesentium rerum adipisci ad fuga, odio molestiae. Soluta quos vel pariatur nemo fugit repellat. nemo fugit repellat</p>
-                              </div>
-                            </article>
-                          </li>
-
-
+                        <ul id="messages-list">
+                          <#if messages?has_content>
+                          <#list messages as message>
                           <li>
                             <article class="comment">
                               <img src="${request.getContextPath()}/theme/images/p-post-1.png" alt="">
 
                               <div>
                                 <header>
-                                  <a href="#" class="user">Jessica Walsh -</a>
-
-                                  <span class="time-ago">May 13, 2015(11.25)</span>
-                                  <a href="#" class="reply">Reply</a>
+                                  <a href="#" class="user">${message.developer.getName()} ${message.developer.getSurname()}</a>
+                                <#if message.isPrivate()>  
+                                  <#if isCollaborator??>
+                                      <span class="reply text-danger"><i class="fa fa-lock"></i></span>
+                                    <#else>
+                                        <span class="reply text-success"><i class="fa fa-globe"></i></span>
+                                    </#if>
+                                  <#else>
+                                    <span class="reply text-success"><i class="fa fa-globe"></i></span>
+                                  </#if>
+                                  <a href="#" class="reply">${message.type}</a>
                                 </header>
-
-                                <p>Veniam minus obcaecati, quos facere et quibusdam debitis iure voluptate libero voluptas dolorem praesentium rerum adipisci ad fuga, odio molestiae. Soluta quos vel pariatur nemo fugit repellat. nemo fugit repellat</p>
+                                  <span class="time-ago"><!--May 13, 2015(11.25)-->${message.getDate().time?date?string.long}</span>
+                                <p>${message.text}</p>
                               </div>
                             </article>
                           </li>
-
+                         </#list>
+                         <#else>
+                         <h2>No message for this project.</h2>
+                         </#if>
                         </ul>
+                      <#if auth_user??>
+                      <div id="alert-box"></div>
+                      <div id="add-message-box">
                         <h4>Join Conversation</h4>
                         <div class="uou-post-comment-form">
-                          <form role="form">
+                          <form id="form-message" role="form" action="${request.getContextPath()}/projects/messages/add_message">
                             <div class="row">
 
                               <div class="col-sm-12">
-                                <textarea placeholder="Your comment"></textarea>
+                                <textarea id="message-text" placeholder="Your comment" name="text"></textarea>
+                                <input type="hidden" value="${projectkey}" name="id_project">
                               </div>
-
-                              <div class="col-sm-12">
-                                <button class="btn btn-primary">Add Comment</button>
+                            </div>
+                              <div class="row">
+                                  <div class="col-sm-3">
+                                      <select id="select-type" name="type-message">
+                                          <option value="1" selected="selected">Discussion</option>
+                                          <option value="2">Ad</option>
+                                          <option value="3">Request</option>
+                                      </select>
+                                </div>
+                              <div class="col-sm-3">
+                                  <#if isCollaborator??>
+                                  <div class="checkbox mt10">
+                                        <input id="checkbox1" class="styled" type="checkbox" name="private-checkbox">
+                                        <label for="checkbox1 text-error"> Private</label>
+                                  </div>
+                                  </#if>
+                                </div>
+                              <div class="col-sm-6">
+                                <button class="btn btn-primary pull-right btn-small" id="add-message" type="submit">Add Comment</button>
                               </div>
+                                  
 
                             </div> <!-- end row -->
                           </form>
                         </div>
+                      </div>
+                      </#if>
                       </aside> <!-- end .uou-block-14a -->
                   </div>
                 </div>
@@ -400,3 +417,69 @@
     </div>
   </div>
 
+<script>
+  $(document).ready(function(){
+      var ctx = "${request.getContextPath()}";
+      var textarea = $("#message-text");
+      var type = $("#select-type");
+      var private = $("#checkbox1");
+      var list = $("#messages-list");
+      var alert_box = $("#alert-box");
+      var fullname = '${fullname}';
+      var foto = "<#if foto??>${request.getContextPath()}/uploads/images/${foto}<#else>${request.getContextPath()}/uploads/images/blog-image-4.png</#if>";
+      var messageTemplate;
+      
+        $.get(ctx + "/templates/mustache/messageTemplate.html", function(t){
+                messageTemplate = t;
+      });
+      
+      $("#form-message").submit(function(e){
+          e.preventDefault();
+          debugger;
+          alert_box.html('');
+          var text = textarea.val();
+          var t = type.val();
+          var p = 0;
+          if(private.attr("checked")){
+              p = 1;
+          }
+          var data = {
+                text: text,
+                type: t,
+                private: p,
+                project_key: ${projectkey}
+          }
+          $.ajax({
+            datatype: 'text/plain',
+            type: 'post',
+            url: ctx + '/projects/messages/add_message',
+            data: data,
+            success: function (response) {
+                debugger;
+                var icon = "";
+                if(p == 1){
+                    icon ='<span class="reply text-danger"><i class="fa fa-lock"></i></span>';
+                }else{
+                    icon = '<span class="reply text-success"><i class="fa fa-globe"></i></span>';   
+                }
+                data.icon = icon;
+                data.fullname = fullname;
+                data.date = "Now";
+                data.ctx = ctx;
+                data.typet = type.find(":selected").text();
+                if(response == 1){
+                    list.append(Mustache.render(messageTemplate, data))
+                    alert_box.html('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Well done!</strong> Your message has been sent successfully. </div>');
+                    $("#add-message-box").remove();
+                }
+                
+            },
+            error: function (data){
+                console.log(data) 
+                alert_box.html('<div class="alert alert-error alert-dismissible" role="alert"><button type="button" class="close">×</button><strong>Ops!</strong> Something went wrong. Try Later! </div>');
+                debugger;
+            }
+        });
+      });
+  })
+</script>

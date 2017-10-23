@@ -65,16 +65,16 @@
         <servlet-class>socialdevelop.controller.MakeLoginReg</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Project_Detail</servlet-name>
-        <servlet-class>it.socialdevelop.controller.Project_Detail</servlet-class>
+        <servlet-name>Project_Details</servlet-name>
+        <servlet-class>it.socialdevelop.controller.Project_Details</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Developers</servlet-name>
         <servlet-class>it.socialdevelop.controller.Developers</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Task_Detail</servlet-name>
-        <servlet-class>it.socialdevelop.controller.Task_Detail</servlet-class>
+        <servlet-name>Task_Details</servlet-name>
+        <servlet-class>it.socialdevelop.controller.Task_Details</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MyCollaborations</servlet-name>
@@ -206,6 +206,10 @@
         <servlet-class>it.socialdevelop.controller.PostDiscussion</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>MessagesManager</servlet-name>
+        <servlet-class>it.socialdevelop.controller.MessagesManager</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>MyCollaborators</servlet-name>
         <servlet-class>it.socialdevelop.controller.MyCollaborators</servlet-class>
     </servlet>
@@ -330,7 +334,7 @@
         <url-pattern>/projects</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Project_Detail</servlet-name>
+        <servlet-name>Project_Details</servlet-name>
         <url-pattern>/projects/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -370,11 +374,11 @@
         <url-pattern>/projects/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Project_Detail</servlet-name>
+        <servlet-name>Project_Details</servlet-name>
         <url-pattern>/Project_Detail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Task_Detail</servlet-name>
+        <servlet-name>Task_Details</servlet-name>
         <url-pattern>/projects/tasks/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
@@ -456,6 +460,10 @@
     <servlet-mapping>
         <servlet-name>DeveloperSkills</servlet-name>
         <url-pattern>/DeveloperSkills</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MessagesManager</servlet-name>
+        <url-pattern>/projects/messages/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PostAd</servlet-name>

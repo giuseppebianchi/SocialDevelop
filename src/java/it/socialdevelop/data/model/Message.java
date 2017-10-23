@@ -1,6 +1,7 @@
 package it.socialdevelop.data.model;
 
 import it.univaq.f4i.iw.framework.data.DataLayerException;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -44,4 +45,8 @@ public interface Message {
     int getDeveloperKey();
 
     void setDeveloperKey(int dev_key);
+    
+    GregorianCalendar getDate();
+
+    void setDate(GregorianCalendar date);
 }

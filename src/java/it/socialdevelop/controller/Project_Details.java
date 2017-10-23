@@ -33,7 +33,7 @@ import java.util.Map.Entry;
  *
  * @author Hello World Group
  */
-public class Project_Detail extends SocialDevelopBaseController {
+public class Project_Details extends SocialDevelopBaseController {
 
     private void action_error(HttpServletRequest request, HttpServletResponse response) {
         if (request.getAttribute("exception") != null) {
@@ -54,16 +54,20 @@ public class Project_Detail extends SocialDevelopBaseController {
         String[] pathParts = pathInfo.split("/");
         String value = pathParts[1]; // {value}
         int key = Integer.parseInt(value);
+        boolean flag = false; //serve per controllare se l'utente loggato (se c'è) è tra i collaboratori del progetto
         Project project = datalayer.getProject(key);
         int coordinator_key = project.getCoordinatorKey();
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
             data.put("logout", "Logout");
             data.put("auth_user", s.getAttribute("userid"));
+            int usedid = (int) s.getAttribute("userid");
             data.put("foto", s.getAttribute("foto"));
             data.put("fullname", s.getAttribute("fullname"));
             if (coordinator_key == (int) s.getAttribute("userid")) {
                 data.put("userid", coordinator_key);
                 data.put("isCoordinator", 1);
+                data.put("isCollaborator", 1);
+                flag = true;
             }
             Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));
             if (admin != null) {
@@ -88,7 +92,7 @@ public class Project_Detail extends SocialDevelopBaseController {
         Map<Integer, Developer> collaborators = new HashMap<Integer, Developer>();
         ArrayList tasks_developer = new ArrayList();
         data.put("tasks", tasks);
-        boolean flag = false; //serve per controllare se l'utente loggato (se c'è) è tra i collaboratori del progetto
+        
         int dev_requests = 0;
         Map<Integer, Integer> dev_votes = new HashMap<Integer, Integer>();
         for (Task task : tasks) {
@@ -102,12 +106,18 @@ public class Project_Detail extends SocialDevelopBaseController {
             dev_requests += nrequests;
             Type type = datalayer.getType(task.getType_key());
             tasks_types.add(type);
-            int i = 0;
-            int[] votes = new int[task.getNumCollaborators()];
+            
             Map<Developer, Integer> developers = datalayer.getCollaboratorsByTask(task.getKey());
+            int i = 0;
+            int[] votes = new int[developers.size()];
             for (Entry<Developer,Integer> pair : developers.entrySet()){
                 int j = 0;
-                Developer dev = pair.getKey();
+                Developer dev = pair.getKey(); 
+                //controllo se l'utente in sessione è un collaboratore 
+                if((s.getAttribute("userid") != null) && (((int) s.getAttribute("userid")) > 0) && ((int) s.getAttribute("userid") == dev.getKey())){
+                    data.put("isCollaborator", 1);
+                    flag = true;
+                }
                 //int vote = pair.getValue();
                 //iterate over the pairs
                 Map<Task, Integer> tasks0 = datalayer.getTasksByDeveloper(dev.getKey());
@@ -176,17 +186,15 @@ public class Project_Detail extends SocialDevelopBaseController {
         } else {
             messages = datalayer.getPublicMessages(project.getKey());
         }
-
+ 
         data.put("messages", messages);
-        List<String> foto_msg = new ArrayList();
-
         List<Developer> by = new ArrayList();
         for (Message message : messages) {
             Developer dev2 = message.getDeveloper();
             by.add(dev2);
         }
         data.put("by", by);
-        data.put("foto_msg", foto_msg);
+        
         Developer coordinator = datalayer.getDeveloper(project.getCoordinatorKey());
         data.put("coordinator", coordinator);
         int vote = 0, j=0;
@@ -206,7 +214,7 @@ public class Project_Detail extends SocialDevelopBaseController {
         String act_url = request.getRequestURI();
         s.setAttribute("previous_url", act_url);
         TemplateResult res = new TemplateResult(getServletContext());
-        res.activate("project_detail.ftl.html", data, response);
+        res.activate("project_details.ftl.html", data, response);
 
     }
 

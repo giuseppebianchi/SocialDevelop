@@ -27,6 +27,7 @@ import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
 import it.socialdevelop.data.model.Type;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  *
@@ -42,7 +43,7 @@ public class Task_Details extends SocialDevelopBaseController {
 
     
 
-    private void action_project(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
+    private void action_task(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
 
         SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
         HttpSession s = request.getSession(true);
@@ -53,12 +54,33 @@ public class Task_Details extends SocialDevelopBaseController {
         String[] pathParts = pathInfo.split("/");
         String value = pathParts[1]; // {value}
         int key = Integer.parseInt(value);
-        Project project = datalayer.getProject(key);
+        
+        Task task = datalayer.getTask(key);
+        task.setType(datalayer.getType(task.getType_key()));
+        
+        Project project = datalayer.getProject(task.getProjectKey());
+        
+        
+        data.put("task", task);
+        data.put("taskType", task.getType().getType());
+        data.put("project", project);
+        
         int coordinator_key = project.getCoordinatorKey();
         if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
             data.put("logout", "Logout");
-            if (coordinator_key == (int) s.getAttribute("userid")) {
+            data.put("auth_user", s.getAttribute("userid"));
+            data.put("foto", s.getAttribute("foto"));
+            data.put("fullname", s.getAttribute("fullname"));
+            int dev_key = (int) s.getAttribute("userid");
+            if (coordinator_key == (int) dev_key) {
                 data.put("userid", coordinator_key);
+                data.put("isCoordinator", 1);
+            }else{
+                Map<String, Integer> thd = datalayer.getTaskDeveloper(dev_key, task.getKey());
+                for (Entry<String, Integer> pair : thd.entrySet()){
+                    //iterate over the pairs
+                    data.put(pair.getKey(), pair.getValue());
+                }
             }
             Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));
             if (admin != null) {
@@ -66,96 +88,92 @@ public class Task_Details extends SocialDevelopBaseController {
             }
 
         }
-        data.put("page_title", "Project" + " " + project.getName());
-        data.put("page_subtitle", "Check project info");
-        data.put("projectname", project.getName());
-        data.put("projectdescr", project.getDescription());
-        data.put("projectkey", key);
-        List<Task> tasks = datalayer.getTasks(project.getKey()); //lista task del progetto
-        List<Task> tasksEnded = new ArrayList();  //lista di quelli terminati
-        List<Type> tasks_types = new ArrayList<>(); //lista dei tipi di ogni task
-        int nProjectCollaborators = 0; //numero collaboratori totali task
-        ArrayList skills = new ArrayList();
-        data.put("tasks", tasks);
+        
         boolean flag = false; //serve per controllare se l'utente loggato (se c'è) è tra i collaboratori del progetto
-        for (Task task : tasks) {
-            if (!task.isOpen()) {
-                tasksEnded.add(task);
-            }
-            Type type = datalayer.getType(task.getType_key());
-            tasks_types.add(type);
-            if (s.getAttribute("userid") != null && ((int) s.getAttribute("userid")) > 0) {
-                //se l'utente è loggato controlliamo se è un collaboratore del progetto.
-                //se lo è rendiamo visibili i messaggi privati e inoltre rendiamo visibile
-                //il form di inserimento del messaggio
-                data.put("auth_user", s.getAttribute("userid"));
-                data.put("foto", s.getAttribute("foto"));
-                data.put("fullname", s.getAttribute("fullname"));
-                int dev_key = (int) s.getAttribute("userid");
-                Map<Developer, Integer> collaborators = datalayer.getCollaboratorsByTask(task.getKey());
-                for (Map.Entry<Developer, Integer> m : collaborators.entrySet()) {
-                    if (m.getKey().getKey() == dev_key || dev_key == coordinator_key) {
 
-                        flag = true;
-                        data.put("userid", dev_key);
+        
+            //se l'utente è loggato controlliamo se è un collaboratore del progetto.
+            //se lo è rendiamo visibili i messaggi privati e inoltre rendiamo visibile
+            //il form di inserimento del messaggio
+            
+            
+            Map<Developer, Integer> collaborators = datalayer.getCollaboratorsByTask(task.getKey());
+            int[] votes = new int[collaborators.size()];
+            int i = 0;
+            for (Map.Entry<Developer, Integer> m : collaborators.entrySet()) {
+                int j = 0;
+                Map<Task, Integer> tasks = datalayer.getTasksByDeveloper(m.getKey().getKey());
+
+                for (Entry<Task,Integer> t : tasks.entrySet()){
+                    Task tas = t.getKey();    
+                    if (tas.isCompleted()) {
+                        votes[i] += t.getValue();
+                        j++;
                     }
-
                 }
-                if (dev_key == coordinator_key) {
-                    data.put("isCoordinator", 1);
+                if(j != 0){
+                   votes[i] = (int) votes[i]/j;   
                 }
-            }
-            nProjectCollaborators += task.getNumCollaborators();
-            GregorianCalendar start = task.getStartDate();
-            GregorianCalendar end = task.getEndDate();
-            Date startDate = new Date();
-            Date endDate = new Date();
-            if (startDate != null) {
-                startDate = start.getTime();
-            }
-            if (endDate != null) {
-                endDate = end.getTime();
-            }
-            if (startDate != null && endDate != null) {
-                long startTime = startDate.getTime();
-                long endTime = endDate.getTime();
-                long diffTime = endTime - startTime;
-                long diffDays = diffTime / (1000 * 60 * 60 * 24);
-                data.put("daysleft", diffDays);
-            }
-            Map<Skill, Integer> skillsList = datalayer.getSkillsByTask(task.getKey());
-            skills.add(skillsList);
+                i++;
 
+            }
+            data.put("collaborators", collaborators);
+            data.put("votes", votes);
+            
+            int nrequests = datalayer.getRequestsByTask(key);
+            data.put("nrequests", nrequests);
+            
+            data.put("datalayer", datalayer);
+            
+           
+        
+        GregorianCalendar start = task.getStartDate();
+        GregorianCalendar end = task.getEndDate();
+        Date startDate = new Date();
+        Date endDate = new Date();
+        if (startDate != null) {
+            startDate = start.getTime();
         }
-        data.put("nProjectCollaborators", nProjectCollaborators);
-        data.put("skills", skills);
-        data.put("tasks_types", tasks_types);
-        double percProg = Math.round(((double) tasksEnded.size() / (double) tasks.size()) * 100);
-        data.put("percProg", percProg);
-        List<Message> messages = new ArrayList();
-        if (flag) {
-            messages = datalayer.getMessages(project.getKey());
-        } else {
-            messages = datalayer.getPublicMessages(project.getKey());
+        if (endDate != null) {
+            endDate = end.getTime();
         }
+        if (startDate != null && endDate != null) {
+            long startTime = startDate.getTime();
+            long endTime = endDate.getTime();
+            long diffTime = endTime - startTime;
+            long diffDays = diffTime / (1000 * 60 * 60 * 24);
+            data.put("daysleft", diffDays);
+        }
+        Map<Skill, Integer> skillsList = datalayer.getSkillsByTask(task.getKey());
 
-        data.put("messages", messages);
-        List<String> foto_msg = new ArrayList();
-
-        List<Developer> by = new ArrayList();
-        for (Message message : messages) {
-            Developer dev2 = message.getDeveloper();
-            by.add(dev2);
-        }
-        data.put("by", by);
-        data.put("foto_msg", foto_msg);
+        data.put("skills", skillsList);
+        //double percProg = Math.round(((double) tasksEnded.size() / (double) tasks.size()) * 100);
+        //data.put("percProg", percProg);
+        
         Developer coordinator = datalayer.getDeveloper(project.getCoordinatorKey());
         data.put("coordinator", coordinator);
+        
+        int vote = 0, j=0;
+        Map<Task, Integer> tasks = datalayer.getTasksByDeveloper(coordinator.getKey());       
+        for (Entry<Task,Integer> t : tasks.entrySet()){
+            Task tas = t.getKey();    
+            if (tas.isCompleted()) {
+                vote += t.getValue();
+                j++;
+            }
+        }
+        if(j != 0){
+           vote = (int) vote/j;   
+        }
+        data.put("vote", vote);
+        
+        
+        
         datalayer.destroy();
         String act_url = request.getRequestURI();
         s.setAttribute("previous_url", act_url);
         TemplateResult res = new TemplateResult(getServletContext());
-        res.activate("project_detail.ftl.html", data, response);
+        res.activate("task_details.ftl.html", data, response);
 
     }
 
@@ -167,7 +185,7 @@ public class Task_Details extends SocialDevelopBaseController {
     @Override
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException {
         try {
-            action_project(request, response);
+            action_task(request, response);
         } catch (IOException ex) {
             request.setAttribute("exception", ex);
             action_error(request, response);
