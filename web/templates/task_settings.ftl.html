@@ -36,6 +36,8 @@
                     <ul class="nav nav-links">
                         <p>Project Settings </p>
                       <li> <a href="${request.getContextPath()}/projects/settings/${task.getProjectKey()}">Project </a> </li>
+                      <p>Developers Settings </p>
+                      <li> <a href="${request.getContextPath()}/projects/developers/settings/${task.getProjectKey()}">Developers </a> </li>
                       <p>Tasks Settings </p>
                       <#list tasks as item>
                         <#if (item.key == task.key)>

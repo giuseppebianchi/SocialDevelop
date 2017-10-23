@@ -278,11 +278,11 @@ $(document).ready(function(){
         modal_invite_state.html('<span class="btn btn-' + class_state + ' btn-small btn-table">' + name_state + '</span>');
         //modal_dev_name.text($(this).data("dev-name"));
         modal_dev_name.text($(this).data("dev-name")).attr("href", "${request.getContextPath()}/developers/" + $(this).data("dev-id"));;
-        modal_delete_button.attr("dev-id", $(this).data("dev-id"));
+        modal_delete_button.data("dev-id", $(this).data("dev-id"));
         modal_dev_headline.text($(this).data("dev-headline"));
         modal_project_name.text($(this).data("project-name")).attr("href", "${request.getContextPath()}/projects/" + $(this).data("project-id"));;
         modal_task_name.text($(this).data("task-name")).attr("href", "${request.getContextPath()}/projects/tasks/" + $(this).data("task-id"));;
-        modal_delete_button.attr("task-id", $(this).data("task-id"));
+        modal_delete_button.data("task-id", $(this).data("task-id"));
         $('#modal-dashboard').modal();
     });
     

@@ -299,6 +299,7 @@ h1, h2, h3, h4, h5{
 	min-height: 500px;
 	background: url(../images/profile-bnr.jpg) no-repeat;
 	background-size: cover;
+        background-position: center center;
 }
 .user-profile-bnr {
 	min-height: 250px;
@@ -3913,6 +3914,9 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 time-ago{
     color: #cdcdcd;
+}
+#developers-project-settings-list.folow-persons li{
+    padding-left: 10px;
 }
 @media (max-width: 767px) {
 	.projects-section .css-table-cell.image.has-bg-image{

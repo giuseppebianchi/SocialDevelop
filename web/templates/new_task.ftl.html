@@ -27,6 +27,8 @@
                     <ul class="nav nav-links">
                         <p>Project Settings </p>
                       <li> <a href="${request.getContextPath()}/projects/settings/${progetto.key}">Project </a> </li>
+                      <p>Developers Settings </p>
+                      <li> <a href="${request.getContextPath()}/projects/developers/settings/${progetto.key}">Developers </a> </li>
                       <p>Tasks Settings </p>
                       <#list tasks as item>
                             <li> <a href="${request.getContextPath()}/projects/tasks/settings/${item.key}">${item.name}</a> </li>

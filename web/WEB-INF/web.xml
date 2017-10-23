@@ -178,6 +178,14 @@
         <servlet-class>it.socialdevelop.controller.UpdateProjectSave</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>UpdateDevelopersProject</servlet-name>
+        <servlet-class>it.socialdevelop.controller.UpdateDevelopersProject</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateDevelopersProjectSave</servlet-name>
+        <servlet-class>it.socialdevelop.controller.UpdateDevelopersProjectSave</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>DeveloperProfile</servlet-name>
         <servlet-class>it.socialdevelop.controller.DeveloperProfile</servlet-class>
     </servlet>
@@ -432,6 +440,14 @@
     <servlet-mapping>
         <servlet-name>UpdateProject</servlet-name>
         <url-pattern>/projects/settings/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateDevelopersProject</servlet-name>
+        <url-pattern>/projects/developers/settings/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateDevelopersProjectSave</servlet-name>
+        <url-pattern>/projects/developers/settings/remove_developer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateTask</servlet-name>
