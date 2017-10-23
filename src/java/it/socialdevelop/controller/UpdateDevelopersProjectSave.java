@@ -41,7 +41,7 @@ public class UpdateDevelopersProjectSave extends SocialDevelopBaseController {
                 //l'utente che sta cercando di rimuovere il collaboratore è effettivamente
                 //il coordiantore del progetto quindi gli è permesso falo
                 
-                //int ret = datalayer.deleteTaskHasDeveloper(task_id, developer_key);
+                int ret = datalayer.deleteTaskHasDeveloper(task_id, developer_key);
                 
                 //aggiorno lo stato del task
                 /*Map<Developer, Integer> collaborators = datalayer.getCollaboratorsByTask(task_id);
