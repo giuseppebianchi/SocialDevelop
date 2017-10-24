@@ -186,6 +186,14 @@
         <servlet-class>it.socialdevelop.controller.UpdateDevelopersProjectSave</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Feedbacks</servlet-name>
+        <servlet-class>it.socialdevelop.controller.Feedbacks</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CompleteTask</servlet-name>
+        <servlet-class>it.socialdevelop.controller.CompleteTask</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>DeveloperProfile</servlet-name>
         <servlet-class>it.socialdevelop.controller.DeveloperProfile</servlet-class>
     </servlet>
@@ -448,6 +456,14 @@
     <servlet-mapping>
         <servlet-name>UpdateDevelopersProjectSave</servlet-name>
         <url-pattern>/projects/developers/settings/remove_developer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Feedbacks</servlet-name>
+        <url-pattern>/projects/tasks/settings/feedbacks/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompleteTask</servlet-name>
+        <url-pattern>/projects/tasks/settings/complete_task</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateTask</servlet-name>

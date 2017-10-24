@@ -63,6 +63,13 @@
                 <form id="form-update-task" method="post" action="${request.getContextPath()}/projects/tasks/settings/update_task">
                 <div class="row">
                     <div class="col-xs-8">
+                        <#if task.isCompleted()>
+                            <span class="btn btn-primary">Completed</span>
+                        <#else>
+                            <a href="${request.getContextPath()}/projects/tasks/settings/feedbacks/${task.key}" class="btn btn-success">Set as Completed</a> 
+                        </#if>
+                        <div class="clearfix"></div>
+                        <br>
                          <h6 class="input-label">Task Name</h6>
                         <input type="text" id="task_name" name="task_name" value="${task.name}" placeholder="">
                         <input type="hidden" name="data" id="form-data">

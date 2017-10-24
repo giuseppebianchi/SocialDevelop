@@ -1,0 +1,184 @@
+<!-- SUB Banner -->
+  <div class="sub-bnr user-profile-bnr">
+    <div class="position-center-center">
+      <div class="container">
+        <h2>Project Settings</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Compny Profile -->
+  <div class="compny-profile"> 
+    
+    <!-- Profile Company Content -->
+    <div class="profile-company-content" data-bg-color="fff">
+      <div class="container">
+          <#if updated_project??>
+          <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close">×</button>
+            <strong>Well done!</strong> Your project has been updated successfully. </div>
+          </#if>
+        <div class="row"> 
+          
+          <!-- SIDE BAR -->
+            <div class="col-md-4"> 
+              <!-- Company Information -->
+              <div class="">
+                
+              <!-- OPTIONS -->
+                <div class="sidebar-information" id="project-settings-menu">
+                  <div class="profile-usermenu">
+                    <ul class="nav nav-links">
+                        <p>Project Settings </p>
+                      <li> <a href="${request.getContextPath()}/projects/settings/${project.key}">Project </a> </li>
+                      <p>Developers Settings </p>
+                      <li> <a href="${request.getContextPath()}/projects/developers/settings/${task.getProjectKey()}">Developers </a> </li>
+                      <p>Tasks Settings </p>
+                      <#list tasks as item>
+                        <#if (item.key == task.key)>
+                            <li class="active"> <a href="#">${item.name}</a> </li>
+                        <#else>
+                            <li> <a href="${request.getContextPath()}/projects/tasks/settings/${item.key}">${item.name}</a> </li>
+                        </#if>
+                      </#list>
+                      
+                    </ul>
+                      <a href="${request.getContextPath()}/projects/settings/new_task/${project.key}" class="btn btn-primary btn-block mt10">Add Task</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          
+
+          <!-- Tab Content -->
+          <div class="col-md-8">
+            <div class="network pt10">
+                <h5 class="tab-title" style="padding-left: 15px">Task Complete</h5>
+                <hr class="mt10">
+                <div class=""> 
+                      
+                    <!-- Filter -->
+                    <div class="filter-flower">
+                        <!--<p>Lorem ipsu umanu est</p>-->
+                      <div class="row">
+                        <div class="col-sm-7">
+                            <p>Before closing your task leave a feedback to your developers.</p>
+                          <!--<a href="#." class="active btn btn-error"><i class="fa fa-trash"></i></a>-->
+                        </div>
+                        
+                        <!-- Short -->
+                        <div class="col-sm-5">
+                          <select>
+                            <option>Sort</option>
+                            <option>Sort</option>
+                            <option>Sort</option>
+                            <option>Sort</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="alert-developers-settings"></div>
+                    <!-- Members -->
+                    <div class="main-mem table-blue"> 
+                      
+                      <!-- Head -->
+                      
+                      
+                      <!-- Tittle -->
+                      <div class="tittle">
+                        <ul class="row">
+                          <li class="col-xs-10"> <span>Developer</span> </li>
+                          <li class="col-xs-2 text-center"> <span>Vote</span> </li>
+                        </ul>
+                      </div>
+                      
+                      <!-- Tittle -->
+                      <div class="folow-persons" id="developers-project-settings-list">
+                          <form id="form-votes" action="${request.getContextPath()}/projects/tasks/settings/complete_task" method="post">
+                        <ul>
+                       
+                      <#if task_collaborators?has_content>      
+                      <#list task_collaborators as key, value>
+                          <!-- MEMBER -->
+                           <li id="entry-${key.getKey()}-${task.getKey()}">
+                            <!-- Check Box 
+                            <div class="checkbox">
+                              <input id="checkbox7" class="styled" type="checkbox">
+                              <label for="checkbox7"></label>
+                            </div>-->
+                            <div class="row"> 
+                              <!-- Title -->
+                              <div class="col-xs-10"> 
+                                
+                                <!-- Name -->
+                                <div class="fol-name">
+                                    <div class="img-block avatar-table"></div>
+                                    <h6>${key.getName()} ${key.getSurname()}</h6>
+                                  <span>${key.getHeadline()}</span> </div>
+                              </div>
+                              <!-- Network -->
+                              <div class="col-xs-2 n-p-r"> <select name="votes" data-dev-id="${key.getKey()}"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select> </div>
+                            </div>
+                          </li>
+                          </#list>
+                          </#if>
+                        
+                          <!-- END MEMBER -->
+                        </ul>
+                              <input type="hidden" name="data" id="data-form">
+                              <input type="hidden" name="task_key" id="task_key" value="${task.key}">
+                              <button type="submit" class="btn btn-success">leave feedbacks and complete task</button>
+                          </form>
+                      </div>
+                     <!-- END TAB-->
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <div id="modal-dashboard" class="modal fade">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Remove Developer from Task</h5>
+        <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fa fa-times"></i></span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <h2>Are you sure to remove <a id="modal-developer-name" class="text-primary" href=""></a> from <a href="" id="modal-task-name" class="text-primary"></a> ?</h2>
+      </div>
+        <br>
+      <div class="modal-footer">
+          <button id="delete-developer-button" type="button" class="btn btn-error">Remove</button>'
+        <button type="button" class="btn btn-secondary pull-right" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  <script>
+$(document).ready(function(){
+    var ctx = "${request.getContextPath()}";
+
+    $("#form-votes").submit(function(e){
+        debugger;
+        var votes = [];
+        $("select[name='votes']").each(function(){
+            votes.push({
+                "dev": $(this).data("dev-id"),
+                "vote": $(this).val()
+            })
+        })
+        $("#data-form").val(JSON.stringify(votes));
+        
+        return true;
+    });
+    
+})
+
+</script>

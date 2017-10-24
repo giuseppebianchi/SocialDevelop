@@ -57,7 +57,7 @@
                     <nav class="nav pull-left">
           <ul class="sf-menu">
           <#if auth_user??>
-          <li><form action="${request.getContextPath()}/search" id="search-menu-form-1" class="search-menu-form"><input type="text" value="" placeholder="Search SocialDevelop"><a href="#" id="search-button"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
+          <li><form action="${request.getContextPath()}/projects/search" id="search-menu-form-1" class="search-menu-form"><input type="text" value="" name="q" placeholder="Search SocialDevelop"  autocomplete="off" class="search-input-menu"><a href="#" id="search-button" onclick="if($(this).closest('form').find('.search-input-menu').val() == ''){ return false;}else{$(this).closest('form').submit()}"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
           </#if>
           <#if menu_active??>
           <li <#if menu_active == "home">class="active"</#if>><a href="${request.getContextPath()}/home">HOME</a></li>
@@ -89,7 +89,7 @@
               </ul>
             </li>
             <#else>
-            <li><form action="${request.getContextPath()}/search" id="search-menu-form-2" class="search-menu-form"><input type="text" value="" placeholder="Search SocialDevelop"><a href="#" id="search-button"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
+            <li><form action="${request.getContextPath()}/projects/search" id="search-menu-form-2" class="search-menu-form" method="get"><input class="search-input-menu" type="text" value="" name="q" placeholder="Search SocialDevelop"  autocomplete="off"><a href="#" id="search-button" onclick="if($(this).closest('form').find('.search-input-menu').val() == ''){ return false;}else{$(this).closest('form').submit()}"><i class="fa fa-search"></i></a><input type="submit" hidden="true"></form></li>
             <li><a href="${request.getContextPath()}/signin">Sign In</a></li>
             <li><a id="signup-button" class="btn btn-transparent-primary btn-small" href="${request.getContextPath()}/signup">Sign Up</a></li>
             </#if>

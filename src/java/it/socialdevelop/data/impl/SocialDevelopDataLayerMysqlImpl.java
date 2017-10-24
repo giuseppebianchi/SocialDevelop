@@ -49,7 +49,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
     private PreparedStatement iTask, uTask, dTask;
     private PreparedStatement iMessage, uMessage, dMessage;
     private PreparedStatement iType, uType, dType, sFileByID;
-    private PreparedStatement iRequest, uRequest, dRequest, iImg, sAdmin, sTasksBySkill;
+    private PreparedStatement iRequest, uRequest, dRequest, iImg, sAdmin, sTasksBySkill, uVote;
     private PreparedStatement iTaskHasSkill, dTaskHasSkill, uTaskHasSkill, sTaskHasSkill, sCollaboratorRequestsByTask;
     private PreparedStatement iTaskHasDeveloper, dTaskHasDeveloper, uTaskHasDeveloper, sTaskHasDeveloper, dTasksFromProject;
     private PreparedStatement iSkillHasDeveloper, dSkillHasDeveloper, uSkillHasDeveloper, sSkillHasDeveloper;
@@ -218,7 +218,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             dDeveloper = connection.prepareStatement("DELETE FROM developer WHERE ID=?");
 
             iTask = connection.prepareStatement("INSERT INTO task (name,numCollaborators,start,end,description,open,project_ID, type_ID) VALUES(?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            uTask = connection.prepareStatement("UPDATE task SET name=?,numCollaborators=?,start=?,end=?,description=?,open=?,project_ID=? WHERE ID=?");
+            uTask = connection.prepareStatement("UPDATE task SET name=?,numCollaborators=?,start=?,end=?,description=?,open=?, completed=?, project_ID=? WHERE ID=?");
             dTask = connection.prepareStatement("DELETE FROM task WHERE ID=?");
             dTasksFromProject = connection.prepareStatement("DELETE FROM task WHERE project_ID=?");
 
@@ -233,6 +233,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             //iRequest = connection.prepareStatement("INSERT INTO request (task_ID,developer_ID,state,date,vote) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             //uRequest = connection.prepareStatement("UPDATE request SET task_ID=?,developer_ID=?,state=?,date=?,vote=? WHERE task_ID=? AND developer_ID=?");
             //dRequest = connection.prepareStatement("DELETE FROM request WHERE task_ID=? AND developer_ID=?");
+            uVote = connection.prepareStatement("UPDATE task_has_developer SET vote=?, state=2 WHERE task_ID=? AND developer_ID=?");
             iTaskHasSkill = connection.prepareStatement("INSERT INTO task_has_skill (task_ID,skill_ID,level_min) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS);
             dTaskHasSkill = connection.prepareStatement("DELETE FROM task_has_skill WHERE task_id=? AND skill_ID=?");
             dSkillsFromTask = connection.prepareStatement("DELETE FROM task_has_skill WHERE task_ID=?");
@@ -1293,6 +1294,23 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
         }
         return -1;
     }
+    
+     @Override
+    public void storeVote(int task_key, int developer_key, int vote) throws DataLayerException {
+        try {
+                uVote.setInt(1, vote);
+                uVote.setInt(2, task_key);
+                uVote.setInt(3, developer_key);
+                uVote.executeUpdate();
+            //restituiamo l'oggetto appena inserito RICARICATO
+            //dal database tramite le API del modello. In tal
+            //modo terremo conto di ogni modifica apportata
+            //durante la fase di inserimento
+            
+        } catch (SQLException ex) {
+            throw new DataLayerException("Unable to store article", ex);
+        }
+    }
 
     @Override
     public Task getTaskByRequest(int collaborator_key, int coordinator_key) throws DataLayerException {
@@ -1476,18 +1494,18 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
                 uTask.setDate(4, sqldate2);
                 uTask.setString(5, task.getDescription());
                 uTask.setBoolean(6, task.isOpen());
-
+                uTask.setBoolean(7, task.isCompleted());
                 if (task.getProject() != null) {
-                    uTask.setInt(7, task.getProject().getKey());
+                    uTask.setInt(8, task.getProject().getKey());
                 } else {
-                    uTask.setNull(7, java.sql.Types.INTEGER);
+                    uTask.setNull(8, java.sql.Types.INTEGER);
                 }
                 /* if(task.getTypeByTask() != null){
                     uTask.setInt(8, task.getType_key());
                 }else{
                     uTask.setNull(8, java.sql.Types.INTEGER);
                 }*/
-                uTask.setInt(8, task.getKey());
+                uTask.setInt(9, task.getKey());
                 uTask.executeUpdate();
             } else { //insert
                 iTask.setString(1, task.getName());

@@ -86,7 +86,8 @@
                       <div class="tittle">
                         <ul class="row">
                           <li class="col-xs-5"> <span>Developer</span> </li>
-                          <li class="col-xs-6"> <span>Task</span> </li>
+                          <li class="col-xs-5"> <span>Task</span> </li>
+                          <li class="col-xs-1 text-center"> <span>Vote</span> </li>
                           <li class="col-xs-1 text-center"> <span></span> </li>
                         </ul>
                       </div>
@@ -116,9 +117,10 @@
                                   <span>${key.getHeadline()}</span> </div>
                               </div>
                               <!-- Network -->
-                              <div class="col-xs-6 n-p-r"> <span>${task.getName()}</span> </div>
+                              <div class="col-xs-5 n-p-r"> <span>${task.getName()}</span> </div>
+                              <div class="col-xs-1 n-p-r text-center"> <span><#if task.isCompleted()>${value}</#if></span> </div>
                               <!-- Connections -->
-                              <div class="col-xs-1 n-p-r n-p-l text-center"> <span class="remove-developer entry-dashboard" data-dev-name="${key.getName()} ${key.getSurname()}" data-task-name="${task.getName()}" data-task-id="${task.getKey()}" data-dev-id="${key.getKey()}"><i class="fa fa-times text-danger"></i></span> </div>
+                              <div class="col-xs-1 n-p-r n-p-l text-center"> <#if !task.isCompleted()><span class="remove-developer entry-dashboard" data-dev-name="${key.getName()} ${key.getSurname()}" data-task-name="${task.getName()}" data-task-id="${task.getKey()}" data-dev-id="${key.getKey()}"><i class="fa fa-times text-danger"></i></span></#if> </div>
                             </div>
                           </li>
                           </#list>
