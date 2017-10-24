@@ -39,7 +39,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (2,1),(1,2);
+INSERT INTO `admin` VALUES (2,1),(1,3);
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -70,7 +70,7 @@ CREATE TABLE `developer` (
   KEY `FK_photo_idx` (`photo_ID`),
   CONSTRAINT `FK_curriculumPdf` FOREIGN KEY (`curriculum_pdf_ID`) REFERENCES `files` (`ID`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `FK_photo` FOREIGN KEY (`photo_ID`) REFERENCES `files` (`ID`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,12 +126,13 @@ CREATE TABLE `message` (
   `type` varchar(45) DEFAULT 'commento',
   `project_ID` int(10) DEFAULT NULL,
   `developer_ID` int(10) DEFAULT NULL,
+  `date` date DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `fk_project_idx` (`project_ID`),
   KEY `fk_dev_idx` (`developer_ID`),
   CONSTRAINT `fk_dev` FOREIGN KEY (`developer_ID`) REFERENCES `developer` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_project` FOREIGN KEY (`project_ID`) REFERENCES `project` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,6 +141,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO `message` VALUES (1,1,'bla bla bla','Discussion',14,3,'2017-11-05'),(2,0,'bla bla bla','Discussion',14,4,'2017-11-05'),(16,0,'sono james blake','Ad',14,32,'2017-10-23');
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -189,7 +191,7 @@ CREATE TABLE `skill` (
   PRIMARY KEY (`ID`),
   KEY `fk_skill_type_idx` (`type_ID`),
   CONSTRAINT `fk_skill_type` FOREIGN KEY (`type_ID`) REFERENCES `type` (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +200,7 @@ CREATE TABLE `skill` (
 
 LOCK TABLES `skill` WRITE;
 /*!40000 ALTER TABLE `skill` DISABLE KEYS */;
-INSERT INTO `skill` VALUES (3,'Java',2),(4,'C',1),(5,'UX Design',2),(6,'UI Design',1),(7,'XHTML',1),(8,'HTML',1),(9,'XML',1),(10,'HTML5',1),(11,'Adobe Illustrator',1),(12,'Adobe InDesign',1),(13,'Adobe Photoshop',1),(14,'Android Development',1),(15,'Art Design',1),(16,'AutoCAD',1),(17,'C++',1),(18,'MySql',1),(19,'CSS',1),(20,'Data Analytics',1),(21,'Fortran',1),(22,'iOS Development',1),(23,'XCode',1),(24,'Swift',1),(25,'Linux',1),(26,'Git',1),(27,'Javascript',1),(28,'Maya',1),(29,'J2EE',1),(30,'SEO',1),(31,'PHP',1),(32,'Perl',1),(33,'Phyton',1),(34,'Ruby',1),(35,'SQL',1),(36,'MongoDB',1),(37,'NoSQL',1),(38,'CSS3',1),(39,'React',1),(40,'Backbone',1),(41,'AngularJS',1),(42,'Apache Cordova',1),(43,'Apache',1);
+INSERT INTO `skill` VALUES (3,'Java',2),(4,'C',1),(5,'UX Design',2),(6,'UI Design',1),(7,'XHTML',1),(8,'HTML',1),(9,'XML',1),(10,'HTML5',1),(11,'Adobe Illustrator',1),(12,'Adobe InDesign',1),(13,'Adobe Photoshop',1),(14,'Android Development',1),(15,'Art Design',1),(16,'AutoCAD',1),(17,'C++',1),(18,'MySql',1),(19,'CSS',1),(20,'Data Analytics',1),(21,'Fortran',1),(22,'iOS Development',1),(23,'XCode',1),(24,'Swift',1),(25,'Linux',1),(26,'Git',1),(27,'Javascript',1),(28,'Maya',1),(29,'J2EE',1),(30,'SEO',1),(31,'PHP',1),(32,'Perl',1),(33,'Phyton',1),(34,'Ruby',1),(35,'SQL',1),(36,'MongoDB',1),(37,'NoSQL',1),(38,'CSS3',1),(39,'React',1),(40,'Backbone',1),(41,'AngularJS',1),(42,'Apache Cordova',1),(43,'Apache',1),(44,'addd',3),(45,'addd',3),(46,'addd',3),(47,'eeee',14),(48,'eeee',14),(49,'eeee',14),(50,'ciao',3),(51,'ciao',3),(52,'ci',3),(53,'nuova',2),(54,'Develop',14),(55,'nuova',4),(56,'Prova',6);
 /*!40000 ALTER TABLE `skill` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,7 +265,7 @@ CREATE TABLE `task` (
 
 LOCK TABLES `task` WRITE;
 /*!40000 ALTER TABLE `task` DISABLE KEYS */;
-INSERT INTO `task` VALUES (5,'Analisi',5,'2017-11-05','2017-11-21','<p><span style=\"color: rgb(115, 115, 115);\">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.</span><br></p>',1,NULL,13,4),(6,'Cluster',5,'2017-11-05','2017-11-28','<h3 style=\"border: 0px; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; font-size: 1.5em; margin-top: 0px; margin-bottom: 1em; outline: 0px; padding: 0px; vertical-align: baseline; color: rgb(68, 68, 68);\">MDE Forge is an extensible Web-based modeling platform specifically conceived to foster a community-based modeling&nbsp; repository, which underpins the development, analysis and reuse of modeling artifacts.</h3><h4 style=\"border: 0px; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; font-size: 1.4em; margin-top: 1em; margin-bottom: 1em; outline: 0px; padding: 0px; vertical-align: baseline; color: rgb(68, 68, 68);\">Moreover, it enables the adoption of model management tools as software-as-a-service that can be remotely used without overwhelming the users with intricate and error-prone installation and configuration procedures.</h4>',1,1,14,5),(7,'Back End Service',0,'2017-10-19','2017-11-19','<h4 class=\"centered subtitle\" style=\"text-align: left; outline: none; font-family: Raleway, sans-serif; line-height: 1.2em; color: rgba(48, 66, 82, 0.7); margin-bottom: 0px; font-size: 26px; padding: 0px 0px 20px;\">LOUD is the best way to use Soundcloud</h4><p style=\"text-align: left; outline: none; margin-bottom: 10px; font-family: Raleway, sans-serif; font-size: 21px; line-height: 1.7em;\"><span style=\"outline: none; font-weight: 600;\">SoundCloud</span>&nbsp;is the most famous platform to share music. All tracks are available for free and you can have a better experience with them by using a less social context service. LOUD is focused more on&nbsp;<span style=\"outline: none; font-weight: 600;\">music context</span>, offering new features to organize your SoundCloud music like a real&nbsp;<span style=\"outline: none; font-weight: 600;\">music library</span>, in an easy and beautiful way.</p><div class=\"row\" style=\"text-align: left; outline: none; color: rgb(51, 51, 51); font-family: Raleway, sans-serif; font-size: 14px;\"><br></div>',1,NULL,15,22),(8,'UI Design',2,'2017-10-31','2017-11-20','<h4 class=\"centered subtitle\" style=\"text-align: left; outline: none; font-family: Raleway, sans-serif; line-height: 1.2em; color: rgba(48, 66, 82, 0.7); margin-bottom: 0px; font-size: 26px; padding: 0px 0px 20px;\">Listening to single tracks and long tracks together can be annoying, so LOUD allows you to manage your favorite podcast in a specific library, dividing them by Radio Stations. In your profile, Likes are orginized and divided by Users, and you can show your Followings, ordering them even by name.<br></h4>',1,NULL,15,17),(12,'Task Nuovo',3,'2017-10-04','2017-10-25','<p><br></p>',1,NULL,15,4),(13,'Task 2',3,'2017-10-12','2017-10-26','<p>fasgdsfgsdfgsdfgds</p>',1,NULL,15,6),(14,'UI Design',2,'2017-10-13','2017-10-25','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.<br></p>',1,NULL,14,21),(15,'Task Prova',4,'2017-10-20','2017-10-26','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.<br></p>',1,NULL,14,5),(16,'Analysis',6,'2017-10-16','2017-10-28','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.<br></p>',1,NULL,14,6);
+INSERT INTO `task` VALUES (5,'Analisi',5,'2017-11-05','2017-11-21','<p><span style=\"color: rgb(115, 115, 115);\">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.</span><br></p>',1,NULL,13,4),(6,'Cluster',5,'2017-11-05','2017-11-28','<h3 style=\"border: 0px; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; font-size: 1.5em; margin-top: 0px; margin-bottom: 1em; outline: 0px; padding: 0px; vertical-align: baseline; color: rgb(68, 68, 68);\">MDE Forge is an extensible Web-based modeling platform specifically conceived to foster a community-based modeling&nbsp; repository, which underpins the development, analysis and reuse of modeling artifacts.</h3><h4 style=\"border: 0px; font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Lucida Grande&quot;, sans-serif; font-size: 1.4em; margin-top: 1em; margin-bottom: 1em; outline: 0px; padding: 0px; vertical-align: baseline; color: rgb(68, 68, 68);\">Moreover, it enables the adoption of model management tools as software-as-a-service that can be remotely used without overwhelming the users with intricate and error-prone installation and configuration procedures.</h4>',1,1,14,5),(7,'Back End Service',0,'2017-10-19','2017-11-19','<h4 class=\"centered subtitle\" style=\"text-align: left; outline: none; font-family: Raleway, sans-serif; line-height: 1.2em; color: rgba(48, 66, 82, 0.7); margin-bottom: 0px; font-size: 26px; padding: 0px 0px 20px;\">LOUD is the best way to use Soundcloud</h4><p style=\"text-align: left; outline: none; margin-bottom: 10px; font-family: Raleway, sans-serif; font-size: 21px; line-height: 1.7em;\"><span style=\"outline: none; font-weight: 600;\">SoundCloud</span>&nbsp;is the most famous platform to share music. All tracks are available for free and you can have a better experience with them by using a less social context service. LOUD is focused more on&nbsp;<span style=\"outline: none; font-weight: 600;\">music context</span>, offering new features to organize your SoundCloud music like a real&nbsp;<span style=\"outline: none; font-weight: 600;\">music library</span>, in an easy and beautiful way.</p><div class=\"row\" style=\"text-align: left; outline: none; color: rgb(51, 51, 51); font-family: Raleway, sans-serif; font-size: 14px;\"><br></div>',1,NULL,15,22),(8,'UI Design',2,'2017-10-31','2017-11-20','<h4 class=\"centered subtitle\" style=\"text-align: left; outline: none; font-family: Raleway, sans-serif; line-height: 1.2em; color: rgba(48, 66, 82, 0.7); margin-bottom: 0px; font-size: 26px; padding: 0px 0px 20px;\">Listening to single tracks and long tracks together can be annoying, so LOUD allows you to manage your favorite podcast in a specific library, dividing them by Radio Stations. In your profile, Likes are orginized and divided by Users, and you can show your Followings, ordering them even by name.<br></h4>',1,NULL,15,17),(12,'Task Nuovo',3,'2017-10-04','2017-10-25','<p><br></p>',1,NULL,15,4),(13,'Task 2',3,'2017-10-12','2017-10-26','<p>fasgdsfgsdfgsdfgds</p>',1,NULL,15,6),(14,'UI Design',2,'2017-10-13','2017-10-25','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.<br></p>',1,1,14,21),(15,'Task Prova',4,'2017-10-20','2017-10-26','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.<br></p>',1,NULL,14,5),(16,'Analysis',6,'2017-10-16','2017-10-28','<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Proin nibh augue conseqaut nibbhi ellit ipsum consectetur.<br></p>',1,NULL,14,6);
 /*!40000 ALTER TABLE `task` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -297,7 +299,7 @@ CREATE TABLE `task_has_developer` (
 
 LOCK TABLES `task_has_developer` WRITE;
 /*!40000 ALTER TABLE `task_has_developer` DISABLE KEYS */;
-INSERT INTO `task_has_developer` VALUES (5,1,1,'2017-11-05',2,1),(6,1,1,'2017-11-05',3,1),(6,2,-1,'2017-11-05',0,3),(6,3,1,'2017-11-05',0,4),(8,1,0,'2017-11-05',0,3),(14,3,1,'2017-10-17',0,4),(15,3,-1,'2017-10-18',0,3),(16,4,1,'2017-10-18',0,3);
+INSERT INTO `task_has_developer` VALUES (5,1,1,'2017-11-05',2,1),(6,1,1,'2017-11-05',3,1),(6,2,-1,'2017-11-05',0,3),(6,3,1,'2017-11-05',0,4),(6,24,1,'2017-10-18',0,24),(7,4,1,'2017-10-18',0,3),(8,1,0,'2017-11-05',0,3),(14,3,2,'2017-10-17',5,4),(15,3,-1,'2017-10-18',0,2);
 /*!40000 ALTER TABLE `task_has_developer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,7 +343,7 @@ CREATE TABLE `type` (
   `ID` int(10) NOT NULL AUTO_INCREMENT,
   `type` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,7 +352,7 @@ CREATE TABLE `type` (
 
 LOCK TABLES `type` WRITE;
 /*!40000 ALTER TABLE `type` DISABLE KEYS */;
-INSERT INTO `type` VALUES (1,'Business Analysis'),(2,'Business Intelligence'),(3,'Business Storytelling'),(4,'Cloud Computing'),(5,'Data Analysis'),(6,'Data Warehousing'),(7,'Database Administration'),(8,'Database Management'),(9,'Editing'),(10,'Game Development'),(11,'Information Management'),(12,'Information Security'),(13,'Software Engineering'),(14,'Web Development'),(15,'Software Development'),(16,'Web Engineering'),(17,'UI / UX'),(18,'User Testing'),(19,'Mobile Development'),(20,'Mobile App Development'),(21,'Front End Development'),(22,'Back End Development');
+INSERT INTO `type` VALUES (1,'Business Analysis'),(2,'Business Intelligence'),(3,'Business Storytelling'),(4,'Cloud Computing'),(5,'Data Analysis'),(6,'Data Warehousing'),(7,'Database Administration'),(8,'Database Management'),(9,'Editing'),(10,'Game Development'),(11,'Information Management'),(12,'Information Security'),(13,'Software Engineering'),(14,'Web Development'),(15,'Software Development'),(16,'Web Engineering'),(17,'UI / UX'),(18,'User Testing'),(19,'Mobile Development'),(20,'Mobile App Development'),(21,'Front End Development'),(22,'Back End Development'),(23,'Nuovo Type');
 /*!40000 ALTER TABLE `type` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -363,4 +365,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-18 14:01:19
+-- Dump completed on 2017-10-24  9:45:47
