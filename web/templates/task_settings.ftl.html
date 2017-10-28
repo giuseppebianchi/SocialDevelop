@@ -263,6 +263,7 @@
         
         $("#form-update-task").submit(function(e){
         var validation = true;
+        $('.error-text').empty();
         
         var data = {
                 "task_key": ${task.key},
@@ -279,6 +280,31 @@
             }
             
         //CONTROLLI
+        if (data.task_name === null || data.task_name === "") {
+            validation = false;
+            $('#task_name').before('<span class="error-text">Task name is missing.</span>');
+        }
+        if (data.task_type === null || data.task_type === "") {
+            validation = false;
+            $('#task_type').before('<span class="error-text">Task type is missing.</span>');
+        }
+        if (data.task_developers === null || data.task_developers === "") {
+            validation = false;
+            $('#task_developers').before('<span class="error-text">Task developers is missing.</span>');
+        }
+        if (data.task_start === null || data.task_start === "") {
+            validation = false;
+            $('#task_start').before('<span class="error-text">Task start is missing.</span>');
+        }
+        if (data.task_end === null || data.task_end === "") {
+            validation = false;
+            $('#task_end').before('<span class="error-text">Task end is missing.</span>');
+        }
+        if (data.task_description === null || data.task_description === "") {
+            validation = false;
+            $('#task_description').before('<span class="error-text">Task description is missing.</span>');
+        }
+        
         if(validation){
             $("#form-data").val(JSON.stringify(data))
             return true;

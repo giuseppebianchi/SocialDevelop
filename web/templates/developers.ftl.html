@@ -39,7 +39,7 @@
                   </div>
                   <div class="col-sm-2">
                       <select id="level-skill">
-                          <option>Level</option>
+                          <option></option>
                           <option value="1">1</option>
                           <option value="2">2</option>
                           <option value="3">3</option>
@@ -203,6 +203,22 @@
         });
         $('#add-new-skill').click(function(e){
             e.preventDefault();
+            $('.error-text').empty();
+            var validate = true;
+            //CONTROLLI
+            if (select_skill.val() === null || select_skill.val() === "") {
+                validate = false;
+                select_skill.after('<span class="error-text">Selected skill is missing.</span>');
+            }
+            
+            if (level_skill.val() === null || level_skill.val() === "") {
+                validate = false;
+                level_skill.before('<span class="error-text">Skill level is missing.</span>');
+            }
+            
+            if (!validate) {
+                return false;
+            }
             var key = select_skill.val();
             options[key] = select_skill.find(":selected")[0];
             skills[id_skill] = {
@@ -230,6 +246,7 @@
         });
         $("#form-filter").submit(function(e){
             //CONTROLLI
+            if ($('#skills-list li').length === 0) return false;
             debugger;
             $("#form-data").val(JSON.stringify(skills))
             return true;

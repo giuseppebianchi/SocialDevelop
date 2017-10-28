@@ -3949,3 +3949,11 @@ time-ago{
         margin: 30px auto;
     }
 }
+
+.error-text {
+    color: #a94442;
+}
+
+.project-section input{
+    margin-bottom: 0px;
+}

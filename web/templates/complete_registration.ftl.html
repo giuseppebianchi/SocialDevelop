@@ -1,144 +1,144 @@
 <!-- SUB Banner -->
-  <div class="sub-bnr user-profile-bnr">
+<div class="sub-bnr user-profile-bnr">
     <div class="position-center-center">
-      <div class="container text-center">
-        <h2>Hi, ${fullname}</h2>
-        <p>Welcome to SocialDevelop. Now complete your profile to have the best experience on SocialDevelop.</p>
-      </div>
+        <div class="container text-center">
+            <h2>Hi, ${fullname}</h2>
+            <p>Welcome to SocialDevelop. Now complete your profile to have the best experience on SocialDevelop.</p>
+        </div>
     </div>
-  </div>
-  
-  <!-- Compny Profile -->
-  <div class="compny-profile"> 
-    
+</div>
+
+<!-- Compny Profile -->
+<div class="compny-profile"> 
+
     <!-- Profile Company Content -->
     <div class="profile-company-content" data-bg-color="fff">
-      <div class="container">
-        <div class="row"> 
-          
-          <!-- SIDE BAR -->
-            <div class="col-md-2"> 
-              <!-- Company Information -->
-              <div class="pt50">
-                
-              <!-- OPTIONS -->
-                <div class="sidebar-information">
-                  <div class="profile-usermenu">
-                    <ul class="nav nav-links">
-                        <!--
-                      <li class="active"> <a> <i class="fa fa-group"></i> Profile </a> </li>
-                      <li> <a href="${request.getContextPath()}/settings/account"> <i class="fa fa-plus-circle"></i> Account </a> </li>
-                      <li> <a href="#."> <i class="fa fa-sign-out"></i> Sign out </a> </li>-->
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="container">
+            <div class="row"> 
 
-          
+                <!-- SIDE BAR -->
+                <div class="col-md-2"> 
+                    <!-- Company Information -->
+                    <div class="pt50">
 
-          <!-- Tab Content -->
-          <div class="col-md-8">
-            <div class="network pt10">
-                <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close">×</button>
-            <strong>Well done!</strong> Your profile has been created successly.</div>
-                <h5 class="tab-title">Tell us about you</h5>
-                <hr class="mt10">
-                <form id="form-profile" method="post" action="${request.getContextPath()}/signup/complete_registration_save">
-                <div class="row">
-                    <div class="col-xs-8">
-                        <h6 class="input-label">First Name</h6>
-                        <input id="profile_name" type="text" name="name" value="" placeholder="">
-                        <input id="form-data" type="hidden" name="data">
-                        <h6 class="input-label">Last Name</h6>
-                        <input id="profile_surname" type="text" name="lastname" value="" placeholder="">
-                        <h6 class="input-label">Username</h6>
-                        <input type="text" name="username" value="${username}" disabled placeholder="">
-                        <h6 class="input-label">Email</h6>
-                        <input id="profile_email" type="email" name="email" value="${mail}" disabled placeholder="">
-                        
-                       
+                        <!-- OPTIONS -->
+                        <div class="sidebar-information">
+                            <div class="profile-usermenu">
+                                <ul class="nav nav-links">
+                                    <!--
+                                  <li class="active"> <a> <i class="fa fa-group"></i> Profile </a> </li>
+                                  <li> <a href="${request.getContextPath()}/settings/account"> <i class="fa fa-plus-circle"></i> Account </a> </li>
+                                  <li> <a href="#."> <i class="fa fa-sign-out"></i> Sign out </a> </li>-->
+                                </ul>
+                            </div>
                         </div>
-                    <div class="col-xs-4">
-                        <div class="img-block avatar-200"></div>
-                        <br>
-                        <label for="#upload-picture" class="btn-block"><a class="btn btn-primary btn-block">Upload Picture</a></label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h6 class="input-label">Biography</h6>
-                         <div id="profile-biography">${biography?no_esc}</div>
+
+
+
+                <!-- Tab Content -->
+                <div class="col-md-8">
+                    <div class="network pt10">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            <button type="button" class="close">×</button>
+                            <strong>Well done!</strong> Your profile has been created successly.</div>
+                        <h5 class="tab-title">Tell us about you</h5>
+                        <hr class="mt10">
+                        <form id="form-profile" method="post" action="${request.getContextPath()}/signup/complete_registration_save">
+                            <div class="row">
+                                <div class="col-xs-8">
+                                    <h6 class="input-label">First Name</h6>
+                                    <input id="profile_name" type="text" name="name" value="" placeholder="">
+                                    <input id="form-data" type="hidden" name="data">
+                                    <h6 class="input-label">Last Name</h6>
+                                    <input id="profile_surname" type="text" name="lastname" value="" placeholder="">
+                                    <h6 class="input-label">Username</h6>
+                                    <input type="text" name="username" value="${username}" disabled placeholder="">
+                                    <h6 class="input-label">Email</h6>
+                                    <input id="profile_email" type="email" name="email" value="${mail}" disabled placeholder="">
+
+
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="img-block avatar-200"></div>
+                                    <br>
+                                    <label for="#upload-picture" class="btn-block"><a class="btn btn-primary btn-block">Upload Picture</a></label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h6 class="input-label">Biography</h6>
+                                    <div id="profile-biography">${biography?no_esc}</div>
+                                </div>
+                            </div>
+                            <br>
+                            <h5 class="tab-title">Developer</h5>
+                            <hr class="mt10">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <p class="tab-subtitle">Your job or a short description about your work.</p>
+                                    <!--<div class="checkbox">
+                                      <input id="checkbox1" class="styled" type="checkbox">
+                                      <label for="checkbox1"> Developer Account</label>
+                                    </div>-->
+                                    <h6 class="input-label">Job</h6>
+                                    <input id="profile_headline" type="text" name="name" value="" placeholder="Job or Headline">
+                                    <h6 class="input-label">Resume</h6>
+                                    <div id="profile-resume"></div>
+                                </div>
+                            </div>
+                            <h6 class="input-label">Skills</h6>
+                            <div id="skills-list"></div>
+                            <div class="row">
+                                <div class="col-sm-8">
+
+                                    <select name="select_skill" id="select-skill" class="js-example-placeholder-single" style="width: 100%; display: inline;">
+                                        <option></option>
+                                        <#list skills as skill>
+                                        <option class="option-skills" value="${skill.key}" data-name="${skill.name}">${skill.name}</option>
+                                        </#list>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <select id="level-skill">
+                                        <option>Level</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-primary btn-block" id="add-new-skill">Add Skill</a>
+                                </div>
+
+                            </div>
+                            <br>
+                            <input type="submit" class="btn btn-success" value="Update Profile">
+                        </form>
                     </div>
                 </div>
-                <br>
-                <h5 class="tab-title">Developer</h5>
-                <hr class="mt10">
-                <div class="row">
-                    <div class="col-sm-12">
-                 <p class="tab-subtitle">Your job or a short description about your work.</p>
-                <!--<div class="checkbox">
-                  <input id="checkbox1" class="styled" type="checkbox">
-                  <label for="checkbox1"> Developer Account</label>
-                </div>-->
-                 <h6 class="input-label">Job</h6>
-                     <input id="profile_headline" type="text" name="name" value="" placeholder="Job or Headline">
-                   <h6 class="input-label">Resume</h6>
-                         <div id="profile-resume"></div>
-                 </div>
-                </div>
-                <h6 class="input-label">Skills</h6>
-                    <div id="skills-list"></div>
-                    <div class="row">
-                  <div class="col-sm-8">
-                      
-                      <select name="select_skill" id="select-skill" class="js-example-placeholder-single" style="width: 100%; display: inline;">
-                          <option></option>
-                          <#list skills as skill>
-                            <option class="option-skills" value="${skill.key}" data-name="${skill.name}">${skill.name}</option>
-                          </#list>
-                      </select>
-                  </div>
-                  <div class="col-sm-2">
-                      <select id="level-skill">
-                          <option>Level</option>
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                          <option value="7">7</option>
-                          <option value="8">8</option>
-                          <option value="9">9</option>
-                          <option value="10">10</option>
-                      </select>
-                  </div>
-                  <div class="col-sm-2">
-                      <a class="btn btn-primary btn-block" id="add-new-skill">Add Skill</a>
-                  </div>
-                      
-              </div>
-                <br>
-                <input type="submit" class="btn btn-success" value="Update Profile">
-                </form>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-  <script src="${request.getContextPath()}/theme/plugins/summernote/summernote.min.js"></script> 
-  <script>
-  $(document).ready(function(){
+</div>
+<script src="${request.getContextPath()}/theme/plugins/summernote/summernote.min.js"></script> 
+<script>
+    $(document).ready(function () {
         var ctx = "${request.getContextPath()}";
         var bio = $("#profile-biography");
         var resume = $("#profile-resume");
         var select_skill = $('#select-skill');
         var level_skill = $('#level-skill');
         var skillTemplate;
-        
+
         select_skill.select2({
             placeholder: "Select a skill",
             allowClear: true
@@ -149,16 +149,16 @@
         resume.summernote({
             minHeight: 300
         });
-        
+
         //skills
         var id_skill = 0;
         var skills = {};
         var options = {};
         var skills_list = $("#skills-list");
-        $.get(ctx + "/templates/mustache/skillTemplate.html", function(t){
-                skillTemplate = t;
+        $.get(ctx + "/templates/mustache/skillTemplate.html", function (t) {
+            skillTemplate = t;
         });
-        $('#add-new-skill').click(function(e){
+        $('#add-new-skill').click(function (e) {
             e.preventDefault();
             var key = select_skill.val();
             options[key] = select_skill.find(":selected")[0];
@@ -175,7 +175,7 @@
             select_skill.select2("val", "");
             level_skill.get(0).selectedIndex = 0;
         })
-        $("body").on("click", '.remove-skill-button', function(e){
+        $("body").on("click", '.remove-skill-button', function (e) {
             e.preventDefault();
             var id = $(this).data("id");
             var key = $(this).data("key");
@@ -185,10 +185,11 @@
             delete options[key];
             $("#skill-" + id).remove();
         });
-        
-        $('#form-profile').submit(function(e){
+
+        $('#form-profile').submit(function (e) {
             var validation = true;
-            
+            $('.error-text').empty();
+
             var data = {
                 "profile_id": ${auth_user},
                 "profile_email": "${mail}",
@@ -198,18 +199,42 @@
                 "profile_headline": $('#profile_headline').val(),
                 "profile_biography": bio.summernote('code'),
                 "profile_resume": resume.summernote('code'),
-                "skills": skills   
+                "skills": skills
+            }
+
+            //CONTROLLI
+            if (data.profile_name === null || data.profile_name === "") {
+                validation = false;
+                $('#profile_name').before('<span class="error-text">Profile name is missing.</span>');
             }
             
-            //CONTROLLI
+            if (data.profile_surname === null || data.profile_surname === "") {
+                validation = false;
+                $('#profile_surname').before('<span class="error-text">Project surname is missing.</span>');
+            }
+            
+            if (data.profile_headline === null || data.profile_headline === "") {
+                validation = false;
+                $('#profile_headline').before('<span class="error-text">Profile headline is missing.</span>');
+            }
+            
+            if (data.profile_biography === null || data.profile_biography === "") {
+                validation = false;
+                $('#project_name').before('<span class="error-text">Profile biography is missing.</span>');
+            }
+            
+            if (data.profile_resume === null || data.profile_resume === "") {
+                validation = false;
+                $('#project_name').before('<span class="error-text">Profile resume is missing.</span>');
+            }
 
-            if(validation){
+            if (validation) {
                 $("#form-data").val(JSON.stringify(data))
                 return true;
-            }else{
+            } else {
                 return false;
             }
-            
+
         })
     })
-  </script>
+</script>

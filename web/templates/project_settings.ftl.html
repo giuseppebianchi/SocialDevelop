@@ -108,8 +108,33 @@
           });
         $('#form-profile').submit(function(e){
              var validation = true;
+             $('.error-text').empty();
             
             //CONTROLLI
+            f ($('#project_name').val() === null || $('#project_name').val() === "") {
+                validation = false;
+                $('#project_name').before('<span class="error-text">Project name is missing.</span>');
+            }
+
+            if ($('#select-project-category').val() === null || $('#select-project-category').val() === "") {
+                validation = false;
+                $('#select-project-category').before('<span class="error-text">Project category is missing.</span>');
+            }
+
+            if ($('#project_location').val() === null || $('#project_location').val() === "") {
+                validation = false;
+                $('#project_location').before('<span class="error-text">Project location is missing.</span>');
+            }
+
+            if ($('#project_company').val() === null || $('#project_company').val() === "") {
+                validation = false;
+                $('#project_company').before('<span class="error-text">Project company is missing.</span>');
+            }
+
+            if ($('#project_description').val() === null || $('#project_description').val() === "") {
+                validation = false;
+                $('#summernote').before('<span class="error-text">Project description is missing.</span>');
+            }
             
             $("#project_description").val($("#summernote").summernote("code"));
             

@@ -228,6 +228,7 @@
         
         $("#form-profile").submit(function(e){
         var validation = true;
+        $('.error-text').empty();
         var data = {
                 "profile_id": ${auth_user},
                 "profile_email": "${mail}",
@@ -242,6 +243,31 @@
             }
             
         //CONTROLLI
+        if (data.profile_name === null || data.profile_name === "") {
+            validation = false;
+            $('#profile_name').before('<span class="error-text">Profile name is missing.</span>');
+        }
+
+        if (data.profile_surname === null || data.profile_surname === "") {
+            validation = false;
+            $('#profile_surname').before('<span class="error-text">Project surname is missing.</span>');
+        }
+
+        if (data.profile_headline === null || data.profile_headline === "") {
+            validation = false;
+            $('#profile_headline').before('<span class="error-text">Profile headline is missing.</span>');
+        }
+
+        if (data.profile_biography === null || data.profile_biography === "") {
+            validation = false;
+            $('#project_name').before('<span class="error-text">Profile biography is missing.</span>');
+        }
+
+        if (data.profile_resume === null || data.profile_resume === "") {
+            validation = false;
+            $('#project_name').before('<span class="error-text">Profile resume is missing.</span>');
+        }
+        
         if(validation){
             $("#form-data").val(JSON.stringify(data))
             return true;
