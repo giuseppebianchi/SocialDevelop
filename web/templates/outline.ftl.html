@@ -78,9 +78,9 @@
             <#if auth_user??>
             <li><a href="${request.getContextPath()}/dashboard/invitations" id="notifications-icon" class="new-contents"><i class="fa fa-envelope"></i></a></li>
             <!--<li><a href="/signin" id="notifications-icon" class="new-contents"><i class="fa fa-tachometer"></i></a></li>-->
-            <li id="avatar-menu" ><a href="${request.getContextPath()}/user"><div <#if foto??>style="background-image: url('${request.getContextPath()}/uploads/images/${foto}')"</#if>></div></a>
+            <li id="avatar-menu" ><a href="${request.getContextPath()}/developers/${auth_user}"><div <#if foto??>style="background-image: url('${request.getContextPath()}/uploads/images/${foto}')"</#if>></div></a>
               <ul style="display: none;">
-                <li class="bordered">Signed in as<strong>${fullname}</strong></li>
+                <li class="bordered">Signed in as <strong><#if auth_user_fullname??>${auth_user_fullname}<#else>${fullname}</#if></strong></li>
                 <li><a href="${request.getContextPath()}/developers/${auth_user}">Profile</a></li>
                 <li><a href="${request.getContextPath()}/dashboard/invitations">Dashboard</a></li>
                 <!--<li class="bordered"><a href="${request.getContextPath()}/developers/${auth_user}?q=tasks">Your tasks</a></li>-->

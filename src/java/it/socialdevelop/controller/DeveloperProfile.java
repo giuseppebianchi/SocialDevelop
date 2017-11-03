@@ -71,6 +71,7 @@ public class DeveloperProfile extends SocialDevelopBaseController {
                 data.put("logout", "Logout");
                 
                 data.put("auth_user", s.getAttribute("userid"));
+                data.put("auth_user_fullname", s.getAttribute("fullname"));
                 data.put("foto", s.getAttribute("foto"));
                 
                 

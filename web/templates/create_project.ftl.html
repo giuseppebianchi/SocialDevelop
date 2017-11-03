@@ -122,7 +122,7 @@
                                 </div>
                                 <h6 class="input-label">Required Skills</h6>
                                 <div id="skills-list"></div>
-                                <div class="row">
+                                <div class="row skill-section-error-row">
                                     <div class="col-sm-8">
 
                                         <select name="select_skill" id="select-skill" class="js-example-placeholder-single" style="width: 100%; display: inline;">
@@ -220,6 +220,35 @@
         var tasks_list = $("#tasks-list")
         $('#add-task').click(function (e) {
             e.preventDefault();
+            $('.error-text-task').empty();
+            var valid_task_form = true;
+            if ($('#task-form-name').val() === null || $('#task-form-name').val() === "") {
+                valid_task_form = false;
+                $('#task-form-name').after('<span class="error-text error-text-task">Task name is missing</span>');
+            }
+            if ($('#task-form-type').val() === null || $('#task-form-type').val() === "") {
+                valid_task_form = false;
+                $('#task-form-type').after('<span class="error-text error-text-task">Task type is missing</span>');
+            }
+            if ($('#task-form-number').val() === null || $('#task-form-number').val() === "") {
+                valid_task_form = false;
+                $('#task-form-number').after('<span class="error-text error-text-task">Number developers is missing or invalid</span>');
+            }
+            if ($('#task-form-start').val() === null || $('#task-form-start').val() === "") {
+                valid_task_form = false;
+                $('#task-form-start').after('<span class="error-text error-text-task">Task start is missing</span>');
+            }
+            if ($('#task-form-end').val() === null || $('#task-form-end').val() === "") {
+                valid_task_form = false;
+                $('#task-form-end').after('<span class="error-text error-text-task">Task end is missing</span>');
+            }
+            if ($('#task-form-task').val() === null || $('#task-form-task').val() === "") {
+                valid_task_form = false;
+                $('#task-form-task').after('<span class="error-text error-text-task">Task description is missing</span>');
+            }
+            
+            if(!valid_task_form) return false;
+            
             var skills_array = $.map(skills, function (value, index) {
                 return value
             });
@@ -264,6 +293,11 @@
         });
         $('#add-new-skill').click(function (e) {
             e.preventDefault();
+            $('.skill-section-error').empty();
+            if ($('#select-skill').val() == "" || $('#level-skill').val() == "Level") {
+                $('.skill-section-error-row').after('<span class="error-text skill-section-error">Skill or level not selected.</span>');
+                return false;
+            }
             var key = select_skill.val();
             options[key] = select_skill.find(":selected")[0];
             skills[id_skill] = {

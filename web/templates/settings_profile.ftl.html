@@ -54,12 +54,12 @@
                 <div class="row">
                     <div class="col-xs-8">
                         <h6 class="input-label">First Name</h6>
-                        <input id="profile_name" type="text" name="profile_name" value="${name}" placeholder="">
+                        <input id="profile_name" type="text" name="profile_name" value="${name}" placeholder="" required>
                         <input id="form-data" type="hidden" name="data">
                         <h6 class="input-label">Last Name</h6>
-                        <input id="profile_surname" type="text" name="profile_surname" value="${surname}" placeholder="">
+                        <input id="profile_surname" type="text" name="profile_surname" value="${surname}" placeholder="" required>
                         <h6 class="input-label">Email</h6>
-                        <input id="profile_email" type="email" name="profile_email" value="${mail}" placeholder=""> 
+                        <input id="profile_email" type="email" name="profile_email" value="${mail}" placeholder="" required> 
                         </div>
                     <div class="col-xs-4">
                         <div class="img-block avatar-200"></div>
@@ -105,7 +105,7 @@
                         </div>
                         </#list>
                     </div>
-                    <div class="row">
+                    <div class="row skill-section-error-row">
                   <div class="col-sm-8">
                       
                       <select name="select_skill" id="select-skill" class="js-example-placeholder-single" style="width: 100%; display: inline;">
@@ -183,6 +183,11 @@
         });
         $('#add-new-skill').click(function(e){
             e.preventDefault();
+            $('.skill-section-error').empty();
+            if ($('#select-skill').val() == "" || $('#level-skill').val() == "Level") {
+                $('.skill-section-error-row').after('<span class="error-text skill-section-error">Skill or level not selected.</span>');
+                return false;
+            }
             var key = select_skill.val();
             options[key] = select_skill.find(":selected")[0];
             if(existing_skills[key]){
@@ -238,7 +243,7 @@
                 "profile_headline": $('#profile_headline').val(),
                 "profile_biography": $("#profile-biography").summernote('code'),
                 "profile_resume": $("#profile-resume").summernote('code'),
-                "skills": skills  ,
+                "skills": skills,
                 "removed_skills": removed_skills
             }
             

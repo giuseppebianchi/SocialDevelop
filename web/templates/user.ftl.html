@@ -1,352 +1,352 @@
 
-  
-  <div class="compny-profile"> 
+
+<div class="compny-profile"> 
     <!-- SUB Banner -->
     <div class="profile-bnr user-profile-bnr overlay-up">
         <a class="overlay"></a>
-      <div class="container overlay-up">
-          <div class="user-page-info">
-               <div class="img-block rounded" style="background-image: url('${request.getContextPath()}/theme/images/avatar.jpg'); height:200px; width: 200px"></div>
-               <h2>
-                   <#if (fullname == " ")>
-                  ${username}
-                  <#else>
+        <div class="container overlay-up">
+            <div class="user-page-info">
+                <div class="img-block rounded" style="background-image: url('${request.getContextPath()}/uploads/images/${foto}'); height:200px; width: 200px"></div>
+                <h2>
+                    <#if (fullname == " ")>
+                    ${username}
+                    <#else>
                     ${fullname}
-                  </#if>
-               </h2>
-               <h5>${headline}</h5>
-               <div class="right-top-bnr">
-                <div class="connect">
-                  <div class="bt-ns"> <a href="#."><i class="fa fa-thumbs-up"></i> </a> <a href="#."><i class="fa fa-facebook"></i> </a> </div>
-                </div>
-                </div>
-          </div>
-        
-      </div>
-      
-    </div>
-    
-    <!-- Profile Company Content -->
-    <div class="profile-company-content user-profile main-user" data-bg-color="f5f5f5">
-      <div class="container">
-        <div class="row"> 
-          
-          <!-- Nav Tabs -->
-          <div class="col-md-12 ">
-            <ul class="nav nav-tabs">
-              <li class="active"><a data-toggle="tab" href="#profile">Biography</a></li>
-              <li><a data-toggle="tab" href="#skills">Skills</a></li>
-              <li><a data-toggle="tab" href="#projects">Projects</a></li>
-              <li><a data-toggle="tab" href="#jobs">Tasks</a></li>
-              <li><a data-toggle="tab" href="#discussion">Contact</a></li>
-              <#if isProfile??> 
-                <li class="pull-right"><a id="settings-profile-button" href="${request.getContextPath()}/settings/profile"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>
-                <li class="pull-right"><a id="dashboard-profile-button" href="${request.getContextPath()}/dashboard/invitations">Dashboard</a></li>
-              </#if>
-            </ul>
-              <hr>
-          </div>
-          
-          <!-- Tab Content -->
-          <div class="col-md-12">
-            <div class="tab-content"> 
-              
-              <!-- PROFILE -->
-              <div id="profile" class="tab-pane fade in active">
-              <!-- SIDE BAR -->
-              <h3 class="tab-title">Biography</h3>
-              <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-              <h5>Full Name</h5>
-              <p>
-                  <#if (fullname == " ")>
-                  <a href="${request.getContextPath()}/settings/profile">Add</a> your information.
-                  <#else>
-                    ${fullname}
-                  </#if>
-              </p>
-              <h5>Username</h5>
-              <p class="text-primary">@${username}</p>
-              <h5>About</h5>
-              ${bio?no_esc}
-              <hr>
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="profile-main">
-                    <h3 class="tab-title">Resume</h3>
-                    <div class="tab-content-body">
-                      ${resume?no_esc}
-                      
+                    </#if>
+                </h2>
+                <h5>${headline}</h5>
+                <div class="right-top-bnr">
+                    <div class="connect">
+                        <div class="bt-ns"> <a href="#."><i class="fa fa-thumbs-up"></i> </a> <a href="#."><i class="fa fa-facebook"></i> </a> </div>
                     </div>
                 </div>
-                
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Profile Company Content -->
+    <div class="profile-company-content user-profile main-user" data-bg-color="f5f5f5">
+        <div class="container">
+            <div class="row"> 
+
+                <!-- Nav Tabs -->
+                <div class="col-md-12 ">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#profile">Biography</a></li>
+                        <li><a data-toggle="tab" href="#skills">Skills</a></li>
+                        <li><a data-toggle="tab" href="#projects">Projects</a></li>
+                        <li><a data-toggle="tab" href="#jobs">Tasks</a></li>
+                        <li><a data-toggle="tab" href="#discussion">Contact</a></li>
+                        <#if isProfile??> 
+                        <li class="pull-right"><a id="settings-profile-button" href="${request.getContextPath()}/settings/profile"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></a></li>
+                        <li class="pull-right"><a id="dashboard-profile-button" href="${request.getContextPath()}/dashboard/invitations">Dashboard</a></li>
+                        </#if>
+                    </ul>
                     <hr>
-          </div>
-
-          </div>
-              </div>
-              <!--Skills -->
-              <div id="skills" class="tab-pane fade">
-                    <h3 class="tab-title">Skills</h3>
-              <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
-              <a href="${request.getContextPath()}/settings/skills" class="btn btn-primary pull-right">Add Skills</a>      
-              <h5>Developer's Rating</h5>
-                    <div class="com-rate"><span>
-                    <#list 1..5 as i>
-                        <#if (i > votes)>
-                        <i class="fa fa-star-o"></i>
-                        <#else>
-                        <i class="fa fa-star"></i>
-                        </#if>
-                    </#list>
-                    </span></div>
-                    <br>
-              <hr>
-              
-                  
-                    <div class="no-border">
-                    
-                      <div class="uou-tabs vertical accordion-xs categories-list">
-                      
-
-                        <#if skillsList?has_content>
-                        <ul class="tabs col-sm-4">
-                          <h5 class="main-title ">Categories</h5>
-                          <#list skillsList as key, value>
-                            <#if key?index == 0>
-                              <li class="active"><a href="#uou-tab-${value[0].skill.getType_key()}">${key}</a></li>
-                            <#else>
-                              <li><a href="#uou-tab-${value[0].skill.getType_key()}">${key}</a></li>
-                            </#if>
-                          </#list>
-                        </ul>
-
-                        <div class="content no-border col-sm-8">
-                            <!-- Category Skills -->
-                            <#list skillsList as key, value>
-                            <#if key?index == 0>
-                                <div class="active" id="uou-tab-${value[0].skill.getType_key()}">
-                            <#else>
-                                <div id="uou-tab-${value[0].skill.getType_key()}">
-                            </#if>
-                                    <h5 id="title-tab-category" class="main-title">${key}</h5>
-                                    <#list value as item>
-                                        <div class="uou-progressbar-single">
-                                        <h6>${item.skill.name}</h6>
-                                        <span class="main-bar"> <span class="inner-bar" style="width: ${item.level}0%"></span> <a class="progress-percent">${item.level}</a> </span> 
-                                        </div>
-                                    </#list>
-                                </div>
-                            <!-- Skill By Type-->
-                            </#list>
-                        </div>
-                        <#else>
-                        <h5>Developer has no skill</h5>
-                        </#if>
-                            
-                  </div>
-                  
                 </div>
-              </div>
-              
-              
-              <!-- Jobs -->
-              <div id="jobs" class="tab-pane fade">
-                  <h3 class="tab-title">Developer's Tasks (<span class="text-primary">${nTask}</span>)</h3>
-              <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
-                <#if tasks?has_content>
-              <ul class="nav nav-tabs">
-                    <li><a>${current_tasks} <span class="text-success">In production</span></a></li>
-                    <li><a>${ncompleted} <span class="text-primary">Completed</span></a></li>
-                </ul>
-                </#if>
-              <hr>
-                <div class="listing listing-1">
-                  <div class="listing-section">
-                  <#if tasks?has_content>
-                    <#list tasks as key,value>
-                    <div class="listing-ver-3 task-item">
-                      <div class="listing-heading">
-                          <h5><#if key.isCompleted()><i class="fa fa-check-circle text-primary"></i><#else><#if key.open><i class="fa fa-folder-open text-success"></i><#else><i class="fa fa-dot-circle-o text-danger"></i></#if></#if> <a class="text-black" href="${request.getContextPath()}/projects/${key.project_key}">${key.project.name}</a> / <a href="${request.getContextPath()}/projects/tasks/${key.key}">${key.name}</a></h5>
 
-                        <#if auth_user??>
-                            <#if isCoordinator??>
-                                <ul class="bookmark list-inline">
-                                  <li><a href="${request.getContextPath()}/projects/tasks/settings/${key.key}"><i class="fa fa-cog"></i></a></li>
-                                </ul>
-                            </#if>
-                        </#if>
-                      </div>
-                      <div class="listing-inner">
-                        <div class="listing-content">
-                          <h6 class="title-company">${tasks_types[key?index].type}</h6>
-                          
-                          <!--<span class="location"> <i class="fa fa-map-marker"></i> Manhattan, New york, USA </span> <!--<span class="text-success"> Start Date</span>: ${task.getStartDate().time?date?string.short} |  <span class="text-danger">End Date</span>: ${task.getEndDate().time?date?string.short}-->
-                          <div>
-                              <#assign dec = key.getTextDescription()>
-                            <#if (dec?length > 251)>
-                                <div class="p10">${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${progetto.key}">read more</a></div>
-                            <#else>
-                                <div class="p10">${dec} <a href="${request.getContextPath()}/projects/${progetto.key}"> read more</a></div>
-                            </#if>
-                          </div>
-                          <h6 class="title-tags">Skills required:</h6>
-                          <ul class="tags list-inline">
-                            <#list skills[key?index] as keyy,valuee>
-                            <li><a href="">${keyy.name} <span>${valuee}</span> </a></li>
-                        </#list>
-                          </ul>
-                          
-                          <#if key.isCompleted()>
-                          <hr>
-                          <span>Developer's Rating: </span>
-                            <#list 1..5 as i>
-                                    <#if (i > tasks_ended[key?index])>
+                <!-- Tab Content -->
+                <div class="col-md-12">
+                    <div class="tab-content"> 
+
+                        <!-- PROFILE -->
+                        <div id="profile" class="tab-pane fade in active">
+                            <!-- SIDE BAR -->
+                            <h3 class="tab-title">Biography</h3>
+                            <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            <h5>Full Name</h5>
+                            <p>
+                                <#if (fullname == " ")>
+                                <a href="${request.getContextPath()}/settings/profile">Add</a> your information.
+                                <#else>
+                                ${fullname}
+                                </#if>
+                            </p>
+                            <h5>Username</h5>
+                            <p class="text-primary">@${username}</p>
+                            <h5>About</h5>
+                            ${bio?no_esc}
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="profile-main">
+                                        <h3 class="tab-title">Resume</h3>
+                                        <div class="tab-content-body">
+                                            ${resume?no_esc}
+
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--Skills -->
+                        <div id="skills" class="tab-pane fade">
+                            <h3 class="tab-title">Skills</h3>
+                            <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
+                            <a href="${request.getContextPath()}/settings/profile" class="btn btn-primary pull-right">Add Skills</a>      
+                            <h5>Developer's Rating</h5>
+                            <div class="com-rate"><span>
+                                    <#list 1..5 as i>
+                                    <#if (i > votes)>
                                     <i class="fa fa-star-o"></i>
                                     <#else>
                                     <i class="fa fa-star"></i>
                                     </#if>
-                                </#list>
-                          </#if>
-                        </div>
-                      </div>
-                      <div class="listing-tabs">
-                        <ul>
-                          <li class="hidden-xs"><#if key.isCompleted()><span class="text-primary">Completed</span><#else><#if key.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></#if></li>
-                          <li><span><i class="fa fa-group text-primary"></i> <strong>${key.numCollaborators}</strong> Developers</span></li>
-                          <li><span><i class="fa fa-clock-o text-primary"></i> ${key.getStartDate().time?date?string.short} <strong class="text-primary">|</strong> ${key.getEndDate().time?date?string.short}</span></li>
-                          <li class="visible-xs"><#if key.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></li>
-                          <li><a href="${request.getContextPath()}/projects/tasks/${key.key}"><span class="text-primary">Show Task <i class="fa fa-chevron-right"></i></span></a></li>
-                        </ul>
-                      </div>
-                    </div>
-                   </#list>
-                   <#else>
-                   <#if isProfile??>
-                   <h5>Click <a href="">here</a> to find some tasks for your skills.</h5>
-                   <#else>
-                   <h5>Developer has no tasks</h5>
-                   </#if>
-                   </#if>
-                  </div>
-                </div>
-              </div>
-              <div id="projects" class="tab-pane fade">
-                 <h3 class="tab-title">Own Projects (<span class="text-primary"><#if projects?has_content>${projects?size}<#else>0</#if></span>)</h3>
-              <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
-              <div class="row">
-               <#if projects?has_content>   
-                <div class="col-sm-9">
-                 
-                <ul class="nav nav-tabs">
-                    <li><a>3 <span class="text-success">In production</span></a></li>
-                    <li><a>20 <span class="text-primary">Completed</span></a></li>
-                </ul>
-               
-                </div>
-               <div class="col-sm-3"><a id="new-project-button" class="btn btn-success btn-block" href="${request.getContextPath()}/projects/new">New Project</a></div>
-               <#else>
-               <div class="col-sm-3"><a id="new-project-button" class="btn btn-success btn-block" href="${request.getContextPath()}/projects/new">New Project</a></div>
-               </#if>
-              </div>
-              <hr>
-              <section class="projects-section">
-                <div class="pb30">
+                                    </#list>
+                                </span></div>
+                            <br>
+                            <hr>
 
-                  <!-- PROJECT -->
-                  <div class="project-list-item">
-                    <div class="uou-block-7a">
-                      <#if projects?has_content>
-                      <#list projects as progetto>
-                        <div class="css-table">
-                        <div class="css-table-cell image has-bg-image" data-bg-image="${request.getContextPath()}/theme/images/blog-image-3.png" style="background-image: url('${request.getContextPath()}/theme/images/blog-image-3.png');"> <img class="hidden-image" src="${request.getContextPath()}/theme/images/blog-image-3.png" alt=""> </div>
-                        <div class="css-table-cell content" style="background: #fff"> 
-                            <a href="${request.getContextPath()}/projects/${progetto.key}"><h1>${progetto.name}</h1></a>
-                                <div class="listing listing-1" style="padding-bottom: 0;">
-                                <div class="listing-section">
-                                  <div class="listing-ver-3" style="margin:0">
 
-                                    <div class="listing-inner">
-                                      <div class="listing-content">
+                            <div class="no-border">
 
-                                          <a href="#" class="location">${fullname}</a>
-                                          <br>
-                                          <h6 class="project-type">${progetto.category}</h6>
-                                          <span class="project-type text-black"><span class="text-primary">${nProTasks[progetto?index]}</span> Tasks  | <span class="text-primary">${ncollaboratori[progetto?index]}</span> Developers</span>
-                                        <#assign dec = progetto.getTextDescription()>
-                                        <#if (dec?length > 251)>
-                                            <div>${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${progetto.key}">read more</a></div>
+                                <div class="uou-tabs vertical accordion-xs categories-list">
+
+
+                                    <#if skillsList?has_content>
+                                    <ul class="tabs col-sm-4">
+                                        <h5 class="main-title ">Categories</h5>
+                                        <#list skillsList as key, value>
+                                        <#if key?index == 0>
+                                        <li class="active"><a href="#uou-tab-${value[0].skill.getType_key()}">${key}</a></li>
                                         <#else>
-                                            <div>${dec} <a href="${request.getContextPath()}/projects/${progetto.key}"> read more</a></div>
+                                        <li><a href="#uou-tab-${value[0].skill.getType_key()}">${key}</a></li>
                                         </#if>
-                                        
-                                      </div>
+                                        </#list>
+                                    </ul>
+
+                                    <div class="content no-border col-sm-8">
+                                        <!-- Category Skills -->
+                                        <#list skillsList as key, value>
+                                        <#if key?index == 0>
+                                        <div class="active" id="uou-tab-${value[0].skill.getType_key()}">
+                                            <#else>
+                                            <div id="uou-tab-${value[0].skill.getType_key()}">
+                                                </#if>
+                                                <h5 id="title-tab-category" class="main-title">${key}</h5>
+                                                <#list value as item>
+                                                <div class="uou-progressbar-single">
+                                                    <h6>${item.skill.name}</h6>
+                                                    <span class="main-bar"> <span class="inner-bar" style="width: ${item.level}0%"></span> <a class="progress-percent">${item.level}</a> </span> 
+                                                </div>
+                                                </#list>
+                                            </div>
+                                            <!-- Skill By Type-->
+                                            </#list>
+                                        </div>
+                                        <#else>
+                                        <h5>Developer has no skill</h5>
+                                        </#if>
+
                                     </div>
 
-                                  </div>
-
                                 </div>
-                              </div>
+                            </div>
+
+
+                            <!-- Jobs -->
+                            <div id="jobs" class="tab-pane fade">
+                                <h3 class="tab-title">Developer's Tasks (<span class="text-primary">${nTask}</span>)</h3>
+                                <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
+                                <#if tasks?has_content>
+                                <ul class="nav nav-tabs">
+                                    <li><a>${current_tasks} <span class="text-success">In production</span></a></li>
+                                    <li><a>${ncompleted} <span class="text-primary">Completed</span></a></li>
+                                </ul>
+                                </#if>
+                                <hr>
+                                <div class="listing listing-1">
+                                    <div class="listing-section">
+                                        <#if tasks?has_content>
+                                        <#list tasks as key,value>
+                                        <div class="listing-ver-3 task-item">
+                                            <div class="listing-heading">
+                                                <h5><#if key.isCompleted()><i class="fa fa-check-circle text-primary"></i><#else><#if key.open><i class="fa fa-folder-open text-success"></i><#else><i class="fa fa-dot-circle-o text-danger"></i></#if></#if> <a class="text-black" href="${request.getContextPath()}/projects/${key.project_key}">${key.project.name}</a> / <a href="${request.getContextPath()}/projects/tasks/${key.key}">${key.name}</a></h5>
+
+                                                <#if auth_user??>
+                                                <#if isCoordinator??>
+                                                <ul class="bookmark list-inline">
+                                                    <li><a href="${request.getContextPath()}/projects/tasks/settings/${key.key}"><i class="fa fa-cog"></i></a></li>
+                                                </ul>
+                                                </#if>
+                                                </#if>
+                                            </div>
+                                            <div class="listing-inner">
+                                                <div class="listing-content">
+                                                    <h6 class="title-company">${tasks_types[key?index].type}</h6>
+
+                                                    <!--<span class="location"> <i class="fa fa-map-marker"></i> Manhattan, New york, USA </span> <!--<span class="text-success"> Start Date</span>: ${task.getStartDate().time?date?string.short} |  <span class="text-danger">End Date</span>: ${task.getEndDate().time?date?string.short}-->
+                                                    <div>
+                                                        <#assign dec = key.getTextDescription()>
+                                                        <#if (dec?length > 251)>
+                                                        <div class="p10">${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${progetto.key}">read more</a></div>
+                                                        <#else>
+                                                        <div class="p10">${dec} <a href="${request.getContextPath()}/projects/${progetto.key}"> read more</a></div>
+                                                        </#if>
+                                                    </div>
+                                                    <h6 class="title-tags">Skills required:</h6>
+                                                    <ul class="tags list-inline">
+                                                        <#list skills[key?index] as keyy,valuee>
+                                                        <li><a href="">${keyy.name} <span>${valuee}</span> </a></li>
+                                                        </#list>
+                                                    </ul>
+
+                                                    <#if key.isCompleted()>
+                                                    <hr>
+                                                    <span>Developer's Rating: </span>
+                                                    <#list 1..5 as i>
+                                                    <#if (i > tasks_ended[key?index])>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <#else>
+                                                    <i class="fa fa-star"></i>
+                                                    </#if>
+                                                    </#list>
+                                                    </#if>
+                                                </div>
+                                            </div>
+                                            <div class="listing-tabs">
+                                                <ul>
+                                                    <li class="hidden-xs"><#if key.isCompleted()><span class="text-primary">Completed</span><#else><#if key.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></#if></li>
+                                                    <li><span><i class="fa fa-group text-primary"></i> <strong>${key.numCollaborators}</strong> Developers</span></li>
+                                                    <li><span><i class="fa fa-clock-o text-primary"></i> ${key.getStartDate().time?date?string.short} <strong class="text-primary">|</strong> ${key.getEndDate().time?date?string.short}</span></li>
+                                                    <li class="visible-xs"><#if key.open><span class="task-open">Open</span><#else><span class="task-closed">Closed</span></#if></li>
+                                                    <li><a href="${request.getContextPath()}/projects/tasks/${key.key}"><span class="text-primary">Show Task <i class="fa fa-chevron-right"></i></span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        </#list>
+                                        <#else>
+                                        <#if isProfile??>
+                                        <h5>Click <a href="">here</a> to find some tasks for your skills.</h5>
+                                        <#else>
+                                        <h5>Developer has no tasks</h5>
+                                        </#if>
+                                        </#if>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="projects" class="tab-pane fade">
+                                <h3 class="tab-title">Own Projects (<span class="text-primary"><#if projects?has_content>${projects?size}<#else>0</#if></span>)</h3>
+                                <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
+                                <div class="row">
+                                    <#if projects?has_content>   
+                                    <div class="col-sm-9">
+
+                                        <ul class="nav nav-tabs">
+                                            <li><a>3 <span class="text-success">In production</span></a></li>
+                                            <li><a>20 <span class="text-primary">Completed</span></a></li>
+                                        </ul>
+
+                                    </div>
+                                    <div class="col-sm-3"><a id="new-project-button" class="btn btn-success btn-block" href="${request.getContextPath()}/projects/new">New Project</a></div>
+                                    <#else>
+                                    <div class="col-sm-3"><a id="new-project-button" class="btn btn-success btn-block" href="${request.getContextPath()}/projects/new">New Project</a></div>
+                                    </#if>
+                                </div>
+                                <hr>
+                                <section class="projects-section">
+                                    <div class="pb30">
+
+                                        <!-- PROJECT -->
+                                        <div class="project-list-item">
+                                            <div class="uou-block-7a">
+                                                <#if projects?has_content>
+                                                <#list projects as progetto>
+                                                <div class="css-table">
+                                                    <div class="css-table-cell image has-bg-image" data-bg-image="${request.getContextPath()}/theme/images/blog-image-3.png" style="background-image: url('${request.getContextPath()}/theme/images/blog-image-3.png');"> <img class="hidden-image" src="${request.getContextPath()}/theme/images/blog-image-3.png" alt=""> </div>
+                                                    <div class="css-table-cell content" style="background: #fff"> 
+                                                        <a href="${request.getContextPath()}/projects/${progetto.key}"><h1>${progetto.name}</h1></a>
+                                                        <div class="listing listing-1" style="padding-bottom: 0;">
+                                                            <div class="listing-section">
+                                                                <div class="listing-ver-3" style="margin:0">
+
+                                                                    <div class="listing-inner">
+                                                                        <div class="listing-content">
+
+                                                                            <a href="#" class="location">${fullname}</a>
+                                                                            <br>
+                                                                            <h6 class="project-type">${progetto.category}</h6>
+                                                                            <span class="project-type text-black"><span class="text-primary">${nProTasks[progetto?index]}</span> Tasks  | <span class="text-primary">${ncollaboratori[progetto?index]}</span> Developers</span>
+                                                                            <#assign dec = progetto.getTextDescription()>
+                                                                            <#if (dec?length > 251)>
+                                                                            <div>${dec?substring(0, 250)}... <a href="${request.getContextPath()}/projects/${progetto.key}">read more</a></div>
+                                                                            <#else>
+                                                                            <div>${dec} <a href="${request.getContextPath()}/projects/${progetto.key}"> read more</a></div>
+                                                                            </#if>
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                </#list>
+                                                <#else>
+                                                <#if isProfile??>
+                                                Click on "New Project" to create your first project.
+                                                <#else>
+                                                Developer has no projects.
+                                                </#if>
+
+                                                </#if>
+                                            </div>
+                                            <!-- end .uou-block-7a --> 
+                                        </div>
+                                        <br>
+                                        <!-- END PROJECT -->
+
+
+                                    </div>
+                                </section>                
+                            </div>
+                            <!-- Contact -->
+                            <div id="discussion" class="tab-pane fade">
+                                <h3 class="tab-title">Contact</h3>
+                                <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
+                                <hr>
+                                <h5>Email</h5>
+                                <p class="text-primary">${mail}</p>
+                                <h5>Phone</h5>
+                                <p>+39 3807821111</p>
+                                <#if isProfile??>
+                                <#else>
+                                <#if auth_user??>
+                                <h5>Send a message to ${fullname}</h5>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate quis tenetur velit! Provident eum molestias aperiam suscipit distinctio ipsum cupiditate quasi, dolor sunt, cum reprehenderit quibusdam, repellendus eaque, quas magni.</p>
+                                <form action="#">
+                                    <textarea placeholder="Your Message"></textarea>
+                                    <button class="btn btn-primary">Send message</button>
+                                </form>
+                                </#if>
+                                </#if>
+                            </div>
                         </div>
-                      </div>
-                      <hr>
-                      </#list>
-                      <#else>
-                      <#if isProfile??>
-                      Click on "New Project" to create your first project.
-                      <#else>
-                      Developer has no projects.
-                      </#if>
-                      
-                      </#if>
                     </div>
-                    <!-- end .uou-block-7a --> 
-                  </div>
-                  <br>
-                  <!-- END PROJECT -->
-
-
                 </div>
-              </section>                
-              </div>
-              <!-- Contact -->
-              <div id="discussion" class="tab-pane fade">
-                  <h3 class="tab-title">Contact</h3>
-              <p class="tab-subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit, maxime, excepturi, mollitia, voluptatibus similique aliquid a dolores autem laudantium sapiente ad enim ipsa modi laborum accusantium deleniti neque architecto vitae.</p>
-              <hr>
-              <h5>Email</h5>
-              <p class="text-primary">${mail}</p>
-              <h5>Phone</h5>
-              <p>+39 3807821111</p>
-              <#if isProfile??>
-              <#else>
-                <#if auth_user??>
-                      <h5>Send a message to Giuseppe</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate quis tenetur velit! Provident eum molestias aperiam suscipit distinctio ipsum cupiditate quasi, dolor sunt, cum reprehenderit quibusdam, repellendus eaque, quas magni.</p>
-                    <form action="#">
-                      <textarea placeholder="Your Message"></textarea>
-                      <button class="btn btn-primary">Send message</button>
-                    </form>
-                </#if>
-              </#if>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-<script>
-    
+    <script>
 
-    $(document).ready(function(){
-        
-        $("#select-skill").select2({
-            placeholder: "Select a Skill",
-            allowClear: true
-          });
-        $('#add-skill-form').submit(function(e){
-            e.preventDefault()
-            return false;
+
+        $(document).ready(function () {
+
+            $("#select-skill").select2({
+                placeholder: "Select a Skill",
+                allowClear: true
+            });
+            $('#add-skill-form').submit(function (e) {
+                e.preventDefault()
+                return false;
+            })
         })
-    })
-</script>
+    </script>
