@@ -50,14 +50,14 @@ public class acceptProposal1 extends SocialDevelopBaseController {
                     //proposta accettata
                     String txt = datalayer.getDeveloper(user_key).getUsername() + " ha accettato la tua proposta di collaborazione"
                             + " al task " + datalayer.getTask(task_key).getName() + "!";
-                    Mailer m1 = new Mailer(datalayer.getDeveloper(sender_key).getMail(), obj, txt);
-                    m1.sendEmail();
+                    Mailer mail = new Mailer(datalayer.getDeveloper(sender_key).getMail(), obj, txt);
+                    mail.sendEmail();
                 } else {
                     //proposta rifiutata
                     String txt = datalayer.getDeveloper(user_key).getUsername() + " ha rifiutato la tua proposta di collaborazione"
                             + " al task " + datalayer.getTask(task_key).getName() + ".";
-                    Mailer m1 = new Mailer(datalayer.getDeveloper(sender_key).getMail(), obj, txt);
-                    m1.sendEmail();
+                    Mailer mail = new Mailer(datalayer.getDeveloper(sender_key).getMail(), obj, txt);
+                    mail.sendEmail();
                 }
             } else {
                 //risposta a domanda
@@ -67,13 +67,13 @@ public class acceptProposal1 extends SocialDevelopBaseController {
                 if (state == 1) {
                     //domanda accettata
                     String txt = "La tua domanda di partecipazione al task " + datalayer.getTask(task_key).getName() + " è stata accettata.";
-                    Mailer m1 = new Mailer(datalayer.getDeveloper(developer_key).getMail(), obj, txt);
-                    m1.sendEmail();
+                    Mailer mail = new Mailer(datalayer.getDeveloper(developer_key).getMail(), obj, txt);
+                    mail.sendEmail();
                 } else {
                     //domanda rifiutata
                     String txt = "La tua domanda di partecipazione al task " + datalayer.getTask(task_key).getName() + " è stata rifiutata.";
-                    Mailer m1 = new Mailer(datalayer.getDeveloper(developer_key).getMail(), obj, txt);
-                    m1.sendEmail();
+                    Mailer mail = new Mailer(datalayer.getDeveloper(developer_key).getMail(), obj, txt);
+                    mail.sendEmail();
                 }
 
             }
