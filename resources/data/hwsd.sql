@@ -62,14 +62,12 @@ CREATE TABLE `developer` (
   `headline` varchar(200) DEFAULT NULL,
   `curriculum_pdf_ID` int(10) DEFAULT NULL,
   `curriculumString` varchar(500) DEFAULT NULL,
-  `photo_ID` int(10) DEFAULT NULL,
+  `photo_filename` varchar(255) DEFAULT NULL,
   `resume` text,
   PRIMARY KEY (`ID`),
   UNIQUE KEY `UC_username` (`username`),
   KEY `FK_curriculumPdf` (`curriculum_pdf_ID`),
-  KEY `FK_photo_idx` (`photo_ID`),
-  CONSTRAINT `FK_curriculumPdf` FOREIGN KEY (`curriculum_pdf_ID`) REFERENCES `files` (`ID`) ON DELETE SET NULL ON UPDATE SET NULL,
-  CONSTRAINT `FK_photo` FOREIGN KEY (`photo_ID`) REFERENCES `files` (`ID`) ON DELETE SET NULL ON UPDATE SET NULL
+  CONSTRAINT `FK_curriculumPdf` FOREIGN KEY (`curriculum_pdf_ID`) REFERENCES `files` (`ID`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -101,16 +99,6 @@ CREATE TABLE `files` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `files`
---
-
-LOCK TABLES `files` WRITE;
-/*!40000 ALTER TABLE `files` DISABLE KEYS */;
-INSERT INTO `files` VALUES ('a',234,'a.jpg','2017-09-11 15:56:59',1,'234','jpg');
-/*!40000 ALTER TABLE `files` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `message`
