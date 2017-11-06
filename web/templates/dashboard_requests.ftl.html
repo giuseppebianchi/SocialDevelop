@@ -20,7 +20,7 @@
                   <!-- DEVELOPER -->
                     <div class="media">
                       <div class="media-left">
-                          <div class="inn-simi"> <div class="media-object" alt=""></div><!-- <a href="#">Profile </a> --></div>
+                          <div class="inn-simi"> <div class="media-object" <#if dev.picture??>style="background-image:url('${request.getContextPath()}/uploads/images/${dev.picture}')"</#if> alt=""></div><!-- <a href="#">Profile </a> --></div>
                       </div>
                       <div class="media-body">
                           <h4 class="pt30"><a class="title-developer-list" href="${request.getContextPath()}/developers/${dev.key}"><#if (dev.name == "" && dev.surname == "")>${dev.username}<#else>${dev.name} ${dev.surname}</#if></a></h4>
@@ -141,7 +141,7 @@
                                 
                                 <!-- Name -->
                                 <div class="fol-name">
-                                    <div class="img-block avatar-table"></div>
+                                    <div class="img-block avatar-table" <#if request.getSender().picture??>style="background-image:url('${request.getContextPath()}/uploads/images/${request.getSender().picture}')"</#if>></div>
                                    <#if (request.getSender().name != "") && (request.getSender().surname!="")>
                                     <h6>${request.getSender().name} ${request.getSender().surname}</h6>
                                    <#else>

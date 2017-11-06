@@ -4,7 +4,7 @@
         <div class="gt_d_author_wrap">
             <div class="gt_d_author_pic">
                 <figure>
-                    <img src=${foto_profilo} alt="">
+                    <img src="<#if dev.picture??>${request.getContextPath()}/uploads/images/${dev.picture}</#if>" alt="">
                 </figure>
             </div>
             <div class="gt_d_author_pic_des">

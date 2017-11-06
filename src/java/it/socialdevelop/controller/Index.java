@@ -38,7 +38,7 @@ public class Index extends SocialDevelopBaseController {
             SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
             Developer dev = datalayer.getDeveloper((int) s.getAttribute("userid"));
             data.put("auth_user", s.getAttribute("userid"));
-            data.put("foto", s.getAttribute("foto"));
+            data.put("profile_picture", s.getAttribute("profile_picture"));
             data.put("fullname", s.getAttribute("fullname"));
             data.put("menu_active", "home");
             datalayer.destroy();

@@ -55,7 +55,7 @@ public class DeveloperProjects extends SocialDevelopBaseController {
 
             request.setAttribute("username", dev.getUsername());
             request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
-
+            request.setAttribute("profile_picture", dev.getPicture());
             request.setAttribute("bio", dev.getBiography());
             request.setAttribute("mail", dev.getMail());
             request.setAttribute("page_title", "Projects");

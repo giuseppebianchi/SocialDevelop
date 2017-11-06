@@ -62,6 +62,7 @@ public class DeveloperProfile extends SocialDevelopBaseController {
             data.put("headline", dev.getHeadline());
             data.put("bio", dev.getBiography());
             data.put("resume", dev.getResume());
+            data.put("profile_picture_dev", dev.getPicture());
             data.put("mail", dev.getMail());
             data.put("page_title", "Social Develop - " + dev.getName() + " " + dev.getSurname());
             data.put("page_subtitle", dev.getName() + " " + dev.getSurname());
@@ -72,7 +73,7 @@ public class DeveloperProfile extends SocialDevelopBaseController {
                 
                 data.put("auth_user", s.getAttribute("userid"));
                 data.put("auth_user_fullname", s.getAttribute("fullname"));
-                data.put("foto", s.getAttribute("foto"));
+                data.put("profile_picture", s.getAttribute("profile_picture"));
                 
                 
                 

@@ -37,7 +37,7 @@ public class DeveloperImpl implements Developer {
         name = "";
         surname = "";
         username = "";
-        picture = "blog-image-4.png";
+        picture = "";
         headline = "";
         password = "";
         mail = "";

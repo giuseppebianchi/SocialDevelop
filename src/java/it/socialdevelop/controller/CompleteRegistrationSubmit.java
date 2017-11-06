@@ -20,7 +20,12 @@ import it.socialdevelop.data.impl.ProjectImpl;
 import it.socialdevelop.data.impl.TaskImpl;
 import it.socialdevelop.data.model.Developer;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.time.Instant;
 import java.util.Iterator;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 /**
  *
@@ -56,13 +61,33 @@ public class CompleteRegistrationSubmit  extends SocialDevelopBaseController {
                     String profile_name = o.getString("profile_name");
                     String profile_email = o.getString("profile_email");
                     String profile_username = o.getString("profile_username");
+                    String profile_photo = o.getString("profile_photo");
                     String profile_surname = o.getString("profile_surname");
                     String profile_biography = o.getString("profile_biography");
                     String profile_headline = o.getString("profile_headline");
                     String profile_resume = o.getString("profile_resume");
                     
+                    //dichiariamo d inizialmente in caso venga caricata una nuova picture
+                    DeveloperImpl d = new DeveloperImpl(datalayer);
+
+                    //salviamo la nuova picture
+                    String filename;
+                    if ((profile_photo != null || profile_photo != "") && (profile_photo.split(";base64,").length == 2)) {
+                        byte[] data = Base64.decodeBase64(profile_photo.split(",")[1]);
+                        String picture_ext = profile_photo.split(";")[0].replace("data:image/", "");
+                        File file = new File("").getCanonicalFile();
+                        String encoded_filename = profile_name + profile_surname + profile_username + profile_email;
+                        filename = "dev_" + encoded_filename.hashCode() + "_" + Instant.now().getEpochSecond() + "." + picture_ext;
+                        try (OutputStream stream = new FileOutputStream(file.getParent() + "/webapps/SocialDevelop/uploads/images/" + filename)) {
+                            stream.write(data);
+                        }
+                        d.setPicture(filename);
+                        request.getSession().setAttribute("profile_picture", filename);
+                    } else {
+                        d.setPicture("blog-image-4.png");
+                    }
+
                     //memorizziamo il progetto
-                    Developer d = new DeveloperImpl(datalayer);
                     d.setKey(profile_id);
                     d.setName(profile_name);
                     d.setSurname(profile_surname);

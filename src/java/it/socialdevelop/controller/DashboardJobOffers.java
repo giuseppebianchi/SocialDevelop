@@ -56,7 +56,7 @@ public class DashboardJobOffers extends SocialDevelopBaseController {
             request.setAttribute("username", dev.getUsername());
             //request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
             request.setAttribute("auth_user", s.getAttribute("userid"));
-            request.setAttribute("foto", s.getAttribute("foto"));
+            request.setAttribute("profile_picture", s.getAttribute("profile_picture"));
             request.setAttribute("fullname", s.getAttribute("fullname"));
             request.setAttribute("bio", dev.getBiography());
             request.setAttribute("mail", dev.getMail());

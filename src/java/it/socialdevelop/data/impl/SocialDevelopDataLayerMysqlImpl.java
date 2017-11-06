@@ -214,7 +214,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             dSkill = connection.prepareStatement("DELETE FROM skill WHERE ID=?");
 
             iDeveloper = connection.prepareStatement("INSERT INTO developer (name,surname,username,mail,password,biography, resume) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            uDeveloper = connection.prepareStatement("UPDATE developer SET username=?,mail=?,name=?, surname=?, biography=?, resume=?, headline=? WHERE ID=?");
+            uDeveloper = connection.prepareStatement("UPDATE developer SET username=?,mail=?,name=?, surname=?, biography=?, resume=?, headline=?, photo_filename=? WHERE ID=?");
             dDeveloper = connection.prepareStatement("DELETE FROM developer WHERE ID=?");
 
             iTask = connection.prepareStatement("INSERT INTO task (name,numCollaborators,start,end,description,open,project_ID, type_ID) VALUES(?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -353,6 +353,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             a.setName(rs.getString("name"));
             a.setSurname(rs.getString("surname"));
             a.setUsername(rs.getString("username"));
+            a.setPicture(rs.getString("photo_filename"));
             a.setHeadline(rs.getString("headline"));
             a.setMail(rs.getString("mail"));
             a.setPassword(rs.getString("password"));
@@ -1424,7 +1425,8 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
                 uDeveloper.setString(5, developer.getBiography());
                 uDeveloper.setString(6, developer.getResume());
                 uDeveloper.setString(7, developer.getHeadline());
-                uDeveloper.setInt(8, developer.getKey());
+                uDeveloper.setString(8, developer.getPicture());
+                uDeveloper.setInt(9, developer.getKey());
                 uDeveloper.executeUpdate();
             } else { //insert
                 iDeveloper.setString(1, developer.getName());

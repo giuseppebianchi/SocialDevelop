@@ -33,8 +33,6 @@ public class SettingsProfile extends SocialDevelopBaseController {
         }
     }
 
-    
-
     private void action_updprofile(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, TemplateManagerException, SQLException, NamingException, DataLayerException {
         HttpSession s = request.getSession(true);
         request.setAttribute("request", request);
@@ -58,6 +56,8 @@ public class SettingsProfile extends SocialDevelopBaseController {
             request.setAttribute("username", dev.getUsername());
             request.setAttribute("mail", dev.getMail());
             request.setAttribute("headline", dev.getHeadline());
+            System.out.println(dev.getPicture());
+            request.setAttribute("profile_picture", dev.getPicture());
             request.setAttribute("resume", dev.getResume());
             request.setAttribute("fullname", dev.getName() + " " + dev.getSurname());
             request.setAttribute("logout", "Logout");

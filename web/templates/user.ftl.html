@@ -6,7 +6,7 @@
         <a class="overlay"></a>
         <div class="container overlay-up">
             <div class="user-page-info">
-                <div class="img-block rounded" style="background-image: url('${request.getContextPath()}/uploads/images/${foto}'); height:200px; width: 200px"></div>
+                <div class="img-block rounded" style="background-image: url('${request.getContextPath()}/uploads/images/<#if profile_picture!=''>${profile_picture_dev}<#else>blog-image-4.png</#if>'); height:200px; width: 200px"></div>
                 <h2>
                     <#if (fullname == " ")>
                     ${username}

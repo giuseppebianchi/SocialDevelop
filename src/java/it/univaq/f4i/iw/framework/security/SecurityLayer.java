@@ -88,7 +88,7 @@ public class SecurityLayer {
         HttpSession s = request.getSession(true);
         s.setAttribute("username", username);
         s.setAttribute("fullname", fullname);
-        s.setAttribute("foto", picture);
+        s.setAttribute("profile_picture", picture);
         s.setAttribute("ip", request.getRemoteHost());
         s.setAttribute("inizio-sessione", Calendar.getInstance());
         s.setAttribute("userid", userid);

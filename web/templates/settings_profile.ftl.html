@@ -50,7 +50,7 @@
             <div class="network pt50">
                 <h5 class="tab-title">Public Profile</h5>
                 <hr class="mt10">
-                <form id="form-profile" method="post" action="${request.getContextPath()}/settings/profile/profile_submit">
+                <form id="form-profile" method="post" action="${request.getContextPath()}/settings/profile/profile_submit" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-xs-8">
                         <h6 class="input-label">First Name</h6>
@@ -62,9 +62,10 @@
                         <input id="profile_email" type="email" name="profile_email" value="${mail}" placeholder="" required> 
                         </div>
                     <div class="col-xs-4">
-                        <div class="img-block avatar-200"></div>
+                        <div class="img-block avatar-200" style="background-image:url('${request.getContextPath()}/uploads/images/<#if profile_picture!=''>${profile_picture}<#else>blog-image-4.png</#if>')"></div>
                         <br>
-                        <label for="#upload-picture" class="btn-block"><a class="btn btn-primary btn-block">Upload New Picture</a></label>
+                        <label for="#upload-picture" class="btn-block"><a class="btn btn-primary btn-block btn-upload-new-pic">Upload New Picture</a></label>
+                        <input type="file" id="upload-picture" name="upload-picture" accept="image/*" style="display:none;">
                     </div>
                 </div>
                     <div class="row">
@@ -234,10 +235,19 @@
         $("#form-profile").submit(function(e){
         var validation = true;
         $('.error-text').empty();
+        
+        var profile_photo;
+        try {
+            profile_photo = $('.avatar-200').attr("style").split('\'')[1];
+        } catch(err) {
+            profile_photo = "";
+        }
+        
         var data = {
                 "profile_id": ${auth_user},
                 "profile_email": "${mail}",
                 "profile_username": "${username}",
+                "profile_photo": profile_photo,
                 "profile_name": $('#profile_name').val(),
                 "profile_surname": $('#profile_surname').val(),
                 "profile_headline": $('#profile_headline').val(),
@@ -265,12 +275,12 @@
 
         if (data.profile_biography === null || data.profile_biography === "") {
             validation = false;
-            $('#project_name').before('<span class="error-text">Profile biography is missing.</span>');
+            $('#profile-biography').before('<span class="error-text">Profile biography is missing.</span>');
         }
 
         if (data.profile_resume === null || data.profile_resume === "") {
             validation = false;
-            $('#project_name').before('<span class="error-text">Profile resume is missing.</span>');
+            $('#profile-resume').before('<span class="error-text">Profile resume is missing.</span>');
         }
         
         if(validation){
@@ -280,7 +290,20 @@
             return false;
         }
             
-        })
+        });
+        
+        $('.btn-upload-new-pic').click(function(e) {
+            e.preventDefault();
+            $('#upload-picture').click();
+        });
+        $('#upload-picture').change(function(e) {
+            var picture = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('.avatar-200').attr("style", "background-image:url('"+ e.target.result +"')");
+            };
+            reader.readAsDataURL(picture);
+        });
         
     })
   </script>

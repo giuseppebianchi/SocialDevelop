@@ -23,8 +23,11 @@ import it.socialdevelop.data.model.Admin;
 import it.socialdevelop.data.model.Developer;
 import it.socialdevelop.data.model.Project;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
+import it.univaq.f4i.iw.framework.security.SecurityLayer;
+import java.time.Instant;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,14 +62,34 @@ public class UpdateProfileSubmit extends SocialDevelopBaseController {
                     response.sendRedirect("/SocialDevelop");
                 }else{
                         String profile_username = o.getString("profile_username");
+                        String profile_photo = o.getString("profile_photo");
                         String profile_name = o.getString("profile_name");
                         String profile_surname = o.getString("profile_surname");
                         String profile_headline = o.getString("profile_headline");
                         String profile_biography = o.getString("profile_biography");
                         String profile_resume = o.getString("profile_resume");
                         String profile_email = o.getString("profile_email");
-                        //memorizziamo il task
+                        
+                        //dichiariamo d inizialmente in caso venga caricata una nuova picture
                         DeveloperImpl d = new DeveloperImpl(datalayer);
+
+                        //salviamo la nuova picture
+                        String filename;
+                        if ((profile_photo != null || profile_photo != "") && (profile_photo.split(";base64,").length == 2)) {
+                            byte[] data = Base64.decodeBase64(profile_photo.split(",")[1]);
+                            String picture_ext = profile_photo.split(";")[0].replace("data:image/", "");
+                            File file = new File("").getCanonicalFile();
+                            String encoded_filename = profile_name + profile_surname + profile_username + profile_email;
+                            filename = "dev_" + encoded_filename.hashCode() + "_" + Instant.now().getEpochSecond() + "." + picture_ext;
+                            try (OutputStream stream = new FileOutputStream(file.getParent() + "/webapps/SocialDevelop/uploads/images/" + filename)) {
+                                stream.write(data);
+                            }
+                            d.setPicture(filename);
+                            request.getSession().setAttribute("profile_picture", filename);
+                        } else {
+                            d.setPicture(dev.getPicture());
+                        }
+                        //memorizziamo il task
                         d.setKey(profile_id);
                         d.setUsername(profile_username);
                         d.setName(profile_name);
@@ -106,7 +129,6 @@ public class UpdateProfileSubmit extends SocialDevelopBaseController {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
 
                     datalayer.destroy();
                     //response.sendRedirect("developers/" + dev.getKey());

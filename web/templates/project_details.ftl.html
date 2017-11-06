@@ -146,7 +146,7 @@
           <div class="developer-list">
           <div class="media">
             <div class="media-left">
-                <div class="inn-simi"> <div class="media-object" alt=""></div></div>
+                <div class="inn-simi"> <div class="media-object" <#if coordinator.picture??>style="background-image:url('${request.getContextPath()}/uploads/images/${coordinator.picture}')"</#if> alt=""></div></div>
             </div>
             <div class="media-body">
               <h4>${coordinator.name} ${coordinator.surname}</h4>
@@ -283,7 +283,7 @@
                       <!-- DEVELOPER -->
           <div class="media">
             <div class="media-left">
-                <div class="inn-simi"> <div class="media-object" alt=""></div></div>
+                <div class="inn-simi"> <div class="media-object" <#if value.picture??>style="background-image:url('${request.getContextPath()}/uploads/images/${value.picture}')"</#if> alt=""></div></div>
             </div>
             <div class="media-body">
               <h4><a class="title-developer-list" href="${request.getContextPath()}/developers/${key}"><#if (value.name == "" && value.surname == "")>${value.username}<#else>${value.name} ${value.surname}</#if></a></h4>
