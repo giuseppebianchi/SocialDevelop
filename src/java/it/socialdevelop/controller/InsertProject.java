@@ -18,7 +18,12 @@ import javax.servlet.http.HttpSession;
 import it.socialdevelop.data.impl.ProjectImpl;
 import it.socialdevelop.data.impl.TaskImpl;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.time.Instant;
 import java.util.Iterator;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 /**
  *
@@ -50,10 +55,30 @@ public class InsertProject extends SocialDevelopBaseController {
                     String project_category = o.getString("project_category");
                     String project_location = o.getString("project_location");
                     String project_company = o.getString("project_company");
+                    String project_picture = o.getString("project_picture");
                     String project_description = o.getString("project_description");
                     int userid = (int) s.getAttribute("userid");
-                    //memorizziamo il progetto
+                    
+                    //dichiariamo p inizialmente in caso venga caricata una nuova picture
                     ProjectImpl p = new ProjectImpl(datalayer);
+
+                    //salviamo la nuova picture
+                    String filename;
+                    if ((project_picture != null || project_picture != "") && (project_picture.split(";base64,").length == 2)) {
+                        byte[] data = Base64.decodeBase64(project_picture.split(",")[1]);
+                        String picture_ext = project_picture.split(";")[0].replace("data:image/", "");
+                        File file = new File("").getCanonicalFile();
+                        String encoded_filename = project_name + project_location + project_company;
+                        filename = "proj_" + encoded_filename.hashCode() + "_" + Instant.now().getEpochSecond() + "." + picture_ext;
+                        try (OutputStream stream = new FileOutputStream(file.getParent() + "/webapps/SocialDevelop/uploads/images/" + filename)) {
+                            stream.write(data);
+                        }
+                        p.setPicture(filename);
+                    } else {
+                        p.setPicture("pro-img-1.jpg");
+                    }
+                    
+                    //memorizziamo il progetto
                     p.setCoordinatorKey(userid);
                     p.setName(project_name);
                     p.setCategory(project_category);

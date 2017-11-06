@@ -40,7 +40,7 @@ public class ProjectImpl implements Project {
         location = "";
         company = "";
         description = "";
-        picture = "pro-img-1.jpg";
+        picture = "";
         tasks = null;
         messages = null;
         dirty = false;

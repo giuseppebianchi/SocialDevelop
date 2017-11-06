@@ -426,7 +426,7 @@
       var list = $("#messages-list");
       var alert_box = $("#alert-box");
       var fullname = '${fullname}';
-      var foto = "<#if foto??>${request.getContextPath()}/uploads/images/${foto}<#else>${request.getContextPath()}/uploads/images/blog-image-4.png</#if>";
+      var foto = "<#if profile_picture??>${request.getContextPath()}/uploads/images/${profile_picture}<#else>${request.getContextPath()}/uploads/images/blog-image-4.png</#if>";
       var messageTemplate;
       
         $.get(ctx + "/templates/mustache/messageTemplate.html", function(t){

@@ -51,7 +51,8 @@
                                 <div class="col-xs-4">
                                     <div class="img-block avatar-pic" style="background-image: url('${request.getContextPath()}/theme/images/user-banner.jpg')"></div>
                                     <br>
-                                    <label for="#upload-picture" class="btn-block"><a class="btn btn-primary btn-block">Upload Picture</a></label>
+                                    <label for="#upload-picture" class="btn-block"><a class="btn btn-primary btn-block btn-upload-new-pic">Upload New Picture</a></label>
+                                    <input type="file" id="upload-picture" name="upload-picture" accept="image/*" style="display:none;">
                                 </div>
                             </div>
 
@@ -329,10 +330,18 @@
             var validation = true;
             $('.error-text').empty();
 
+            var picture;
+            try {
+                picture = $('.avatar-pic').attr("style").split('\'')[1];
+            } catch(err) {
+                picture = "";
+            }
+
             var data = {
                 "project_name": $('#project_name').val(),
                 "project_category": $('#select-project-category').val(),
                 "project_location": $('#project_location').val(),
+                "project_picture": picture,
                 "project_company": $('#project_company').val(),
                 "project_description": $('#summernote').summernote('code'),
                 "tasks": tasks
@@ -371,7 +380,20 @@
                 return false;
             }
 
-        })
+        });
+        
+        $('.btn-upload-new-pic').click(function(e) {
+            e.preventDefault();
+            $('#upload-picture').click();
+        });
+        $('#upload-picture').change(function(e) {
+            var picture = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('.avatar-pic').attr("style", "background-image:url('"+ e.target.result +"')");
+            };
+            reader.readAsDataURL(picture);
+        });
 
     })
 

@@ -68,9 +68,11 @@
                         <input type="text" name="project_company" value="${project.company}" placeholder="">
                         </div>
                     <div class="col-xs-4">
-                        <div class="img-block avatar-200"></div>
+                        <div class="img-block avatar-pic" <#if project.picture??>style="background-image:url('${request.getContextPath()}/uploads/images/${project.picture}')"</#if>></div>
                         <br>
-                        <label for="#upload-picture" class="btn-block"><a class="btn btn-primary btn-block">Upload New Picture</a></label>
+                        <label for="#upload-picture" class="btn-block"><a class="btn btn-primary btn-block btn-upload-new-pic">Upload New Picture</a></label>
+                        <input type="file" id="upload-picture" name="upload-picture" accept="image/*" style="display:none;">
+                        <input type="hidden" id="upload-picture-base64" name="upload-picture-base64">
                     </div>
                 </div>
                 
@@ -109,9 +111,16 @@
         $('#form-profile').submit(function(e){
              var validation = true;
              $('.error-text').empty();
+             
+            var picture;
+            try {
+                picture = $('.avatar-pic').attr("style").split('\'')[1];
+            } catch(err) {
+                picture = "";
+            }
             
             //CONTROLLI
-            f ($('#project_name').val() === null || $('#project_name').val() === "") {
+            if ($('#project_name').val() === null || $('#project_name').val() === "") {
                 validation = false;
                 $('#project_name').before('<span class="error-text">Project name is missing.</span>');
             }
@@ -146,6 +155,20 @@
         })
          $('#summernote').summernote({
             minHeight: 300,
+        });
+        
+        $('.btn-upload-new-pic').click(function(e) {
+            e.preventDefault();
+            $('#upload-picture').click();
+        });
+        $('#upload-picture').change(function(e) {
+            var picture = this.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('.avatar-pic').attr("style", "background-image:url('"+ e.target.result +"')");
+                $('#upload-picture-base64').val(e.target.result);
+            };
+            reader.readAsDataURL(picture);
         });
     })
   </script>

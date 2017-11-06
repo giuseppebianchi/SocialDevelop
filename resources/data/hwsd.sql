@@ -146,7 +146,7 @@ CREATE TABLE `project` (
   `description` text,
   `location` varchar(100) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
-  `picture` varchar(60) DEFAULT NULL,
+  `picture` varchar(255) DEFAULT NULL,
   `coordinator_ID` int(10) NOT NULL,
   `category` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`ID`),

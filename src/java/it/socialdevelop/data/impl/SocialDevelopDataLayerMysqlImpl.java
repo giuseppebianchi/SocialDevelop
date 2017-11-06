@@ -205,8 +205,8 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
              */
             sOffertsByDeveloperID = connection.prepareStatement("SELECT task_ID FROM (SELECT skill_ID FROM skill_has_developer WHERE developer_ID=?) AS shd "
                     + "INNER JOIN task_has_skill AS ths ON (shd.skill_ID = ths.skill_ID) WHERE task_ID NOT IN (SELECT task_ID FROM task_has_developer WHERE developer_ID=?) GROUP BY task_ID");
-            iProject = connection.prepareStatement("INSERT INTO project (name, category, location, company, description,coordinator_ID) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            uProject = connection.prepareStatement("UPDATE project SET name=?, category=?, location=?, company=?, description=?, coordinator_ID=? WHERE ID=?");
+            iProject = connection.prepareStatement("INSERT INTO project (name, category, location, company, picture, description,coordinator_ID) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            uProject = connection.prepareStatement("UPDATE project SET name=?, category=?, location=?, company=?, picture=?, description=?, coordinator_ID=? WHERE ID=?");
             dProject = connection.prepareStatement("DELETE FROM project WHERE ID=?");
 
             iSkill = connection.prepareStatement("INSERT INTO skill (name,type_ID) VALUES(?,?)", Statement.RETURN_GENERATED_KEYS);
@@ -281,6 +281,7 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
             a.setLocation(rs.getString("location"));
             a.setCompany(rs.getString("company"));
             a.setDescription(rs.getString("description"));
+            a.setPicture(rs.getString("picture"));
             a.setCoordinatorKey(rs.getInt("coordinator_ID"));
             //a.setTasks(getTasks(a.getKey()));
             //a.setCoordinator(getDeveloper(a.getCoordinatorKey()));
@@ -1344,24 +1345,26 @@ public class SocialDevelopDataLayerMysqlImpl extends DataLayerMysqlImpl implemen
                 uProject.setString(2, project.getCategory());
                 uProject.setString(3, project.getLocation());
                 uProject.setString(4, project.getCompany());
-                uProject.setString(5, project.getDescription());
+                uProject.setString(5, project.getPicture());
+                uProject.setString(6, project.getDescription());
                 if (project.getCoordinator() != null) {
-                    uProject.setInt(6, project.getCoordinator().getKey());
+                    uProject.setInt(7, project.getCoordinator().getKey());
                 } else {
-                    uProject.setNull(6, java.sql.Types.INTEGER);
+                    uProject.setNull(7, java.sql.Types.INTEGER);
                 }
-                uProject.setInt(7, project.getKey());
+                uProject.setInt(8, project.getKey());
                 uProject.executeUpdate();
             } else { //insert
                 iProject.setString(1, project.getName());
                 iProject.setString(2, project.getCategory());
                 iProject.setString(3, project.getLocation());
                 iProject.setString(4, project.getCompany());
-                iProject.setString(5, project.getDescription());
+                iProject.setString(5, project.getPicture());
+                iProject.setString(6, project.getDescription());
                 if (project.getCoordinator() != null) {
-                    iProject.setInt(6, project.getCoordinator().getKey());
+                    iProject.setInt(7, project.getCoordinator().getKey());
                 } else {
-                    iProject.setNull(6, java.sql.Types.INTEGER);
+                    iProject.setNull(7, java.sql.Types.INTEGER);
                 }
 
                 if (iProject.executeUpdate() == 1) {

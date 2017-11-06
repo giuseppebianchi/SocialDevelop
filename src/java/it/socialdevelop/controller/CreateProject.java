@@ -43,7 +43,7 @@ public class CreateProject extends SocialDevelopBaseController {
             data.put("page_title", "New Project");
             data.put("page_subtitle", "realize your ideas!");
             data.put("auth_user", s.getAttribute("userid"));
-                data.put("foto", s.getAttribute("foto"));
+                data.put("profile_picture", s.getAttribute("profile_picture"));
                 data.put("fullname", s.getAttribute("fullname"));
             SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
             Admin admin = datalayer.getAdmin((int) s.getAttribute("userid"));

@@ -17,6 +17,11 @@ import it.socialdevelop.data.model.Admin;
 import it.socialdevelop.data.model.Project;
 import it.socialdevelop.data.model.SocialDevelopDataLayer;
 import it.socialdevelop.data.model.Task;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.time.Instant;
+import org.apache.tomcat.util.codec.binary.Base64;
 
 /**
  *
@@ -45,14 +50,32 @@ public class UpdateProjectSave extends SocialDevelopBaseController {
             if (userid == coordinator_key) {
 
                 String project_name = request.getParameter("project_name");
+                String project_picture = request.getParameter("upload-picture-base64");
                 String project_category = request.getParameter("project_category");
                 String project_location = request.getParameter("project_location");
                 String project_company = request.getParameter("project_company");
                 String project_descr = request.getParameter("project_description");
                 
+                //dichiariamo p inizialmente in caso venga caricata una nuova picture
+                ProjectImpl p = new ProjectImpl(datalayer);
+
+                //salviamo la nuova picture
+                String filename;
+                if ((project_picture != null || project_picture != "") && (project_picture.split(";base64,").length == 2)) {
+                    byte[] data = Base64.decodeBase64(project_picture.split(",")[1]);
+                    String picture_ext = project_picture.split(";")[0].replace("data:image/", "");
+                    File file = new File("").getCanonicalFile();
+                    String encoded_filename = project_name + project_location + project_company;
+                    filename = "proj_" + encoded_filename.hashCode() + "_" + Instant.now().getEpochSecond() + "." + picture_ext;
+                    try (OutputStream stream = new FileOutputStream(file.getParent() + "/webapps/SocialDevelop/uploads/images/" + filename)) {
+                        stream.write(data);
+                    }
+                    p.setPicture(filename);
+                } else {
+                    p.setPicture(project_picture);
+                }
                 
                 //memorizziamo il progetto
-                ProjectImpl p = new ProjectImpl(datalayer);
                 p.setCoordinatorKey(userid);
                 p.setName(project_name);
                 p.setCategory(project_category);

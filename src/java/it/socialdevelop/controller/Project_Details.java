@@ -61,7 +61,7 @@ public class Project_Details extends SocialDevelopBaseController {
             data.put("logout", "Logout");
             data.put("auth_user", s.getAttribute("userid"));
             int usedid = (int) s.getAttribute("userid");
-            data.put("foto", s.getAttribute("foto"));
+            data.put("profile_picture", s.getAttribute("profile_picture"));
             data.put("fullname", s.getAttribute("fullname"));
             if (coordinator_key == (int) s.getAttribute("userid")) {
                 data.put("userid", coordinator_key);
