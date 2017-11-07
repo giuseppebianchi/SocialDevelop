@@ -52,6 +52,7 @@ public class SignupSubmit extends SocialDevelopBaseController {
                             dev.setUsername(username);
                             dev.setMail(mail);
                             dev.setPassword(pwd);
+                            dev.setPicture("blog-image-4.png");
                             
                             datalayer.storeDeveloper(dev);
                             int key = datalayer.getDeveloperByUsername(username);
