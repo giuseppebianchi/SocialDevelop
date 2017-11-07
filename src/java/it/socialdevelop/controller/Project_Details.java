@@ -78,6 +78,7 @@ public class Project_Details extends SocialDevelopBaseController {
         data.put("page_title", "Project" + " " + project.getName());
         data.put("page_subtitle", "Check project info");
         data.put("projectname", project.getName());
+        data.put("project_picture", project.getPicture());
         data.put("projectcategory", project.getCategory());
         data.put("projectlocation", project.getLocation());
         data.put("projectcompany", project.getCompany());

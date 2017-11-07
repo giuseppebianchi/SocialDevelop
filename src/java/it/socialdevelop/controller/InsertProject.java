@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.time.Instant;
 import java.util.Iterator;
+import javax.servlet.ServletContext;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 /**
@@ -70,7 +71,9 @@ public class InsertProject extends SocialDevelopBaseController {
                         File file = new File("").getCanonicalFile();
                         String encoded_filename = project_name + project_location + project_company;
                         filename = "proj_" + encoded_filename.hashCode() + "_" + Instant.now().getEpochSecond() + "." + picture_ext;
-                        try (OutputStream stream = new FileOutputStream(file.getParent() + "/webapps/SocialDevelop/uploads/images/" + filename)) {
+                        ServletContext context = getServletContext();
+                        String path = context.getInitParameter("uploaded-images.directory");
+                        try (OutputStream stream = new FileOutputStream(path + filename)) {
                             stream.write(data);
                         }
                         p.setPicture(filename);

@@ -140,7 +140,7 @@
                                 
                                 <!-- Name -->
                                 <div class="fol-name">
-                                    <div class="img-block avatar-table" <#if proposal.getSender().picture??>style="background-image:url('${request.getContextPath()}/uploads/images/${proposal.getSender().picture}')"</#if>></div>
+                                    <div class="img-block avatar-table" <#if proposal.getSender().getPicture()??>style="background-image:url('${request.getContextPath()}/uploads/images/${proposal.getSender().getPicture()}')"</#if>></div>
                                    <#if (proposal.getSender().name != "") && (proposal.getSender().surname!="")>
                                     <h6>${proposal.getSender().name} ${proposal.getSender().surname}</h6>
                                    <#else>

@@ -56,7 +56,7 @@ public class joinTask extends SocialDevelopBaseController {
                 String obj = "Richiesta di Collaborazione";
                 String txt = "Hai ricevuto una richiesta di partecipazione al task " + datalayer.getTask(task_id).getName() + " da " + datalayer.getDeveloper(user_key).getUsername() + ".";
                 Mailer mail = new Mailer(datalayer.getDeveloper(user_key).getMail(), obj, txt);
-                mail.sendEmail();
+                //mail.sendEmail();
                 try {
                     out.println("Your request has been sended!");
                 } finally {

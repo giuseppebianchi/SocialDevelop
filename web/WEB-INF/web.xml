@@ -10,16 +10,11 @@
         <param-value>/home/mirkopizii/Scrivania/socialdevelop/web/curriculums</param-value>
     </context-param>
     -->
-    <!-- Giuseppe
+    <!-- Giuseppe-->
     <context-param>
         <param-name>uploaded-images.directory</param-name>
-        <param-value>/home/giuseppe/Scrivania/socialdevelop/web/uploaded-images</param-value>
+        <param-value>/Users/Giuseppe/Development/SocialDevelop/web/uploads/images/</param-value>
     </context-param>
-    <context-param>
-        <param-name>curriculums.directory</param-name>
-        <param-value>/home/giuseppe/Scrivania/socialdevelop/web/curriculums</param-value>
-    </context-param>
-    -->
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>it.socialdevelop.controller.Index</servlet-class>

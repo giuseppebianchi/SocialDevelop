@@ -106,8 +106,7 @@ public class DeveloperForTask extends SocialDevelopBaseController {
                                     flag = true;
                                 }
                             }
-                            if (!devTask.contains(dev) && dev.getKey() != ((int) s.getAttribute("userid")) && !flag) {
-
+                            if (devTask.size() > 0 && !devTask.contains(dev) && dev.getKey() != ((int) s.getAttribute("userid")) && !flag) {
                                 devTask.add(dev);
                             }
 

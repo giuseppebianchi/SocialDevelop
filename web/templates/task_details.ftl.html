@@ -2,7 +2,7 @@
   
   <div class="compny-profile"> 
     <!-- SUB Banner -->
-    <div class="profile-bnr overlay-up" style="background-image: url('${request.getContextPath()}/theme/images/pro-img-1.jpg')">
+    <div class="profile-bnr overlay-up" <#if task.getProject().getPicture()??>style="background-image:url('${request.getContextPath()}/uploads/images/${task.getProject().getPicture()}')"</#if>>
         <a class="overlay"></a>
       <div class="container overlay-up"> 
         

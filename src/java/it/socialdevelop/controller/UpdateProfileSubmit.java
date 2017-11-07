@@ -27,6 +27,7 @@ import it.univaq.f4i.iw.framework.security.SecurityLayer;
 import java.time.Instant;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import javax.servlet.ServletContext;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +57,7 @@ public class UpdateProfileSubmit extends SocialDevelopBaseController {
                 int userid = (int) s.getAttribute("userid");
                 // this parses the json
                 String JSONData = request.getParameter("data");
+                
                 JSONObject o = new JSONObject(JSONData);
                 int profile_id = o.getInt("profile_id");
                 if(userid != profile_id){
@@ -81,7 +83,9 @@ public class UpdateProfileSubmit extends SocialDevelopBaseController {
                             File file = new File("").getCanonicalFile();
                             String encoded_filename = profile_name + profile_surname + profile_username + profile_email;
                             filename = "dev_" + encoded_filename.hashCode() + "_" + Instant.now().getEpochSecond() + "." + picture_ext;
-                            try (OutputStream stream = new FileOutputStream(file.getParent() + "/webapps/SocialDevelop/uploads/images/" + filename)) {
+                            ServletContext context = getServletContext();
+                        String path = context.getInitParameter("uploaded-images.directory");
+                        try (OutputStream stream = new FileOutputStream(path + filename)) {
                                 stream.write(data);
                             }
                             d.setPicture(filename);
@@ -135,7 +139,7 @@ public class UpdateProfileSubmit extends SocialDevelopBaseController {
                     response.sendRedirect("/SocialDevelop/settings/profile?updated_profile=1");
                 }
             } else {
-                response.sendRedirect("UpdateProfile");
+                response.sendRedirect("/SocialDevelop/settings/profile");
             }
             s.removeAttribute("previous_url");
         } else {

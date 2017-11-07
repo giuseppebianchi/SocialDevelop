@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.time.Instant;
 import java.util.Iterator;
+import javax.servlet.ServletContext;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 /**
@@ -47,10 +48,11 @@ public class CompleteRegistrationSubmit  extends SocialDevelopBaseController {
             String u = (String) s.getAttribute("previous_url");
             if (/*s.getAttribute("previous_url") != null && u.equals("/SocialDevelop/signup/signup_submit")*/ true) {
                 
-                    SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
+                    
                     
                     // this parses the json 
                     String JSONData = request.getParameter("data");
+                    SocialDevelopDataLayer datalayer = (SocialDevelopDataLayer) request.getAttribute("datalayer");
                     JSONObject o = new JSONObject(JSONData);  
                     
                     int profile_id = o.getInt("profile_id");
@@ -78,7 +80,9 @@ public class CompleteRegistrationSubmit  extends SocialDevelopBaseController {
                         File file = new File("").getCanonicalFile();
                         String encoded_filename = profile_name + profile_surname + profile_username + profile_email;
                         filename = "dev_" + encoded_filename.hashCode() + "_" + Instant.now().getEpochSecond() + "." + picture_ext;
-                        try (OutputStream stream = new FileOutputStream(file.getParent() + "/webapps/SocialDevelop/uploads/images/" + filename)) {
+                        ServletContext context = getServletContext();
+                        String path = context.getInitParameter("uploaded-images.directory");
+                        try (OutputStream stream = new FileOutputStream(path + filename)) {
                             stream.write(data);
                         }
                         d.setPicture(filename);

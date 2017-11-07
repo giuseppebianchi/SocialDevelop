@@ -126,7 +126,7 @@
                               <input id="checkbox7" class="styled" type="checkbox">
                               <label for="checkbox7"></label>
                             </div>-->
-                            <span class="<#if (jobapp.state == 0)>entry-dashboard</#if>" 
+                            <span 
                                <#assign name=jobapp.getSender().name>
                                <#assign surname=jobapp.getSender().surname>
                                <#if (name != "") && (surname!="")>
@@ -141,13 +141,13 @@
                                 
                                 <!-- Name -->
                                 <div class="fol-name">
-                                    <div class="img-block avatar-table" <#if jobapp.getSender().picture??>style="background-image:url('${request.getContextPath()}/uploads/images/${jobapp.getSender().picture}')"</#if>></div>
-                                   <#if (jobapp.getSender().name != "") && (jobapp.getSender().surname!="")>
-                                    <h6>${jobapp.getSender().name} ${jobapp.getSender().surname}</h6>
+                                    <div class="img-block avatar-table" <#if jobapp.getTaskByRequest().getProject().getCoordinator().getPicture()??>style="background-image:url('${request.getContextPath()}/uploads/images/${jobapp.getTaskByRequest().getProject().getCoordinator().getPicture()}')"</#if>></div>
+                                   <#if (jobapp.getTaskByRequest().getProject().getCoordinator().name != "") && (jobapp.getTaskByRequest().getProject().getCoordinator().surname!="")>
+                                    <h6>${jobapp.getTaskByRequest().getProject().getCoordinator().name} ${jobapp.getTaskByRequest().getProject().getCoordinator().surname}</h6>
                                    <#else>
-                                   <h6>${jobapp.getSender().username}</h6>
+                                   <h6>${jobapp.getTaskByRequest().getProject().getCoordinator().username}</h6>
                                    </#if>
-                                  <span>${jobapp.getSender().headline}</span> </div>
+                                  <span>${jobapp.getTaskByRequest().getProject().getCoordinator().headline}</span> </div>
                               </div>
                               <!-- Location -->
                               <div class="col-xs-3 n-p-r n-p-l"> <span>${jobapp.getTaskByRequest().getProject().name}</span> </div>

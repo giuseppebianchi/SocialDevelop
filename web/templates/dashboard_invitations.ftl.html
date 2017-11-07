@@ -141,7 +141,7 @@
                                 
                                 <!-- Name -->
                                 <div class="fol-name">
-                                    <div class="img-block avatar-table" <#if invite.getCollaboratorRequest().picture??>style="background-image:url('${request.getContextPath()}/uploads/images/${invite.getCollaboratorRequest().picture}')"</#if>></div>
+                                    <div class="img-block avatar-table" <#if invite.getCollaboratorRequest().getPicture()??>style="background-image:url('${request.getContextPath()}/uploads/images/${invite.getCollaboratorRequest().getPicture()}')"</#if>></div>
                                    <#if (invite.getCollaboratorRequest().name != "") && (invite.getCollaboratorRequest().surname!="")>
                                     <h6>${invite.getCollaboratorRequest().name} ${invite.getCollaboratorRequest().surname}</h6>
                                    <#else>

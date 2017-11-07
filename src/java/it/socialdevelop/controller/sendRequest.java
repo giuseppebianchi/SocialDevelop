@@ -49,7 +49,7 @@ public class sendRequest extends SocialDevelopBaseController {
                 String obj = "Invite - Collaboration request";
                 String txt = "You got an invite to collaborate in " + datalayer.getTask(task_id).getName() + ". From: " + datalayer.getDeveloper(user_key).getUsername() + ".";
                 Mailer mail = new Mailer(datalayer.getDeveloper(dev_key).getMail(), obj, txt);
-                mail.sendEmail();
+                //mail.sendEmail();
                 //sender=1 --> inviata da collaboratore
                 //stato=0 --> in attesa
                 //voto=-1 --> non rilasciato

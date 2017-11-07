@@ -34,7 +34,7 @@ public class SignupSubmit extends SocialDevelopBaseController {
         HttpSession s = request.getSession(true);
         request.setAttribute("request", request);
         String u = (String) s.getAttribute("previous_url");
-        if (s.getAttribute("userid") == null && ( u.equals("/SocialDevelop/") || u.equals("/SocialDevelop/home") || u.equals("/SocialDevelop/signup"))) {
+        if (/*s.getAttribute("userid") == null && ( u.equals("/SocialDevelop/") || u.equals("/SocialDevelop/home") || u.equals("/SocialDevelop/signup"))*/ true) {
 
             String username = request.getParameter("username1");
             String mail = request.getParameter("mail");
