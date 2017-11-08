@@ -62,7 +62,7 @@
                 <hr class="mt10">
                 <form id="form-update-task" method="post" action="${request.getContextPath()}/projects/tasks/settings/update_task">
                 <div class="row">
-                    <div class="col-xs-8">
+                    <div class="col-sm-12">
                         <#if task.isCompleted()>
                             <span class="btn btn-primary">Completed</span>
                         <#else>
@@ -95,11 +95,11 @@
                         <input type="number" id="task_developers" name="task_developer" value="${task.numCollaborators}" placeholder="Developers">
                         
                         </div>
-                    <div class="col-xs-4">
+                    <!--<div class="col-xs-4">
                         <div class="img-block avatar-200"></div>
                         <br>
                         <label for="#upload-picture" class="btn-block"><a class="btn btn-primary btn-block">Upload New Picture</a></label>
-                    </div>
+                    </div>-->
                 </div>
                     <div class="row">
                         <div class="col-sm-6">

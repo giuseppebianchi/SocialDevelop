@@ -3,11 +3,7 @@
     <!-- Mirko
     <context-param>
         <param-name>uploaded-images.directory</param-name>
-        <param-value>/home/mirkopizii/Scrivania/socialdevelop/web/uploaded-images</param-value>
-    </context-param>
-    <context-param>
-        <param-name>curriculums.directory</param-name>
-        <param-value>/home/mirkopizii/Scrivania/socialdevelop/web/curriculums</param-value>
+        <param-value>/Users/Giuseppe/Development/SocialDevelop/web/uploads/images/</param-value>
     </context-param>
     -->
     <!-- Giuseppe-->
@@ -52,16 +48,8 @@
         <servlet-class>socialdevelop.data.model.Project</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>provaDB2</servlet-name>
-        <servlet-class>socialdevelop.data.impl.provaDB2</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>MakeLoginReg</servlet-name>
-        <servlet-class>socialdevelop.controller.MakeLoginReg</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>Project_Details</servlet-name>
-        <servlet-class>it.socialdevelop.controller.Project_Details</servlet-class>
+        <servlet-name>ProjectDetails</servlet-name>
+        <servlet-class>it.socialdevelop.controller.ProjectDetails</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Developers</servlet-name>
@@ -69,11 +57,7 @@
     </servlet>
     <servlet>
         <servlet-name>Task_Details</servlet-name>
-        <servlet-class>it.socialdevelop.controller.Task_Details</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>MyCollaborations</servlet-name>
-        <servlet-class>it.socialdevelop.controller.MyCollaborations</servlet-class>
+        <servlet-class>it.socialdevelop.controller.TaskDetails</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchProject</servlet-name>
@@ -86,18 +70,6 @@
     <servlet>
         <servlet-name>CompleteRegistrationSubmit</servlet-name>
         <servlet-class>it.socialdevelop.controller.CompleteRegistrationSubmit</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>DownloadCurriculum</servlet-name>
-        <servlet-class>it.socialdevelop.controller.DownloadCurriculum</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>MySkills</servlet-name>
-        <servlet-class>it.socialdevelop.controller.MySkills</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>MyProjects</servlet-name>
-        <servlet-class>it.socialdevelop.controller.MyProjects</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>addSkill</servlet-name>
@@ -141,16 +113,8 @@
         <servlet-class>it.socialdevelop.controller.InsertTask</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>FindDeveloper</servlet-name>
-        <servlet-class>it.socialdevelop.controller.FindDeveloper</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>DevelopersFilter</servlet-name>
         <servlet-class>it.socialdevelop.controller.DevelopersFilter</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchDeveloper</servlet-name>
-        <servlet-class>it.socialdevelop.controller.SearchDeveloper</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateProject</servlet-name>
@@ -193,44 +157,16 @@
         <servlet-class>it.socialdevelop.controller.DeveloperProfile</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>DeveloperCollaborations</servlet-name>
-        <servlet-class>it.socialdevelop.controller.DeveloperCollaborations</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>DeveloperProjects</servlet-name>
         <servlet-class>it.socialdevelop.controller.DeveloperProjects</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>DeveloperSkills</servlet-name>
-        <servlet-class>it.socialdevelop.controller.DeveloperSkills</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PostAd</servlet-name>
-        <servlet-class>it.socialdevelop.controller.PostAd</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PostRequest</servlet-name>
-        <servlet-class>it.socialdevelop.controller.PostRequest</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>PostDiscussion</servlet-name>
-        <servlet-class>it.socialdevelop.controller.PostDiscussion</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>MessagesManager</servlet-name>
         <servlet-class>it.socialdevelop.controller.MessagesManager</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>MyCollaborators</servlet-name>
-        <servlet-class>it.socialdevelop.controller.MyCollaborators</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>removeCollaboratorFromTask</servlet-name>
         <servlet-class>it.socialdevelop.controller.removeCollaboratorFromTask</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>releaseVote</servlet-name>
-        <servlet-class>it.socialdevelop.controller.releaseVote</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>joinTask</servlet-name>
@@ -249,20 +185,12 @@
         <servlet-class>it.socialdevelop.controller.AdminAddSkill</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>UpdateSkillBack</servlet-name>
-        <servlet-class>it.socialdevelop.controller.UpdateSkillBack</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AdminRemoveSkill</servlet-name>
         <servlet-class>it.socialdevelop.controller.AdminRemoveSkill</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminRemoveType</servlet-name>
         <servlet-class>it.socialdevelop.controller.AdminRemoveType</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UpdateType</servlet-name>
-        <servlet-class>it.socialdevelop.controller.UpdateType</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AdminAddType</servlet-name>
@@ -285,10 +213,6 @@
         <servlet-class>it.socialdevelop.controller.acceptProposal</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>declineProposal</servlet-name>
-        <servlet-class>socialdevelop.controller.declineProposal</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>DashboardJobApplications</servlet-name>
         <servlet-class>it.socialdevelop.controller.DashboardJobApplications</servlet-class>
     </servlet>
@@ -303,14 +227,6 @@
     <servlet>
         <servlet-name>DashboardJobOffers</servlet-name>
         <servlet-class>it.socialdevelop.controller.DashboardJobOffers</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>DeveloperCollaborators</servlet-name>
-        <servlet-class>it.socialdevelop.controller.DeveloperCollaborators</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>GetPhoto</servlet-name>
-        <servlet-class>socialdevelop.controller.GetPhoto</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Home</servlet-name>
@@ -345,24 +261,12 @@
         <url-pattern>/projects</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Project_Details</servlet-name>
+        <servlet-name>ProjectDetails</servlet-name>
         <url-pattern>/projects/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Developers</servlet-name>
         <url-pattern>/developers</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>provaDB2</servlet-name>
-        <url-pattern>/provaDB2</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MakeLoginReg</servlet-name>
-        <url-pattern>/MakeLoginReg</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MyProjects</servlet-name>
-        <url-pattern>/MyProjects</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CompleteRegistration</servlet-name>
@@ -373,28 +277,12 @@
         <url-pattern>/signup/complete_registration_save</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>MyCollaborations</servlet-name>
-        <url-pattern>/MyCollaborations</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DownloadCurriculum</servlet-name>
-        <url-pattern>/DownloadCurriculum</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>SearchProject</servlet-name>
         <url-pattern>/projects/search</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Project_Details</servlet-name>
-        <url-pattern>/Project_Detail</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>Task_Details</servlet-name>
         <url-pattern>/projects/tasks/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MySkills</servlet-name>
-        <url-pattern>/MySkills</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>addSkill</servlet-name>
@@ -431,10 +319,6 @@
     <servlet-mapping>
         <servlet-name>InsertTask</servlet-name>
         <url-pattern>/projects/settings/create_task</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FindDeveloper</servlet-name>
-        <url-pattern>/FindDevelopers</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DevelopersFilter</servlet-name>
@@ -477,48 +361,16 @@
         <url-pattern>/developers/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>DeveloperCollaborations</servlet-name>
-        <url-pattern>/DeveloperCollaborations</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>DeveloperProjects</servlet-name>
         <url-pattern>/developers/projects/*</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DeveloperSkills</servlet-name>
-        <url-pattern>/DeveloperSkills</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MessagesManager</servlet-name>
         <url-pattern>/projects/messages/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>PostAd</servlet-name>
-        <url-pattern>/PostAd</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PostRequest</servlet-name>
-        <url-pattern>/PostRequest</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PostDiscussion</servlet-name>
-        <url-pattern>/PostDiscussion</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchDeveloper</servlet-name>
-        <url-pattern>/SearchDeveloper</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>MyCollaborators</servlet-name>
-        <url-pattern>/MyCollaborators</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>removeCollaboratorFromTask</servlet-name>
         <url-pattern>/projects/remove_collaborator</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>releaseVote</servlet-name>
-        <url-pattern>/releaseVote</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>joinTask</servlet-name>
@@ -545,16 +397,8 @@
         <url-pattern>/admin/skills/remove_skill</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>UpdateSkillBack</servlet-name>
-        <url-pattern>/UpdateSkillBack</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AdminRemoveType</servlet-name>
         <url-pattern>/admin/types/remove_type</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UpdateType</servlet-name>
-        <url-pattern>/UpdateType</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DeveloperForTask</servlet-name>
@@ -573,10 +417,6 @@
         <url-pattern>/dashboard/proposals/accept_proposal</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>declineProposal</servlet-name>
-        <url-pattern>/declineProposal</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>DashboardJobApplications</servlet-name>
         <url-pattern>/dashboard/job_applications</url-pattern>
     </servlet-mapping>
@@ -591,14 +431,6 @@
     <servlet-mapping>
         <servlet-name>DashboardJobOffers</servlet-name>
         <url-pattern>/dashboard/job_offers</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DeveloperCollaborators</servlet-name>
-        <url-pattern>/DeveloperCollaborators</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>GetPhoto</servlet-name>
-        <url-pattern>/GetPhoto</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
