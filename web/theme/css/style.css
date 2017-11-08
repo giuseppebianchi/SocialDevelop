@@ -3564,6 +3564,9 @@ a:hover, a:focus{
 .projects-sectioncss-table-cell.content{
 	width: 70%;
 }
+.project-list-item{
+    margin-bottom: 15px;
+}
 .project-list-item .css-table .css-table-cell.content h1{
         margin: 0 0 10px 0;
         font-size: 1.8em;

@@ -204,7 +204,7 @@
               <div id="developers" class="tab-pane fade">
                   <#if auth_user??>
                         <#if isCoordinator??>
-                            <a href="${request.getContextPath()}/projects/task/suggestions/13" class="btn btn-primary pull-right"><i class="fa fa-user-plus"></i> Find Developers</a>
+                            <a href="${request.getContextPath()}/projects/suggestions/${project.key}" class="btn btn-primary pull-right"><i class="fa fa-user-plus"></i> Find Developers</a>
                         
                         </#if>
                   </#if>

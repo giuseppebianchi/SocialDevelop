@@ -258,7 +258,7 @@
                                                 <#if projects?has_content>
                                                 <#list projects as progetto>
                                                 <div class="css-table">
-                                                    <div class="css-table-cell image has-bg-image" data-bg-image="${request.getContextPath()}/theme/images/blog-image-3.png" style="background-image: url('${request.getContextPath()}/theme/images/blog-image-3.png');"> <img class="hidden-image" src="${request.getContextPath()}/theme/images/blog-image-3.png" alt=""> </div>
+                                                    <div class="css-table-cell image has-bg-image" data-bg-image="${request.getContextPath()}/uploads/images/${progetto.picture}" style="background-image: url('${request.getContextPath()}/uploads/images/${progetto.picture}');"> <img class="hidden-image" src="${request.getContextPath()}/uploads/images/${progetto.picture}" alt=""> </div>
                                                     <div class="css-table-cell content" style="background: #fff"> 
                                                         <a href="${request.getContextPath()}/projects/${progetto.key}"><h1>${progetto.name}</h1></a>
                                                         <div class="listing listing-1" style="padding-bottom: 0;">
